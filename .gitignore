@@ -103,3 +103,8 @@ ubuntu-noble-rootfs/
 stock_boot/
 custom_boot.img
 custom_init_boot.img
+
+# ==============================================================================
+# Initramfs Builder Artifacts
+# ==============================================================================
+initramfs_builder/
