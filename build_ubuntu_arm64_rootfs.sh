@@ -162,6 +162,20 @@ CHROOT_SCRIPT
 
 log_ok "Chroot package installation complete."
 
+# Immediately unmount pseudofs before file operations and packaging
+log_info "Unmounting pseudofs (/proc, /sys, /dev)..."
+umount -l "$ROOTFS_DIR/dev/pts" 2>/dev/null || true
+umount -l "$ROOTFS_DIR/dev" 2>/dev/null || true
+umount -l "$ROOTFS_DIR/sys" 2>/dev/null || true
+umount -l "$ROOTFS_DIR/proc" 2>/dev/null || true
+rm -f "$ROOTFS_DIR/usr/sbin/policy-rc.d"
+rm -f "$ROOTFS_DIR/usr/bin/qemu-aarch64-static"
+rm -f "$ROOTFS_DIR/etc/resolv.conf"
+cat << 'EOF' > "$ROOTFS_DIR/etc/resolv.conf"
+nameserver 8.8.8.8
+nameserver 1.1.1.1
+EOF
+
 # 5. Copy Kernel Modules (286 .ko modules)
 log_info "5/8 Installing 286 compiled Linux kernel modules..."
 MOD_DEST="$ROOTFS_DIR/lib/modules/$KERNEL_VER"
@@ -243,3 +257,4 @@ log_ok "Flashable Image:  $IMAGE_OUT"
 log_ok "Default User:     tonton (password: tonton)"
 log_ok "Root User:        root   (password: root)"
 log_ok "=========================================================================="
+
