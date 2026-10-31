@@ -332,7 +332,7 @@ copy_to_dist_dir(
     data = [
         ":mx8855",
         ":mx8855_dtbo",
-        ":mx8855_images",
+        #":mx8855_images",
         ":mx8855_modules_install",
         ":mx8855_module_symbols",
         ":mx8855_merged_uapi_headers",
