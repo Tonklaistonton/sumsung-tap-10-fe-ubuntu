@@ -1,0 +1,3 @@
+obj-$(CONFIG_AUDIO_EXYNOS_KUNIT_TEST) += audio_exynos_test.o
+
+ccflags-y += -I $(srctree)/$(src)/../

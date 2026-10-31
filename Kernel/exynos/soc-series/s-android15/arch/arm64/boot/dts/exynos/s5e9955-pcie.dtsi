@@ -1,0 +1,108 @@
+/*
+ * SAMSUNG S5E9955 PCIe device tree source
+ *
+ * Copyright (c) 2024 Samsung Electronics Co., Ltd.
+ *		http://www.samsung.com
+ *
+ * SAMSUNG S5E9955 SoC device nodes are listed in this file.
+ * S5E9955 based board files can include this file and provide
+ * values for board specfic bindings.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+#include <dt-bindings/pci/pci.h>
+#include <dt-bindings/soc/samsung,sysmmu-v9.h>
+/ {
+	/* HSI1 PCIe channel0 - GEN3 1Lane */
+	pcie_0: pcie@19150000 {
+		compatible = "exynos-pcie-rc,wifi_bcm";
+		gpios = <&gpf0 1 0x1 /* PERST */>;
+		reg = <0x0 0x19150000 0x2000    /* elbi base */
+			0x0 0x191B0000 0xD000   /* soc base */
+			0x0 0x19120000 0xB000   /* phy pcs base */
+			0x0 0x19130000 0xD000   /* phy udbg base */
+			0x0 0x19110000 0x7000   /* phy pma base */
+			0x0 0x19400000 0x381000 /* DBI base */
+			0x0 0x19180000 0x1000   /* I/A space */
+			0x0 0x19190000 0x1000   /* I/A space */
+			0x0 0x191A0000 0x1000   /* I/A space */
+			0x0 0x10000000 0xc310	/* OTP TOP */
+			0x1 0x01000000 0x2000>; /* Configuration space */
+		reg-names = "elbi", "soc", "pcs", "phyudbg", "phy", "dbi", "ia", "ia1", "ia2", "otp", "config";
+		interrupts = <GIC_SPI INTREQ__PCIE_GEN4_2L_0_SubSystem IRQ_TYPE_LEVEL_HIGH>,
+			     <GIC_SPI INTREQ__PCIE_GEN4_2L_0_msi_recieved_from_EP_NUM_0 IRQ_TYPE_LEVEL_HIGH>,
+			     <GIC_SPI INTREQ__PCIE_GEN4_2L_0_msi_recieved_from_EP_NUM_1 IRQ_TYPE_LEVEL_HIGH>,
+			     <GIC_SPI INTREQ__PCIE_GEN4_2L_0_msi_recieved_from_EP_NUM_2 IRQ_TYPE_LEVEL_HIGH>,
+			     <GIC_SPI INTREQ__PCIE_GEN4_2L_0_msi_recieved_from_EP_NUM_3 IRQ_TYPE_LEVEL_HIGH>,
+			     <GIC_SPI INTREQ__PCIE_GEN4_2L_0_msi_recieved_from_EP_NUM_4 IRQ_TYPE_LEVEL_HIGH>,
+			     <GIC_SPI INTREQ__PCIE_GEN4_2L_0_msi_recieved_from_EP_NUM_5 IRQ_TYPE_LEVEL_HIGH>,
+			     <GIC_SPI INTREQ__PCIE_GEN4_2L_0_msi_recieved_from_EP_NUM_6 IRQ_TYPE_LEVEL_HIGH>,
+			     <GIC_SPI INTREQ__PCIE_GEN4_2L_0_msi_recieved_from_EP_NUM_7 IRQ_TYPE_LEVEL_HIGH>,
+			     <GIC_SPI INTREQ__PCIE_GEN4_2L_0_SOC_CTRL IRQ_TYPE_LEVEL_HIGH>;
+		/* !!Keep the 'interrupt-names' like below!! */
+		interrupt-names = "pcie_int", "msi0", "msi1";
+		#interrupt-cells = <1>;
+		samsung,pmu-phandle = <&pmu_system_controller>;
+		samsung,sysreg-phandle = <&pcie_sysreg_controller>;
+		pinctrl-names = "active", "idle";
+		pinctrl-0 = <&pcie0_clkreq &pcie0_perst>;
+		pinctrl-1 = <&pcie0_clkreq &pcie0_perst>;
+		#address-cells = <3>;
+		#size-cells = <2>;
+		device_type = "pci";
+		/* non-prefetchable memory */
+		ranges = <0x83000000 0x1 0x00000000 0x1 0x00000000 0 0x1000000>;
+		bus-range = <0x0 0x1>;
+		ip-ver = <0x995500>;
+		num-lanes = <2>;
+		ch-num = <0>;
+		linux,pci-domain = <0>;
+		/* pcie-pm-qos-int = <267000>; */
+		use-sysmmu = "false";
+		use-ia = "false";
+		use-l1ss = "true";
+
+		/* PMU/SYSREG registers offset */
+		/* pmu-phy-isolation = <0x610>;*/ /* It will be handled by PMU at HSI block off */
+		pmu-hw-ctrl-en = <0x670>;
+		pmu-gpio-retention = <0x3B20>;
+		sysreg-sharability = <0x1100>;
+		sysreg-ia0-channel-sel = <0x1008>;
+		sysreg-ia1-channel-sel = <0x100c>;
+		sysreg-ia2-channel-sel = <0x1010>;
+		dma-coherent;
+
+		/* dump range */
+		elbi = <0x0 0x1000>;
+		phy = <0x0 0x2000>;
+		pcs = <0x0 0x200>;
+		udbg = <0x0 0x1000>;
+		dbi = <0x0 0x900>;
+
+		max-link-speed = <LINK_SPEED_GEN4>;
+		power-domains = <&pd_hsi1>;
+		status = "okay";
+	};
+
+	sysmmu_pcie: sysmmu@19090000 {
+		compatible = "samsung,pcie-sysmmu";
+		reg = <0x0 0x19090000 0x10000>;
+		interrupts = <0 INTREQ__SYSMMU_HSI1_S0_STAGE1_NONSECURE IRQ_TYPE_LEVEL_HIGH>;
+		qos = <15>;
+		num_pmmu = <1>;
+		port-name = "PCIe";
+		#iommu-cells = <0>;
+		power-domains = <&pd_hsi1>;
+
+		pmmu0,default_stream =
+			<STREAM_CFG(PTLB_ID(0x0), STLB_ID(0x0), FETCH_SIZE(SIZE1), PTLB_DIS, STLB_DIS)>;
+	};
+
+	pcie_sysreg_controller: pcie-sysreg-controller@19040000 {
+		compatible = "samsung,pcie-sysreg", "syscon";
+		reg = <0x0 0x19040000 0x2000>;
+	};
+};

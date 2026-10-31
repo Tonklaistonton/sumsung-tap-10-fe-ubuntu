@@ -1,0 +1,47 @@
+/ {
+	scsc_wifibt: scsc_wifibt{
+		compatible = "samsung,scsc_wifibt";
+		memory-region = <&wifibt_if>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&wlbt_pmic_pinctrl &wlbt_wakeup_pinctrl &wlbt_reset_pinctrl &wlbt_suspend_pinctrl>;
+		wlbt,pmic_gpio = <&gpm13 0 0x1 /* PMIC TO PMU */>;
+		wlbt,wakeup_gpio = <&gpa3 4 0xf>;
+		wlbt,reset_gpio = <&gpa2 7 0x1>;
+		wlbt,suspend_gpio = <&gpa2 4 0x1>;
+		pci_ch_num = <0>;
+
+		/* MIF / INT / CL0 / CL1 / CL2 */
+		qos_table = <
+			421000 89000 400000 533000 533000 /* SCSC_QOS_MIN */
+			1539000 400000 1274000 1352000 1352000 /* SCSC_QOS_MED */
+			3172000 663000 2002000 2600000 2808000 /* SCSC_QOS_MAX */
+			>;
+
+		/* LOW / MID / HIGH / OVERRIDE */
+		cpu_table_napi = <
+			0 0 4 4 /* NP_RX_0 */
+			0 0 5 5 /* NP_RX_1 */
+			0 0 5 5 /* NP_TX_0 */
+			>;
+		cpu_table_rps = "00", "00", "40", "40";
+		/* mid_tput / high_tput */
+		threshold_table_napi = <0 50>;
+		threshold_table_rps =  <0 300>;
+	};
+
+	wpan: slsi_wpan {
+		compatible = "samsung,slsi-wpan";
+		status = "okay";
+		bt2ap-wakeup-gpio = <&gpa0 4 0xf>;
+	};
+
+};
+
+&serial_1 {
+	#address-cells = <2>;
+	#size-cells = <1>;
+
+	bluetooth {
+		compatible = "samsung,s6375-bt";
+	};
+};

@@ -1,0 +1,67 @@
+/*
+ * copyright (c) 2023 samsung electronics co., ltd.
+ *		http://www.samsung.com
+ *
+ * this program is free software; you can redistribute it and/or modify
+ * it under the terms of the gnu general public license version 2 as
+ * published by the free software foundation.
+ */
+
+#include <dt-bindings/clock/s5e9955.h>
+/{
+	contexthub_0: contexthub {
+		compatible = "samsung,exynos-nanohub";
+		memory-region = <&contexthub_rmem>;
+		/* INTREQ MAILBOX_AP2CHUB */
+		interrupts = <GIC_SPI INTREQ__MAILBOX_CHUB2AP IRQ_TYPE_LEVEL_HIGH>, <GIC_SPI INTREQ__WDT_CHUB IRQ_TYPE_LEVEL_HIGH>;
+		reg =   <0x0 0x13DF0000 0x000200>, /* mailbox */
+			<0x0 0x14C00000 0x180000>, /* sram */
+			<0x0 0x148F0000 0x000100>, /* dumpgpr */
+			<0x0 0x14950000 0x002000>, /* barac_chub */
+			<0x0 0x14E40000 0x002000>; /* barac_ld_chubvts */
+		reg-names = "mailbox",
+				"sram",
+				"dumpgpr",
+				"barac_chub",
+				"barac_ld_chubvts";
+		barac,names = "barac_chub", "barac_ld_chubvts";
+		barac,sizes = <14 8>;
+		barac,values = </* barac_chub */
+				0x1804 0x101   0x40000 0x4064F 0x13800 /* ALIVE SFR */
+				0x1884 0x101   0x43400 0x435FF 0x15000 /* CMGP PERI */
+				0x1904 0x000   0x60000 0xFFFFF 0x80000 /* DRAM */
+				0x1984 0x000   0x43600 0x437FF 0x15800 /* Ufd PERI */
+				0x1A04 0x000   0x40A00 0x40A0F 0x15A30 /* UFD SRAM */
+				0x1A84 0x000   0x40B00 0x40BFF 0x23800 /* BLK_CSIS */
+				0x1B04 0x000   0x00200 0x003FF 0x14400 /* VTS_SRAM */
+				0x1B84 0x101   0x42E00 0x42EDF 0x14E00 /* CHUBVTS_COMMON */
+				0x1C04 0x101   0x00000 0x0017F 0x14C00 /* CHUB_SRAM */
+				0x1C84 0x101   0x40800 0x409FF 0x14800 /* CHUB SFR */
+				0x1D04 0x101   0x42FA0 0x42FEF 0x14FA0 /* CHUBVTS COMMON SFRs */
+				0x1D84 0x000   0x40C60 0x40C7F 0x2D860 /* PMU_UFD, PMU_UNPU */
+				0x1E04 0x101   0x50000 0x50001 0x10000 /* CHIP ID */
+				0x1E84 0x101   0x40C20 0x40C2F 0x2D820 /* PMU_CHUB */
+				/* barac_ld_chubvts */
+				0x1804 0x101   0x13800 0x13E4F 0x13800 /* ALIVE SFR */
+				0x1884 0x101   0x15000 0x151FF 0x15000 /* CMGP PERI */
+				0x1904 0x101   0x60000 0xFFFFF 0x60000 /* DRAM */
+				0x1984 0x101   0x15800 0x159FF 0x15800 /* Ufd PERI */
+				0x1A04 0x101   0x15A30 0x15A3F 0x15A30 /* UFD MEMORY */
+				0x1A84 0x101   0x23800 0x238FF 0x23800 /* BLK_CSIS */
+				0x1B04 0x101   0x10000 0x10001 0x10000 /* CHIP ID */
+				0x1B84 0x101   0x2D820 0x2D82F 0x2D820 /* PMU_CHUB*/>;
+		smc-required = "true";
+		multi-os = "enabled";
+		hardfault-debug = "enabled";
+		/* chub dfs governer */
+		chub-dfs-gov = "disabled";
+		/* chub dvfs */
+		chub-dvfs = "disabled";
+		/* chub-dvfs-level = <400000 200000>; */
+		chub-no-baaw;
+		use_alive_mct;
+		clocks = <&clock DOUT_CLKALIVE_CHUBVTS_NOC>,
+			 <&clock DOUT_CLKALIVE_CHUB_PERI>;
+		clock-names = "chub_bus", "chub_peri";
+	};
+};

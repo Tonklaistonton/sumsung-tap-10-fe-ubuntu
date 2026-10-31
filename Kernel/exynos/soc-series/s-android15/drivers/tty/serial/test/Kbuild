@@ -1,0 +1,7 @@
+# SPDX-License-Identifier: GPL-2.0
+
+obj-$(CONFIG_SERIAL_EXYNOS_KUNIT_TEST) += uart_exynos_test.o
+
+uart_exynos_test-y += exynos-tty_test.o
+
+ccflags-y += -I $(srctree)/$(src)/../

@@ -1,0 +1,204 @@
+menuconfig EXYNOS_NPU
+	tristate "Exynos NPU driver (Test)"
+	depends on VISION_SUPPORT
+	help
+		Exynos NPU Test device driver
+
+config NPU_DEBUG_MEMDUMP
+	bool "Enable memory dump for memories defined in device tree by name"
+	default n
+	help
+	This is a debug option to enable dumping arbitrary NPU memory
+	which is defined by name in the device tree.
+	It can be ION allocated memory or physical IO memory.
+	Memory can be dumped with a simple debugfs interface:
+	Write memory name, read memory data (must use the same RW file descriptor).
+	Example: 'exec 3<>/d/npu/memdump && echo -n fwmem >&3 && cat <&3 > fwmem.bin; 3>&-'
+
+config NPU_STM
+	bool "use STM for debugging"
+	depends on CORESIGHT_STM
+	default y
+	help
+		This feature need to analyze npu complier.
+
+config NPU_USE_ASYNC
+	bool "use async"
+	default n
+	help
+		This feature enables async execution in device driver.
+
+config NPU_STM_NEED_BUSP_DIV
+	bool "Need BUSP div on STM mode"
+	depends on NPU_STM
+	default n
+	help
+		If need to busp div ratio, this feature should be enable
+
+config NPU_FW_ACCESS_MCT
+	bool "FW Use MCT"
+	depends on NPU_STM
+	default n
+	help
+		If fw use MCT, this feature should be enable
+
+if EXYNOS_NPU
+
+config NPU_ZEBU_EMULATION
+	bool
+	default n
+
+config NPU_AFM
+	bool "use AFM feature"
+	default n
+	help
+		This feature support hw thrott.
+
+config NPU_USE_MAILBOX_GROUP
+	bool "use group in mailbox"
+	default y
+	help
+		This feature can support mailbox group in mailbox.
+
+config NPU_USE_HW_DEVICE
+	bool "use hw-device platform driver"
+	default n
+	help
+		This feature can support additional function to control HW device module
+		which is defined as individual module inside of NPU/DSP IP.
+		This module can represent individual control of CPU, MIF or INT to support
+		NPU-related controls.
+
+config DSP_USE_VS4L
+	bool "support DSP functionality with VS4L"
+	default n
+	help
+		This feature can support DSP functionality with VS4L.
+		This feature includes DL (Dynamic Loading).
+
+config NPU_USE_S2MPU_NAME_IS_NPUS
+	bool "name of NPU S2MPU is NPUS"
+	default n
+	help
+		This feature can support name of NPU S2MPU is NPUS. Default name is DNC.
+
+config NPU_USE_LLC
+	bool "LLC"
+	default n
+	help
+		TODO
+
+config NPU_USE_IMB_ALLOCATOR
+	bool "use CHUNK-IMB allocator"
+	default n
+	help
+		use CHUNK-IMB allocator
+
+		CHUNK-IMB allocator for memory management of intermediate buffer.
+		Host used to allocate the memory for an intermediate buffer in the past,
+		but the owner of intermediate buffer allocation should be changed to NPU firmware because
+		the several requests with unbounded property, which are issued from the same network,
+		should be able to be processed on all NPU cores in terms of hardware utilization.
+		Therefore NPU firmware should be able to allocate a different intermediate buffer on runtime,
+		and host does not have to allocate memory for intermediate buffer more.
+
+config NPU_NCP_VERSION
+	int "NPU NCP Version"
+	range 26 28
+	default 28
+	help
+		NPU NCP Version
+
+config NPU_NUM_CORES
+	int "NPU NUM Cores"
+	range 1 4
+	default 2
+	help
+		NPU NUM Cores
+
+config NPU_USE_UTIL_STATS
+	bool "NPU UTIL STATS"
+	default n
+	help
+		Use utilization of HW for exynos stats
+
+config NPU_USE_ESCA_DTM
+	bool "use ESCA_DTM"
+	default n
+	help
+		use ESCA_DTM for NPU thermal
+
+config NPU_USE_DTM_EMODE
+	bool "use DTM_EMODE"
+	default n
+	help
+		use DTM_EMODE for NPU thermal
+
+config NPU_USE_PI_DTM
+	bool "use PI_DTM"
+	default n
+	help
+		use PI_DTM for NPU thermal
+
+config NPU_USE_PI_DTM_DEBUG
+	bool "use PI_DTM_DEBUG"
+	default n
+	help
+		use PI_DTM_DEBUG for NPU thermal
+
+config NPU_SET_DNC_FREQ
+	bool "set DNC_FREQ"
+	default n
+	help
+		set DNC_FREQ for preset
+
+config NPU_GOVERNOR
+	bool "NPU Governor"
+	default n
+	help
+		use governor
+
+config NPU_BRINGUP_NOTDONE
+	bool "during NPU bringup"
+	default n
+	help
+		This option can be used during any SOC bringup.
+
+config NPU_IMB_ASYNC_ALLOC
+    bool "IMB async alloc"
+	default n
+	    help
+		    Alloc IMB asynchronous
+
+config NPU_CLOCK
+	bool "USE specific clock source"
+	default n
+	help
+		device driver use specifi clock source form dtsi
+
+config NPU_ONE_BUCK
+	bool "All GNPU0/1 SNPU0/1 are in one buck"
+	default y
+	help
+		device driver parse PMIC buck info from dtsi
+
+		Delete this config after PMIC update in mainline
+
+config NPU_PM_SLEEP_WAKEUP
+	bool "NPU can enter ap sleep when no job"
+	default n
+	help
+		NPU can enter ap sleep when no job
+
+config NPU_WITH_CAM_NOTIFICATION
+	bool "received camera's noti"
+	default n
+	help
+		For Quadra, Root HW
+
+menuconfig NPU_UNITTEST
+	bool "Build unittest for Vision"
+	depends on VISION_SUPPORT
+	help
+	  Include unittest code into the vision-core
+endif

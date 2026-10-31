@@ -1,0 +1,59 @@
+&pinctrl_0 {
+	epen_int_active: epen-int-active {
+		GPIO_CONFIG_PUD(AP,gpc6,gpc6,0, FUNC_INPUT_WAKEUP, PULL_NONE);
+	};
+};
+
+&hsi2c_13 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	status = "ok";
+	clock-frequency = <400000>;
+	samsung,reset-before-trans;
+
+	wacom: wacom@56 {
+		status = "okay";
+		compatible = "wacom,wez01";
+		reg = <0x56>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&epen_int_active>;
+		wacom_avdd-supply = <&l33_reg>;
+
+		/* gpios */
+		sec,irq_gpio = <SEC_GPIO_REF(AP,gpc6,gpc6,0) 0>;
+		wacom,fwe-gpio = <SEC_GPIO_REF(AP,gpc7,gpc7,0) 0>;
+
+		/* features */
+		wacom,boot_addr = <0x09>;
+		wacom,origin = <0 0>; /* x y */
+		wacom,max_pressure = <4095>;
+		wacom,max_tilt = <63 63>; /* x y */
+		wacom,max_height = <255>;
+		wacom,invert = <1 0 1>; /* x y switch */
+
+//		wacom,bringup = <${bringup}>;
+		/*support feature*/
+		sec,enable_sysinput_enabled;
+	};
+};
+
+/* /home/dpi/qb5_8814/workspace/P4_1716/kernel/kmodule/input/sec_input_2025/wacom/wez01_tablet/dts/input-lsi-wacom.gts10fe(wifi).dtsi */
+
+&wacom {
+	chip_on_board;
+
+	sec,avdd_name = "wacom_avdd";
+	sec,dvdd_name = "wacom_dvdd";
+	sec,max_coords = <7315 15687>;
+	sec,firmware_name = "wez01_gts10fe.bin";
+	sec,bringup = <0>;
+
+	wacom_dvdd-supply = <&fixed_regulator1>;
+	wacom,support_aop_mode = "1"; /* S-note want to check to use aop */
+
+	wacom,module_ver = <0x2>; /* this value use to distinguish open/short test (0x1 : only open test, 0x2: open/short test) */
+	wacom,table_swap = <0x2>; /* bit set: 0 ~ 1(kbd) 1(dex station)*/
+	wacom,support_cover_noti;
+	wacom,support_cover_detection;
+	wacom,support_pogo_cover;
+};

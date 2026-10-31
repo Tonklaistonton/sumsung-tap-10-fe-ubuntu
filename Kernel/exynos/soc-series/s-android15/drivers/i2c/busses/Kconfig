@@ -1,0 +1,23 @@
+# SPDX-License-Identifier: GPL-2.0-only
+
+comment "HSI2C Drivers"
+
+config I2C_EXYNOS5_EXT
+	tristate "Exynos high-speed I2C driver"
+	depends on OF
+	depends on ARCH_EXYNOS || COMPILE_TEST
+	help
+	  High-speed I2C controller on Samsung Exynos5 and newer Samsung SoCs
+
+config I2C_EXYNOS5_EXT_KUNIT_TEST
+	tristate "Kunit tests for Exynos high-speed I2C driver" if !KUNIT_ALL_TESTS
+	depends on KUNIT
+	depends on I2C_EXYNOS5_EXT
+	default KUNIT_ALL_TESTS
+
+config EXYNOS_ESCA_MFD_BUS
+	tristate "SAMSUNG EXYNOS ESCA_MFD_BUS driver"
+	depends on ARCH_EXYNOS && OF
+	help
+	  ESCA MFD BUS on Exynos based Samsung SoCs.
+

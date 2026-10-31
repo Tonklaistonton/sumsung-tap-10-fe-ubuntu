@@ -1,0 +1,7 @@
+obj-$(CONFIG_ITMON_EXYNOS_KUNIT_TEST)	+= itmon_exynos_test.o
+
+itmon_exynos_test-y					:= exynos_itmon_test.o
+
+obj-$(CONFIG_DEBUG_SNAPSHOT_EXYNOS_KUNIT_TEST)	+= debug_snapshot_exynos_test.o
+
+debug_snapshot_exynos_test-y					:= exynos_debug_snapshot_test.o

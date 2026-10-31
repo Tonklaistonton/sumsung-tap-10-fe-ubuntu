@@ -1,0 +1,60 @@
+# SPDX-License-Identifier: GPL-2.0-only
+#
+# SAMSUNG PMIC ADC drivers
+#
+# When adding new entries keep the list in alphabetical order
+
+config ADC_S2P
+	tristate "SAMSUNG ADC driver support for common"
+	depends on MFD_S2P
+	help
+	  Core support for the ADC block found in the Samsung PMIC series
+	  for drivers such as the touchscreen and hwmon to use to share
+	  this resource.
+
+	  To compile this driver as a module, choose M here: the module will be
+	  called s2p_adc.
+
+config S2MPS27_ADC
+	tristate "S2MPS27 ADC driver support for 9945"
+	depends on MFD_S2MPS27
+	help
+	  Core support for the ADC block found in the Samsung PMIC series
+	  for drivers such as the touchscreen and hwmon to use to share
+	  this resource.
+
+	  To compile this driver as a module, choose M here: the module will be
+	  called s2mps27_adc.
+
+config S2SE910_ADC
+	tristate "S2SE910 ADC driver support for S2SE910"
+	depends on MFD_S2SE910
+	help
+	  Core support for the ADC block found in the Samsung PMIC series
+	  for drivers such as the touchscreen and hwmon to use to share
+	  this resource.
+
+	  To compile this driver as a module, choose M here: the module will be
+	  called s2se910_adc.
+
+config S2RP910_ADC
+	tristate "S2RP910 ADC driver support for S2RP910"
+	depends on MFD_S2RP910
+	help
+	  Core support for the ADC block found in the Samsung PMIC series
+	  for drivers such as the touchscreen and hwmon to use to share
+	  this resource.
+
+	  To compile this driver as a module, choose M here: the module will be
+	  called s2rp910_adc.
+
+config S2MPU15_ADC
+	tristate "S2MPU15 ADC driver support for S2MPU15"
+	depends on MFD_S2MPU15
+	help
+	  Core support for the ADC block found in the Samsung PMIC series
+	  for drivers such as the touchscreen and hwmon to use to share
+	  this resource.
+
+	  To compile this driver as a module, choose M here: the module will be
+	  called s2mpu15_adc.

@@ -1,0 +1,25 @@
+# SPDX-License-Identifier: GPL-2.0-only
+#
+# Exynos EL2 solutions
+#
+
+config EXYNOS_EL2
+	tristate "Exynos EL2 Solution"
+	depends on ARCH_EXYNOS
+	help
+	  Exynos EL2 Solution has implemented Stage 2
+	  MMU and IOMMU.
+
+config EXYNOS_S2MPU
+        tristate "Exynos Stage 2 Memory Protection Unit(S2MPU)"
+	depends on EXYNOS_EL2
+        help
+          Exynos S2MPU driver to set S2MPU access permission.
+
+config EXYNOS_S2MPU_PD
+	bool "Exynos S2MPU PM domain support"
+	depends on EXYNOS_S2MPU
+	default n
+	help
+	  Backup and restore S2MPU when PM domains
+	  turn on and off.

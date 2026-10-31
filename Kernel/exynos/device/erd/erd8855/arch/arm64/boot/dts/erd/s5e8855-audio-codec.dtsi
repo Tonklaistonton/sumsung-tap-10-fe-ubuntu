@@ -1,0 +1,79 @@
+
+&hsi2c_15 {
+	but_zones: but_zones {
+		#list-but-cells = <2>;
+	};
+
+	imp_range: imp_range {
+		#list-imp-cells = <5>;
+	};
+
+	mic_range: mic_range {
+		#list-imp-cells = <2>;
+	};
+
+	wtp_range: wtp_range {
+		#list-ldet-cells = <3>;
+	};
+};
+
+&pinctrl_0 {
+        s5m3500x_resetb: s5m3500x_resetb {
+                samsung,pins = "gpc10-0";
+                samsung,pin-function = <0x1>;
+                samsung,pin-pud = <0x1>;
+                samsung,pin-drv = <0x0>;
+                samsung,pin-con-pdn = <0x3>;
+                samsung,pin-pud-pdn = <0x1>;
+        };
+};
+
+&pinctrl_1 {
+        s5m3500x_irq: s5m3500x-irq {
+                samsung,pins = "gpm11-0";
+                samsung,pin-function = <0xf>;
+                samsung,pin-pud = <3>;
+                samsung,pin-drv = <0>;
+        };
+};
+
+&hsi2c_15 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	status = "okay";
+	clock-frequency = <400000>;
+
+	codec_s5m3500x: s5m3500x@14 {
+		status = "okay";
+		compatible = "samsung,s5m3500x";
+		#sound-dai-cells = <0>;
+		reg = <0x14>;
+
+		pinctrl-names = "default";
+		pinctrl-0 = <&s5m3500x_resetb>, <&s5m3500x_irq>;
+
+		s5m3500x-codec-int = <&gpm11 0 0>;
+		s5m3500x-resetb = <&gpc10 0 1>;
+		s5m3500x-power-always-on;
+
+		/* 3.5PI: 0 */
+		jack-type = <0>;
+
+		/* micbias voltage */
+		mic-bias1-voltage = <15>;
+		mic-bias2-voltage = <15>;
+
+		/* threshold for pole decision */
+		mic-adc-range = <&mic_range 25 659>;
+
+		/* threshold for WTP Impedance */
+		wtp-ldet-range = <&wtp_range 66 96 675>;
+
+		/* button threshold (min / max) */
+		but-zones-list = <&but_zones 0 40>, /* 0 ~ 70 ohm */
+			<&but_zones 51 70>, /* 110 ~ 180 ohm */
+			<&but_zones 78 99>, /* 210 ~ 290 ohm */
+			<&but_zones 116 184>; /* 360 ~ 680 ohm */
+	};
+};
+

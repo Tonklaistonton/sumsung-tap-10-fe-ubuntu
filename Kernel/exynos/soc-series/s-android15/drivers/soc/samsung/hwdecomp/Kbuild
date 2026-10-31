@@ -1,0 +1,9 @@
+#  SPDX-License-Identifier: GPL-2.0
+#
+#  Makefile for Exynos HW Decompression engin Driver
+
+obj-$(CONFIG_VENDOR_ZRAM_LZO_HW_DECOMP)	:= hwdecomp.o
+
+hwdecomp-y				:= exynos_hw_decomp.o
+
+obj-$(CONFIG_VENDOR_ZRAM_LZO_HW_DECOMP_KUNIT_TEST) += test/

@@ -1,0 +1,5 @@
+obj-$(CONFIG_EMS_EXYNOS_KUNIT_TEST) += ems_exynos_test.o
+
+ems_exynos_test-y += freqboost_test.o
+
+ccflags-y += -I $(srctree)/$(src)/../

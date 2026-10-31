@@ -1,0 +1,15 @@
+#
+# Exynos tsmux device driver
+#
+
+config VIDEO_EXYNOS_TSMUX
+	tristate "EXYNOS TSMUX Driver"
+	default n
+	help
+	  Tsmux driver for WFD
+
+config TSMUX_EXYNOS_KUNIT_TEST
+	tristate "KUnit tests for TSMUX" if !KUNIT_ALL_TESTS
+	depends on KUNIT
+	depends on VIDEO_EXYNOS_TSMUX
+	default KUNIT_ALL_TESTS

@@ -1,0 +1,3 @@
+# Cust OS driver
+obj-$(CONFIG_CUSTOS) += custos.o
+custos-y := main.o control_path.o data_path.o mailbox.o logsink.o

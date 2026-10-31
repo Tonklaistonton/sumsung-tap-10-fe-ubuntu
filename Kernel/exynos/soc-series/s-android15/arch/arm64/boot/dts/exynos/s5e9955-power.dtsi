@@ -1,0 +1,95 @@
+/*
+ * SAMSUNG S5E9955 SoC DVFS Manager device tree source
+ *
+ * Copyright (c) 2024 Samsung Electronics Co., Ltd.
+ *		http://www.samsung.com
+ *
+ * SAMSUNG S5E9955 SoC device nodes are listed in this file.
+ * EXYNOS based board files can include this file and provide
+ * values for board specfic bindings.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+#include "s5e9955-dm.dtsi"
+#include <dt-bindings/soc/samsung/s5e9955-esca-ipc.h>
+#include "s5e9955-devfreq.dtsi"
+#include "s5e9955-bus.dtsi"
+#include "s5e9955-thermal.dtsi"
+
+
+/ {
+	exynos-ect {
+		compatible = "samsung,exynos-ect";
+		memory-region = <&ect_binary>;
+	};
+
+	acpm_dvfs {
+		compatible = "samsung,exynos-acpm-dvfs";
+		esca-ipc-channel = <ESCA_IPC_PHY__NOTI_MIF>;
+		noti_dvfs {
+			esca-ipc-channel = <ESCA_IPC_PHY__NOTI_DVFS>;
+		};
+	};
+
+	exynos-esca-wow {
+	 	compatible = "samsung,exynos-esca-wow";
+		esca-ipc-channel = <ESCA_IPC_APP__WOW>;
+
+		polling_delay = <2000>; /* ms */
+	};
+
+#if 0 
+	exynos-wow {
+		compatible = "samsung,exynos-wow";
+		reg = <0x0 0x2A280000 0x1000>, //0
+			<0x0 0x2A290000 0x1000>, //1
+			<0x0 0x2A2A0000 0x1000>, //2
+			<0x0 0x2A2B0000 0x1000>, //3
+			<0x0 0x2A2D0000 0x1000>, //4
+			<0x0 0x2A2E0000 0x1000>, //5
+			<0x0 0x2A2F0000 0x1000>, //6
+			<0x0 0x2A300000 0x1000>, //7
+			<0x0 0x2A310000 0x1000>, //8
+			<0x0 0x2A320000 0x1000>, //9
+			<0x0 0x2A330000 0x1000>, //10
+			<0x0 0x2A340000 0x1000>, //11
+			<0x0 0x2A350000 0x1000>; //12
+
+		polling_delay = <2000>; /* ms */
+
+		wow-ip {
+			CPUCL0 {
+				bus_width = <32>;
+				nr_ppc = <1>;
+				nr_base = <4>;
+				reg_index = <0>, <1>, <2>, <3>;
+				ip_type = <0>;
+			};
+			G3D {
+				bus_width = <16>;
+				nr_ppc = <4>;
+				nr_base = <1>;
+				reg_index = <4>;
+				ip_type = <1>;
+			};
+			IRPS {
+				bus_width = <32>;
+				nr_ppc = <1>;
+				nr_base = <4>;
+				reg_index = <5>, <6>, <7>, <8>;
+				ip_type = <2>;
+			};
+			MIF {
+				bus_width = <16>;
+				nr_ppc = <1>;
+				nr_base = <4>;
+				reg_index = <9>, <10>, <11>, <12>;
+				ip_type = <3>;
+			};
+		};
+	};
+#endif
+};

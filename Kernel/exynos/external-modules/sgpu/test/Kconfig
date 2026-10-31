@@ -1,0 +1,7 @@
+# SPDX-License-Identifier: MIT
+
+config SGPU_EXYNOS_KUNIT_TEST
+	tristate "KUnit tests for SGPU" if !KUNIT_ALL_TESTS
+	depends on KUNIT
+	depends on DRM_SGPU
+	default KUNIT_ALL_TESTS

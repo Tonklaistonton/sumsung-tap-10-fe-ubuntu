@@ -1,0 +1,117 @@
+# Copyright (C) 2022 The Android Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+load("@bazel_skylib//rules:common_settings.bzl", "string_flag")
+load("@bazel_skylib//rules:common_settings.bzl", "bool_flag")
+
+package(
+    default_visibility = [
+        "//exynos/device:__subpackages__",
+        "//exynos/soc-series:__subpackages__",
+        "//exynos/external-modules:__subpackages__",
+    ],
+)
+
+filegroup(
+    name = "exynos_undefined",
+    srcs = [],
+)
+
+label_flag(
+    name = "exynos_kernel_build",
+    build_setting_default = ":exynos_undefined",
+)
+
+label_flag(
+    name = "exynos_soc_module",
+    build_setting_default = ":exynos_undefined",
+)
+
+label_flag(
+    name = "exynos_soc_header",
+    build_setting_default = ":exynos_undefined",
+)
+
+string_flag(
+    name = "exynos_build_variant",
+    build_setting_default = "eng",
+)
+
+config_setting(
+    name = "eng_build",
+    flag_values = {
+         ":exynos_build_variant": "eng",
+    },
+)
+
+config_setting(
+    name = "userdebug_build",
+    flag_values = {
+         ":exynos_build_variant": "userdebug",
+    },
+)
+
+config_setting(
+    name = "user_build",
+    flag_values = {
+         ":exynos_build_variant": "user",
+    },
+)
+
+string_flag(
+    name = "exynos_abi_update",
+    build_setting_default = "no",
+)
+
+config_setting(
+    name = "abi_update",
+    flag_values = {
+        ":exynos_abi_update": "yes",
+    },
+)
+
+bool_flag(
+    name = "factory",
+    build_setting_default = False,
+)
+
+config_setting(
+    name = "factory_build",
+    flag_values = {
+        ":factory": "True",
+    }
+)
+
+config_setting(
+    name = "eng_fac_build",
+    flag_values = {
+        ":factory": "True",
+        ":exynos_build_variant": "eng",
+    }
+)
+
+config_setting(
+    name = "userdebug_fac_build",
+    flag_values = {
+        ":factory": "True",
+        ":exynos_build_variant": "userdebug",
+    }
+)
+
+config_setting(
+    name = "user_fac_build",
+    flag_values = {
+        ":factory": "True",
+        ":exynos_build_variant": "user",
+    }
+)

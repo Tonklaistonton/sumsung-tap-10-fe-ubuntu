@@ -1,0 +1,6 @@
+config HELLO_LEGO
+	tristate "HELLO LEGO Module"
+	default n
+	help
+	  Enable Hello lego Feature
+

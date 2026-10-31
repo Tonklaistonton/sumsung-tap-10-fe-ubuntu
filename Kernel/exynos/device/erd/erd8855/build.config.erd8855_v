@@ -1,0 +1,21 @@
+BOARD_NAME=erd8855
+BOARD_DIR=${ROOT_DIR}/exynos/device/erd/${BOARD_NAME}
+ADDITIONAL_FRAGMENTS=${BOARD_DIR}/arch/arm64/configs/${BOARD_NAME}.fragment
+
+MAIN_KERNEL_VERSION=6.6
+
+. ${ROOT_DIR}/exynos/soc-series/s-android15/build.config.s5e8855_v
+
+EXYNOS_EXT_MODULES_DIR=${ROOT_DIR}/${EXYNOS_BASE_DIR}/external-modules
+KCONFIG_EXT_MODULES_PREFIX=$(realpath ${EXYNOS_EXT_MODULES_DIR} --relative-to ${KERNEL_DIR})/
+
+: ${PAGE_16K_SUPPORT:=1}
+#SKIP_ABI_UPDATE=1
+VENDOR_BOOTCONFIG="
+androidboot.first_stage_console=0
+androidboot.dtbo_idx=0
+androidboot.boot_devices=17100000.ufs
+androidboot.hardware=s5e8855
+androidboot.debug_level=0x4948
+androidboot.selinux=permissive
+"

@@ -1,0 +1,54 @@
+/ {
+	/* power-scenario mode - default */
+	set1: set@100 {
+		/* Ontime Migration */
+		ontime {
+			top-app		= <1>;
+			foreground	= <1>;
+
+			domain0 {
+				cpus = CPU_CL0;
+				lower-boundary = <0>;
+				upper-boundary = <42>;
+			};
+			domain1 {
+				cpus = "4-7";
+				lower-boundary = <10>;
+				upper-boundary = <100>;
+			};
+		};
+
+		ecs_dynamic {
+			dynamic-busy-ratio	= <70 70 70>;
+			min-cpus = "0-5";
+		};
+
+		fclamp {
+			monitor-group {
+				top-app         = <1>;
+			};
+		};
+
+		dslt {
+			running-sensitivity {
+				background = <90>;
+				system-background = <90>;
+			};
+		};
+
+		cpufreq_gov {
+			step-latency-enable = < 1 >;
+			step-margin-enable = < 1 >;
+
+				/* LIT MID BIG */
+			low-pelt-margin = < 6 6 6 >;
+			margin-freq = < 1536000 2016000 2016000 >;
+			step-latency-ns = < 4 4 16 16
+					4 4 16 16
+					4 4 16 16 >;
+			step-latency-freq = < 400000 400000 1536000 1536000
+					400000 400000 2016000 2016000
+					400000 400000 2016000 2016000 >;
+		};
+	};
+};

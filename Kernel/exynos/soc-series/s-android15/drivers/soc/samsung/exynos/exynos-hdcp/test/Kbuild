@@ -1,0 +1,1 @@
+obj-$(CONFIG_HDCP2_EXYNOS_KUNIT_TEST) += hdcp2_exynos_test.o

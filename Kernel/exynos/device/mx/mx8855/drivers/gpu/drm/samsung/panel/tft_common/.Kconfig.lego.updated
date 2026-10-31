@@ -1,0 +1,17 @@
+menuconfig USDM_PANEL_TFT_COMMON
+	tristate "TFT_COMMON DDI Panel Driver"
+	depends on USDM_PANEL
+	default n
+	help
+		This enables TFT_COMMON DDI dependent panel drivers of
+		common panel driver. say Y, if you have a panel based on
+		the TFT_COMMON DDI.
+
+
+########## FOR KUNIT ##########
+
+config TFT_COMMON_TEST
+	bool "KUnit test for tft_common ddi driver"
+	depends on SEC_KUNIT
+	help
+	  TODO: Describe config fully.

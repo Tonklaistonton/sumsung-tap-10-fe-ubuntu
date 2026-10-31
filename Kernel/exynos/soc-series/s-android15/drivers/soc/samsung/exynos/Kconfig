@@ -1,0 +1,332 @@
+# SPDX-License-Identifier: GPL-2.0-only
+#
+# Samsung SoC drivers
+#
+
+config EXYNOS_CHIPID_V2
+	tristate "Exynos Chipid controller driver v2"
+	depends on ARCH_EXYNOS
+	help
+	  Exynos chipid V2 driver.
+	  Support newly added soc chipid.
+
+config EXYNOS_USI_V2
+	tristate "Enable Exynos Universal Serial Interface version 2"
+
+config EXYNOS_PMU_IF
+	tristate "Exynos PMU controller Interface driver"
+	help
+	Support PMU register API for Exynos SoC.
+	select EXYNOS_PMU_ARM_DRIVERS if ARM && ARCH_EXYNOS
+
+config CAL_IF
+	tristate "Exynos Chip Abstraction Layer Interface"
+	help
+	Support CMU CAL for Exynos SoC.
+
+config EXYNOS_DEBUG_INFO
+	bool "Exynos Debug infromation"
+	default y
+	help
+	Support printing Exynos Debug information.
+
+config CMUCAL
+	tristate "Exynos CMU Chip Abstraction Layer"
+	default y
+	depends on CAL_IF
+	help
+	Support CMUCAL for Exynos SoC.
+
+config CMUCAL_V2
+	tristate "Exynos CMU Chip Abstraction Layer"
+	depends on CAL_IF
+	help
+	Support CMUCAL_V2 for Exynos SoC.
+
+config CMUCAL_DEBUG
+	tristate "CMUCAL Debug Interface"
+	default y
+	depends on CMUCAL
+
+config CMUCAL_QCH_IGNORE_SUPPORT
+	tristate "CMUCAL QCH IGNORE Support"
+	default y
+	depends on CMUCAL
+
+config CP_PMUCAL
+	tristate "Exynos PMU(for CP) Chip Abstraction Layer"
+	default n
+	depends on CAL_IF
+	help
+	Support CP_PMUCAL for Exynos SoC.
+
+config GNSS_PMUCAL
+	tristate "Exynos PMU(for GNSS) Chip Abstraction Layer"
+	depends on CAL_IF
+	help
+	Support GNSS_PMUCAL for Exynos SoC.
+
+config CHUB_PMUCAL
+	tristate "Exynos PMU(for CHUB) Chip Abstraction Layer"
+	depends on CAL_IF
+	help
+	Support CHUB_PMUCAL for Exynos SoC.
+
+config PMUCAL
+        bool "Exynos PMU Chip Abstraction Layer"
+        depends on CAL_IF
+        default y
+        help
+        Support PMUCAL for Exynos SoC.
+
+config PMUCAL_DBG
+        tristate "Exynos PMUCAL debugging interface"
+        depends on PMUCAL
+        help
+        Support PMUCAL debugging for Exynos SoC.
+
+config EXYNOS_FLEXPMU_DBG
+        tristate "Exynos FLEXPMU debugging interface"
+	depends on SOC_S5E9925
+	help
+	Support FLEXPMU for Exynos SoC.
+
+config PMUCAL_CMU_INIT
+		tristate "CMU_INIT in kernel"
+	default n
+	help
+	Support PMUCAL_CMU_INIT for Exynos SoC.
+
+config CMU_EWF
+	tristate "exynos early wakeup force enable"
+	depends on CAL_IF
+	default n
+	help
+	Support CMUEWF for Exynos SoC.
+
+config EXYNOS_PD
+	tristate "Exynos PM domain Support"
+        depends on CAL_IF && CMUCAL
+	depends on PM
+	select PM_GENERIC_DOMAINS
+
+config EXYNOS_PD_DBG
+	tristate "Exynos PM domain Support"
+        depends on CAL_IF && CMUCAL
+	depends on PM
+	select PM_GENERIC_DOMAINS
+
+config EXYNOS_PD_EL3
+	tristate "Exynos PD Save/Restore"
+	default m
+	help
+	Support Exynos Power Domain Save/Restore
+
+config EXYNOS_ACPM
+	tristate "ACPM driver support"
+	depends on ARCH_EXYNOS
+	default n
+	help
+	Support ACPM for Exynos SoC.
+
+config EXYNOS_PM_QOS
+	tristate "Exynos PM QOS"
+	help
+	  Support Exynos PM QOS
+
+config EXYNOS_DVFS_MANAGER
+	tristate "Exynos DVFS Manager"
+	help
+	  Enable DVFS Manager for Exynos SoC.
+	  This module controls constraint between each DVFS domains.
+
+
+config EXYNOS_ESCA_DVFS_MANAGER
+	tristate "Exynos ESCA DVFS Manager"
+	help
+	  Enable ESCA DVFS Manager for Exynos SoC.
+	  This module controls constraint between each DVFS domains.
+
+config ACPM_DVFS
+        tristate "Exynos ACPM DVFS manager"
+        depends on CAL_IF && CMUCAL
+        default n
+        help
+        Support ACPM DVFS for Exynos SoC.
+
+config PRECISE_DVFS_LOGGING
+        tristate "For more precise logging method"
+        depends on ACPM_DVFS
+        default n
+        help
+        Support precise dvfs logging for Exynos SoC.
+
+config SHOW_ASV
+	tristate "Support ASV Sysfs Node"
+	depends on CAL_IF && SEC_FACTORY
+	default y
+	help
+	Support ASV Sysfs Node
+
+config EXYNOS_WOW
+	tristate "Exynos Workload Watcher"
+	depends on ARM_EXYNOS_DEVFREQ
+	default n
+	help
+	  Exynos Workload Wather (WoW) driver support
+
+config EXYNOS_ESCA_WOW
+	tristate "Exynos Workload Watcher Offloading"
+	depends on EXYNOS_WOW
+	default n
+	help
+	  Exynos Workload Wather (WoW) Offloading support
+
+config ECT
+	tristate "Enable Exynos Characteristic Table File"
+	default n
+	help
+	Support ECT for Exynos SoC.
+
+config ECT_LEGACY
+	bool "Enable ECT Legacy functions"
+	depends on ECT
+	default n
+	help
+	Support lehacy ECT functions for Exynos SoC.
+
+config EXYNOS_PM
+	tristate "Enable Exynos PM"
+	help
+	Support EXYNOS_PM for Exynos SoC.
+
+config EXYNOS_S2I
+	tristate "Enable Exynos Suspend to IDLE"
+	help
+	Support EXYNOS_S2I for Exynos SoC.
+
+config EXYNOS_POWER_RAIL_DBG
+	tristate "Exynos POWER RAIL minlock debugging interface"
+	depends on ACPM_DVFS
+	default m
+	help
+		Support POWER RAIL STATUS for Exynos SoC.
+
+config POWER_EXYNOS_KUNIT_TEST
+	tristate "Test for POWER_EXYNOS" if !KUNIT_ALL_TESTS
+	depends on KUNIT
+	default KUNIT_ALL_TESTS
+
+config EXYNOS_MCINFO
+        tristate "Exynos memory controller information"
+
+config MCINFO_SYSFS
+        bool "Exynos memory controller information sysfs"
+        depends on EXYNOS_MCINFO
+        default y if SYSFS
+
+config EXYNOS_MEMORY_LOGGER
+	tristate "Exynos Memory Logger"
+	default n
+	help
+	  Exynos Memory Logger API is provided by memlog driver.
+
+	  Memlog means exynos memory Logger driver. The memlog provides
+	  the logging method desired by each driver in memory for debugging,
+	  memlog provides APIs for memory logging.
+
+config MEMLOGGER_EXYNOS_KUNIT_TEST
+	tristate "KUnit tests for memlogger driver" if !KUNIT_ALL_TESTS
+	depends on KUNIT
+	depends on EXYNOS_MEMORY_LOGGER
+	default KUNIT_ALL_TESTS
+
+config EXYNOS_IMGLOADER
+	tristate "Exynos Image Loader"
+	default n
+	help
+	  Enable Image Loader for Exynos SoC.
+
+config EXYNOS_SYSTEM_EVENT
+	tristate "Exynos System Event Framework"
+	default n
+	help
+	  Enable System Event Framework for Exynos SoC.
+
+config EXYNOS_ICM
+	tristate "Exynos Isolated CryptoManager driver"
+	default n
+	help
+	  Support Exynos Isolated CryptoManager driver
+
+config EXYNOS_SSP
+	tristate "Exynos Samsung Secure Platform"
+	default m
+	help
+	  Support Samsung Secure Platform
+
+config EXYNOS_SEH
+	tristate "Exynos Smart Exception Handler"
+	default m
+	help
+	  Support Exynos Smart Exception Handler
+
+config EXYNOS_SECURE_LOG
+	tristate "Exynos Secure Log"
+	default m
+	help
+	Support Exynos Secure Log
+
+config EXYNOS_TZASC_FAIL_DETECTOR
+	tristate "Exynos TZASC Fail Detector"
+	default m
+	help
+	  Support Exynos TZASC Fail Detector
+
+config EXYNOS_TZASC_ILLEGAL_READ_LOGGING
+	bool "Logging TZASC Read Fail Information"
+	depends on EXYNOS_TZASC_FAIL_DETECTOR
+	default n
+	help
+	  TZASC fail information of illegal reads will be printed
+	  by the Kernel logging system.
+
+config EXYNOS_TZASC_ILLEGAL_ACCESS_PANIC
+	bool "Kernel Panic over TZASC Illegal Access"
+	depends on EXYNOS_TZASC_FAIL_DETECTOR
+	default y
+	help
+	  Kernel panic will occur in case that TZASC illegal
+	  access is detected.
+
+config EXYNOS_CONTENT_PATH_PROTECTION
+	tristate "Exynos Content Path Protection"
+	default m
+	help
+	  Enable content path protection of EXYNOS.
+
+config EXYNOS_SDM
+	tristate "Exynos Security Dump Manager Support"
+	depends on DEBUG_SNAPSHOT
+	default m
+	help
+	  Exynos Security Dump Manager
+
+config HW_RANDOM_EXYNOS_SWD
+        tristate "EXYNOS SWD HW random number generator support"
+        depends on ARCH_EXYNOS
+        default m
+        help
+          This driver provides kernel-side support for TRNG hardware
+          found in secure world by using smc call
+
+          To compile this driver as a module, choose M here: the
+          module will be called exynos-rng.
+
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/soc/samsung/exynos/acpm/Kconfig"
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/soc/samsung/exynos/exynos-hdcp/Kconfig"
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/soc/samsung/exynos/esca/Kconfig"
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/soc/samsung/exynos/psp/Kconfig"
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/soc/samsung/exynos/custos/Kconfig"
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/soc/samsung/exynos/profiler/Kconfig"
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/soc/samsung/exynos/gcma/Kconfig"

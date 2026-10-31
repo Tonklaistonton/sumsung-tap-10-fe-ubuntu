@@ -1,0 +1,289 @@
+/*
+ * SAMSUNG S5E8855 SoC device tree source
+ *
+ * Copyright (c) 2023 Samsung Electronics Co., Ltd.
+ *             http://www.samsung.com
+ *
+ * SAMSUNG S5E8855 SoC device nodes are listed in this file.
+ * EXYNOS based board files can include this file and provide
+ * values for board specfic bindings.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+/dts-v1/;
+/plugin/;
+#include <dt-bindings/clock/s5e8855.h>
+#include <dt-bindings/interrupt-controller/s5e8855.h>
+//#include <dt-bindings/soc/samsung/s5e8855-dm.h>
+//#include <dt-bindings/soc/samsung/s5e8855-devfreq.h>
+//#include <dt-bindings/soc/samsung/exynos_pm_qos.h>
+//#include <dt-bindings/soc/samsung/exynos-bcm_dbg.h>
+#include "s5e8855-pm-domains.dtsi"
+#include "s5e8855-usi.dtsi"
+#include "s5e8855-virtio.dtsi"
+#include "s5e8855-pinctrl.dtsi"
+#include "s5e8855-dma-heap.dtsi"
+#include "s5e8855-sysmmu.dtsi"
+#include "s5e8855-sgpu.dtsi"
+#include "s5e8855-drm-dpu.dtsi"
+#include "s5e8855-wlbt.dtsi"
+#include "s5e8855-rmem.dtsi"
+
+/ {
+	compatible = "samsung,armv9", "samsung,s5e8855";
+	interrupt-parent = <&gic>;
+	#address-cells = <2>;
+	#size-cells = <1>;
+
+	aliases {
+		uart0 = &serial_0;
+		pinctrl0 = &pinctrl_0;
+		pinctrl1 = &pinctrl_1;
+		pinctrl2 = &pinctrl_2;
+		pinctrl3 = &pinctrl_3;
+		pinctrl4 = &pinctrl_4;
+		pinctrl5 = &pinctrl_5;
+		pinctrl6 = &pinctrl_6;
+	};
+
+	memory@80000000 {
+                device_type = "memory";
+                reg = <0x0 0x80000000 0x80000000>;
+	};
+
+	fixed-rate-clocks {
+		oscclk {
+			compatible = "samsung,s5e8855-oscclk";
+			clock-frequency = <76800000>;
+		};
+	};
+
+	ext_26m: ext_26m {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <26000000>;
+		clock-output-names = "ext-26m";
+    };
+
+	ext_uart: ext_uart {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <1843200>;
+		clock-output-names = "ext-uart";
+	};
+
+	chosen: chosen {
+		bootargs = "earlycon=exynos4210,0x15500000 console=ttySAC0,115200n8 clk_ignore_unused androidboot.first_stage_console=1 androidboot.force_normal_boot=1 clocksource=arch_sys_counter printk.devkmsg=on nokaslr kasan=off nosmp arm64.nomte rcupdate.rcu_expedited=1 swiotlb=noforce arm64.nopauth androidboot.dtbo_idx=0 androidboot.hardware=s5e8855 androidboot.boot_devices=14200000.virtio_block androidboot.debug_level=0x4948 androidboot.selinux=permissive sgpu.mcbp=0 sgpu.tmz=0 firmware_class.path=/vendor/firmware";
+		linux,initrd-start = <0x84000000>;
+		linux,initrd-end = <0x85FFFFFF>;
+	};
+
+	gic:interrupt-controller@10200000 {
+			compatible = "arm,gic-v3";
+			#interrupt-cells = <3>;
+			interrupt-controller;
+			reg = <0x0 0x10200000 0x10000>,         /* GICD */
+				  <0x0 0x10240000 0x140000>;        /* GICR * 10 */
+			interrupts = <GIC_PPI 9 IRQ_TYPE_LEVEL_HIGH>;
+	};
+
+	clock: clock-controller@13900000 {
+		compatible = "samsung,s5e8855-clock";
+		reg = <0x0 0x13900000 0x8000>;
+		#clock-cells = <1>;
+	};
+
+	chipid@10000000 {
+		compatible = "samsung,s5e8855-chipid";
+		reg = <0x0 0x10000000 0x10000>;
+	};
+
+	timer {
+		compatible = "arm,armv8-timer";
+		interrupts = <GIC_PPI 13 IRQ_TYPE_LEVEL_LOW>,
+			     <GIC_PPI 14 IRQ_TYPE_LEVEL_LOW>,
+			     <GIC_PPI 11 IRQ_TYPE_LEVEL_LOW>,
+			     <GIC_PPI 10 IRQ_TYPE_LEVEL_LOW>;
+		clock-frequency = <26000000>;
+		use-clocksource-only;
+	};
+
+	mct_alive@11890000 {
+			compatible = "samsung,exynos-mct-v3";
+			reg = <0x0 0x11890000 0x800>;
+			interrupt-controller;
+			#interrupt-cells = <1>;
+			interrupt-parent = <&mct_alive_map>;
+			interrupts =    <0>, <1>, <2>, <3>,
+							<4>, <5>, <6>, <7>,
+							<8>, <9>, <10>, <11>;
+//                clocks = <&clock OSCCLK1>, <&clock GATE_MCT_ALIVE_QCH>;
+			clocks = <&ext_26m>, <&ext_26m>;
+			clock-names = "fin_pll", "mct";
+			use-clockevent-only;
+			mct_alive_map: mct-alive-map {
+					#interrupt-cells = <1>;
+					#address-cells = <0>;
+					#size-cells = <0>;
+					interrupt-map = <0 &gic 0 INTREQ__MCT_ALIVE_IRQ_0 IRQ_TYPE_LEVEL_HIGH>,
+							<1 &gic 0 INTREQ__MCT_ALIVE_IRQ_1 IRQ_TYPE_LEVEL_HIGH>,
+							<2 &gic 0 INTREQ__MCT_ALIVE_IRQ_2 IRQ_TYPE_LEVEL_HIGH>,
+							<3 &gic 0 INTREQ__MCT_ALIVE_IRQ_3 IRQ_TYPE_LEVEL_HIGH>,
+							<4 &gic 0 INTREQ__MCT_ALIVE_IRQ_4 IRQ_TYPE_LEVEL_HIGH>,
+							<5 &gic 0 INTREQ__MCT_ALIVE_IRQ_5 IRQ_TYPE_LEVEL_HIGH>,
+							<6 &gic 0 INTREQ__MCT_ALIVE_IRQ_6 IRQ_TYPE_LEVEL_HIGH>,
+							<7 &gic 0 INTREQ__MCT_ALIVE_IRQ_7 IRQ_TYPE_LEVEL_HIGH>,
+							<8 &gic 0 INTREQ__MCT_ALIVE_IRQ_8 IRQ_TYPE_LEVEL_HIGH>;
+			};
+	};
+        sysreg_cmgp2pmu_ap: sysreg-controller@12070000 {
+		compatible = "samsung,exynos-sysreg", "syscon";
+		reg = <0x0 0x12070000 0x1000>;
+	};
+
+	/* ALIVE */
+	pinctrl_0: pinctrl@11850000 {
+		compatible = "samsung,s5e8855-pinctrl";
+		reg = <0x0 0x11850000 0xa50>;
+		interrupts = <GIC_SPI INTREQ__ALIVE_EINT0 IRQ_TYPE_LEVEL_HIGH>,
+				<GIC_SPI INTREQ__ALIVE_EINT1 IRQ_TYPE_LEVEL_HIGH>,
+				<GIC_SPI INTREQ__ALIVE_EINT2 IRQ_TYPE_LEVEL_HIGH>,
+				<GIC_SPI INTREQ__ALIVE_EINT3 IRQ_TYPE_LEVEL_HIGH>,
+				<GIC_SPI INTREQ__ALIVE_EINT4 IRQ_TYPE_LEVEL_HIGH>,
+				<GIC_SPI INTREQ__ALIVE_EINT5 IRQ_TYPE_LEVEL_HIGH>,
+				<GIC_SPI INTREQ__ALIVE_EINT6 IRQ_TYPE_LEVEL_HIGH>,
+				<GIC_SPI INTREQ__ALIVE_EINT7 IRQ_TYPE_LEVEL_HIGH>,
+				<GIC_SPI INTREQ__ALIVE_EINT8 IRQ_TYPE_LEVEL_HIGH>,
+				<GIC_SPI INTREQ__ALIVE_EINT9 IRQ_TYPE_LEVEL_HIGH>,
+				<GIC_SPI INTREQ__ALIVE_EINT10 IRQ_TYPE_LEVEL_HIGH>,
+				<GIC_SPI INTREQ__ALIVE_EINT11 IRQ_TYPE_LEVEL_HIGH>,
+				<GIC_SPI INTREQ__ALIVE_EINT12 IRQ_TYPE_LEVEL_HIGH>,
+				<GIC_SPI INTREQ__ALIVE_EXT_INTC0 IRQ_TYPE_LEVEL_HIGH>,
+				<GIC_SPI INTREQ__ALIVE_EXT_INTC1 IRQ_TYPE_LEVEL_HIGH>,
+				<GIC_SPI INTREQ__ALIVE_EXT_INTC2 IRQ_TYPE_LEVEL_HIGH>,
+				<GIC_SPI INTREQ__ALIVE_EXT_INTC3 IRQ_TYPE_LEVEL_HIGH>,
+				<GIC_SPI INTREQ__ALIVE_EXT_INTC4 IRQ_TYPE_LEVEL_HIGH>,
+				<GIC_SPI INTREQ__ALIVE_EXT_INTC5 IRQ_TYPE_LEVEL_HIGH>,
+				<GIC_SPI INTREQ__ALIVE_EXT_INTC6 IRQ_TYPE_LEVEL_HIGH>,
+				<GIC_SPI INTREQ__ALIVE_EXT_INTC7 IRQ_TYPE_LEVEL_HIGH>,
+				<GIC_SPI INTREQ__ALIVE_EXT_INTC8 IRQ_TYPE_LEVEL_HIGH>,
+				<GIC_SPI INTREQ__ALIVE_EXT_INTC9 IRQ_TYPE_LEVEL_HIGH>,
+				<GIC_SPI INTREQ__ALIVE_EXT_INTC10 IRQ_TYPE_LEVEL_HIGH>,
+				<GIC_SPI INTREQ__ALIVE_EXT_INTC11 IRQ_TYPE_LEVEL_HIGH>,
+				<GIC_SPI INTREQ__ALIVE_EXT_INTC12 IRQ_TYPE_LEVEL_HIGH>,
+				<GIC_SPI INTREQ__ALIVE_EXT_INTC13 IRQ_TYPE_LEVEL_HIGH>,
+				<GIC_SPI INTREQ__ALIVE_EXT_INTC14 IRQ_TYPE_LEVEL_HIGH>,
+				<GIC_SPI INTREQ__ALIVE_EXT_INTC15 IRQ_TYPE_LEVEL_HIGH>,
+				<GIC_SPI INTREQ__ALIVE_EXT_INTC16 IRQ_TYPE_LEVEL_HIGH>,
+				<GIC_SPI INTREQ__ALIVE_EXT_INTC17 IRQ_TYPE_LEVEL_HIGH>;
+
+		wakeup-interrupt-controller {
+			compatible = "samsung,exynos-wakeup-eint";
+		};
+	};
+
+	/* CMGP */
+	pinctrl_1: pinctrl@12030000{
+		compatible = "samsung,s5e8855-pinctrl";
+		reg = <0x0 0x12030000 0xa58>;
+		interrupts =
+				<GIC_SPI INTREQ__EXT_INTM00 IRQ_TYPE_LEVEL_HIGH>,
+				<GIC_SPI INTREQ__EXT_INTM01 IRQ_TYPE_LEVEL_HIGH>,
+				<GIC_SPI INTREQ__EXT_INTM02 IRQ_TYPE_LEVEL_HIGH>,
+				<GIC_SPI INTREQ__EXT_INTM03 IRQ_TYPE_LEVEL_HIGH>,
+				<GIC_SPI INTREQ__EXT_INTM04 IRQ_TYPE_LEVEL_HIGH>,
+				<GIC_SPI INTREQ__EXT_INTM05 IRQ_TYPE_LEVEL_HIGH>,
+				<GIC_SPI INTREQ__EXT_INTM06 IRQ_TYPE_LEVEL_HIGH>,
+				<GIC_SPI INTREQ__EXT_INTM07 IRQ_TYPE_LEVEL_HIGH>,
+				<GIC_SPI INTREQ__EXT_INTM08 IRQ_TYPE_LEVEL_HIGH>,
+				<GIC_SPI INTREQ__EXT_INTM09 IRQ_TYPE_LEVEL_HIGH>,
+				<GIC_SPI INTREQ__EXT_INTM10 IRQ_TYPE_LEVEL_HIGH>,
+				<GIC_SPI INTREQ__EXT_INTM11 IRQ_TYPE_LEVEL_HIGH>,
+				<GIC_SPI INTREQ__EXT_INTM12 IRQ_TYPE_LEVEL_HIGH>,
+				<GIC_SPI INTREQ__EXT_INTM13 IRQ_TYPE_LEVEL_HIGH>,
+				<GIC_SPI INTREQ__EXT_INTM14 IRQ_TYPE_LEVEL_HIGH>,
+				<GIC_SPI INTREQ__EXT_INTM15 IRQ_TYPE_LEVEL_HIGH>,
+				<GIC_SPI INTREQ__EXT_INTM16 IRQ_TYPE_LEVEL_HIGH>,
+				<GIC_SPI INTREQ__EXT_INTM17 IRQ_TYPE_LEVEL_HIGH>,
+				<GIC_SPI INTREQ__EXT_INTM18 IRQ_TYPE_LEVEL_HIGH>,
+				<GIC_SPI INTREQ__EXT_INTM19 IRQ_TYPE_LEVEL_HIGH>,
+				<GIC_SPI INTREQ__EXT_INTM20 IRQ_TYPE_LEVEL_HIGH>,
+				<GIC_SPI INTREQ__EXT_INTM21 IRQ_TYPE_LEVEL_HIGH>;
+
+		samsung,syscon-phandle = <&sysreg_cmgp2pmu_ap>;
+		wakeup-interrupt-controller {
+			compatible = "samsung,exynos-cmgp-wakeup-eint";
+		};
+	};
+
+	/* HSIUFS */
+	pinctrl_2: pinctrl@17040000 {
+		compatible = "samsung,s5e8855-pinctrl";
+		reg = <0x0 0x17040000 0xb18>;
+		interrupts = <GIC_SPI INTREQ__GPIO_HSI_UFS IRQ_TYPE_LEVEL_HIGH>;
+	};
+
+	/* PERIC */
+	pinctrl_3: pinctrl@15440000 {
+		compatible = "samsung,s5e8855-pinctrl";
+		reg = <0x0 0x15440000 0xb30>;
+		interrupts = <GIC_SPI INTREQ__GPIO_PERIC IRQ_TYPE_LEVEL_HIGH>;
+	};
+
+	/* PERICMMC */
+	pinctrl_4: pinctrl@154f0000 {
+		compatible = "samsung,s5e8855-pinctrl";
+		reg = <0x0 0x154f0000 0xb18>;
+		interrupts = <GIC_SPI INTREQ__GPIO_PERICMMC IRQ_TYPE_LEVEL_HIGH>;
+	};
+
+	/* USI */
+	pinctrl_5: pinctrl@15030000 {
+		compatible = "samsung,s5e8855-pinctrl";
+		reg = <0x0 0x15030000 0xb24>;
+		interrupts = <GIC_SPI INTREQ__GPIO_USI IRQ_TYPE_LEVEL_HIGH>;
+	};
+
+	/* VTS */
+	pinctrl_6: pinctrl@11780000 {
+		compatible = "samsung,s5e8855-pinctrl";
+		reg = <0x0 0x11780000 0xb18>;
+		/*
+		 * pinctrl framework will not support VTS GPIO Interrupt.
+		 * VTS subsystem has to take care for it.
+		 */
+	};
+
+	/*CAL-IF*/
+	cal_if {
+		compatible = "samsung,exynos_cal_if";
+		reg = <0x0 0x13900000 0x8000>, /* CMU_TOP */
+				<0x0 0x14E00000 0x1000>, /* CMU_AUD */
+				<0x0 0x13800000 0x1000>, /* CMU_NOCL0 */
+				<0x0 0x18840000 0x1000>, /* CMU_CPUCL0 */
+				<0x0 0x18850000 0x1000>, /* CMU_CPUCL1 */
+				<0x0 0x18860000 0x1000>, /* CMU_CPUCL2 */
+				<0x0 0x18870000 0x1000>, /* CMU_DSU */
+				<0x0 0x10030000 0x1000>; /* CMU_PERIS */
+		acpm-ipc-channel = <0>;
+	};
+
+	/* PMU */
+	exynos-pmu {
+		compatible = "samsung,exynos-pmu";
+		samsung,syscon-phandle = <&pmu_system_controller>;
+		reg = <0x0 0x11860000 0x10000>;
+		reg-names = "pmu_alive";
+		cpu_offset = <0x0>, <0x80>, <0x100>, <0x180>,
+					<0x300>, <0x380>, <0x400>, <0x600>;
+	};
+
+	pmu_system_controller: system-controller@11860000 {
+		compatible = "samsung,exynos991-pmu", "syscon";
+		reg = <0x0 0x11860000 0x10000>;
+	};
+
+};

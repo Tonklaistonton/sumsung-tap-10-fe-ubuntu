@@ -1,0 +1,20 @@
+subdir-ccflags-y += \
+		-I$(srctree)/$(src)/include \
+		-I$(srctree)/$(src)/include/uapi
+
+obj-y += drivers/samsung/pm/
+obj-y += drivers/samsung/debug/
+obj-y += drivers/tee/tzdev/
+obj-y += drivers/tee/tui/
+obj-y += sound/soc/codecs/
+obj-y += sound/soc/codecs/tas25xx/
+obj-y += sound/soc/samsung/exynos/
+obj-y += sound/soc/samsung/exynos/abox/
+obj-y += drivers/ufs/host/
+obj-y += drivers/mmc/host/
+obj-y += drivers/usb/gadget/function/
+obj-y += drivers/camera/
+obj-y += drivers/leds/
+obj-y += block/
+obj-y += drivers/usb/dwc3/
+obj-y += drivers/usb/misc/

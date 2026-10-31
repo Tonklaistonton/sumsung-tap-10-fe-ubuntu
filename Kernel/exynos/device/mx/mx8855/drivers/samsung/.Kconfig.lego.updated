@@ -1,0 +1,2 @@
+source "$(KCONFIG_EXT_PREFIX)drivers/samsung/pm/Kconfig"
+source "$(KCONFIG_EXT_PREFIX)drivers/samsung/debug/Kconfig"

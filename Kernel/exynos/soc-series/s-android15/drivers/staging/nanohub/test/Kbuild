@@ -1,0 +1,16 @@
+# SPDX-License-Identifier: GPL-2.0
+ifneq ($(TARGET_SOC),"")
+EXTRA_CFLAGS := -DTARGET_SOC=$(TARGET_SOC)
+endif
+
+ifneq ($(EXYNOS_SOC),"")
+EXTRA_CFLAGS := -DTARGET_SOC=$(EXYNOS_SOC)
+endif
+
+obj-$(CONFIG_CHUB_EXYNOS_KUNIT_TEST) += chub_exynos_test.o
+
+
+chub_exynos_test-y += user_to_reg_test.o
+
+
+ccflags-y += -I $(srctree)/$(src)/../

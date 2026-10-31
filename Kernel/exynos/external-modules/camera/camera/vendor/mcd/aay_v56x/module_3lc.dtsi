@@ -1,0 +1,262 @@
+/*
+ * SAMSUNG EXYNOSxxxx board camera device tree source
+ *
+ * Copyright (c) 2024 Samsung Electronics Co., Ltd.
+ *		http://www.samsung.com
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+#include <dt-bindings/camera/exynos_is_dt.h>
+
+/ {
+	fragment@camera {
+		target-path = "/";
+		__overlay__ {
+			is_sensor_3lc: is_sensor_3lc@5A {
+				compatible = "samsung,sensor-module";
+
+				/* common */
+				sensor_id = <SENSOR_NAME_S5K3LC>;
+				active_width = <4000>;
+				active_height = <3000>;
+				margin_left = <0>;
+				margin_right = <0>;
+				margin_top = <0>;
+				margin_bottom = <0>;
+				max_framerate = <120>;
+				bitwidth = <10>;
+				use_retention_mode = <SENSOR_RETENTION_UNSUPPORTED>;
+				sensor_maker = "SLSI";
+				sensor_name = "S5K3LC";
+				setfile_name = "setfile_3lc.bin";
+				pinning_setfile;
+
+				status = "okay";
+				/* board */
+				pinctrl-names = "pin0", "pin1", "release";
+				pinctrl-0 = <&sensor_mclk2_out>;
+				pinctrl-1 = <&sensor_mclk2_fn>;
+				pinctrl-2 = <>;
+
+				position = <1>; /* sensor position of camera dt */
+				id = <1>; /* is_sensor id */
+				mclk_ch = <2>;
+				mclk_freq = <19200>;
+				sensor_i2c_ch = <4>; /* SENSOR_CONTROL_I2C4 lock */
+
+				/* vendor */
+				rom_type = <2>; /* ROM_TYPE_EEPROM */
+				rom_id = <1>;
+				rom_cal_index = <0>;
+
+				/* sensor modes */
+				modes {
+					/* mode0 : 4000x3000@30 (4:3) */
+					/* mode1 : 4000x2256@30 (16:9) */
+					/* mode2 : 3184x2388@30 (4:3) */
+					/* mode3 : 3184x1792@30 (16:9) */
+					/* mode4 : 3472x2388@30 (3:2) 3pp */
+					/* mode5 : 2000x1128@120 (16:9) */
+					/* mode6 : 2000x1496@120 (4:3) fast AE */
+					/* mode7 : 4000x3000@30 (4:3 12bit) */
+					/* mode8 : 4000x2256@30 (16:9 12bit) */
+					/* mode9 : 2000x1128@60 (16:9) FHD 60fps */
+					/* mode10 : 2000x1496@30 (4:3) VT */
+
+					/* common = <width, height, fps, settle, mode, lane, speed, interleave, lrte, pd_mode> */
+					/* vcX = <map, hwformat, width, height, hwformat, type, width, height> */
+
+					/* 0 : 4000x3000_30FPS */
+					mode0 {
+						common = <4000 3000 30 0 0 CSI_DATA_LANES_4 1587 CSI_MODE_VC_ONLY LRTE_DISABLE PD_NONE EX_NONE>;
+						vc0 = </* in */ 0 HW_FORMAT_RAW10 DATA_IMG 4000 3000    /* out */ HW_FORMAT_RAW10 VC_NOTHING 4000 3000>;
+						vc1 = </* in */ 1 HW_FORMAT_UNKNOWN DATA_NONE 0 0    /* out */ HW_FORMAT_UNKNOWN VC_NOTHING 0 0>;
+						vc2 = </* in */ 2 HW_FORMAT_UNKNOWN DATA_NONE 0 0    /* out */ HW_FORMAT_UNKNOWN VC_NOTHING 0 0>;
+						vc3 = </* in */ 3 HW_FORMAT_UNKNOWN DATA_NONE 0 0    /* out */ HW_FORMAT_UNKNOWN VC_NOTHING 0 0>;
+					};
+					/* For SECURE CAMERA FD Scenario */
+					mode0_secure {
+						common = <4000 3000 30 0 0 CSI_DATA_LANES_4 1587 CSI_MODE_VC_ONLY LRTE_DISABLE PD_NONE EX_PDAF_OFF>;
+						vc0 = </* in */ 0 HW_FORMAT_RAW10 DATA_IMG 4000 3000    /* out */ HW_FORMAT_RAW10 VC_NOTHING 2000 1500>;
+						vc1 = </* in */ 1 HW_FORMAT_UNKNOWN DATA_NONE 0 0    /* out */ HW_FORMAT_UNKNOWN VC_NOTHING 0 0>;
+						vc2 = </* in */ 2 HW_FORMAT_UNKNOWN DATA_NONE 0 0    /* out */ HW_FORMAT_UNKNOWN VC_NOTHING 0 0>;
+						vc3 = </* in */ 3 HW_FORMAT_UNKNOWN DATA_NONE 0 0    /* out */ HW_FORMAT_UNKNOWN VC_NOTHING 0 0>;
+						option { votf = <0>; hw_bns = <HW_BNS_2_0>; };
+					};
+					/* 1 : 4000x2256_30FPS */
+					mode1 {
+						common = <4000 2256 30 0 1 CSI_DATA_LANES_4 1587 CSI_MODE_VC_ONLY LRTE_DISABLE PD_NONE EX_NONE>;
+						vc0 = </* in */ 0 HW_FORMAT_RAW10 DATA_IMG 4000 2256    /* out */ HW_FORMAT_RAW10 VC_NOTHING 4000 2256>;
+						vc1 = </* in */ 1 HW_FORMAT_UNKNOWN DATA_NONE 0 0    /* out */ HW_FORMAT_UNKNOWN VC_NOTHING 0 0>;
+						vc2 = </* in */ 2 HW_FORMAT_UNKNOWN DATA_NONE 0 0    /* out */ HW_FORMAT_UNKNOWN VC_NOTHING 0 0>;
+						vc3 = </* in */ 3 HW_FORMAT_UNKNOWN DATA_NONE 0 0    /* out */ HW_FORMAT_UNKNOWN VC_NOTHING 0 0>;
+					};
+					/* 2 : 3184x2388_30FPS */
+					mode2 {
+						common = <3184 2388 30 0 2 CSI_DATA_LANES_4 1587 CSI_MODE_VC_ONLY LRTE_DISABLE PD_NONE EX_NONE>;
+						vc0 = </* in */ 0 HW_FORMAT_RAW10 DATA_IMG 3184 2388    /* out */ HW_FORMAT_RAW10 VC_NOTHING 3184 2388>;
+						vc1 = </* in */ 1 HW_FORMAT_UNKNOWN DATA_NONE 0 0    /* out */ HW_FORMAT_UNKNOWN VC_NOTHING 0 0>;
+						vc2 = </* in */ 2 HW_FORMAT_UNKNOWN DATA_NONE 0 0    /* out */ HW_FORMAT_UNKNOWN VC_NOTHING 0 0>;
+						vc3 = </* in */ 3 HW_FORMAT_UNKNOWN DATA_NONE 0 0    /* out */ HW_FORMAT_UNKNOWN VC_NOTHING 0 0>;
+					};
+					/* 3 : 3184x1792_30FPS */
+					mode3 {
+						common = <3184 1792 30 0 3 CSI_DATA_LANES_4 1587 CSI_MODE_VC_ONLY LRTE_DISABLE PD_NONE EX_NONE>;
+						vc0 = </* in */ 0 HW_FORMAT_RAW10 DATA_IMG 3184 1792    /* out */ HW_FORMAT_RAW10 VC_NOTHING 3184 1792>;
+						vc1 = </* in */ 1 HW_FORMAT_UNKNOWN DATA_NONE 0 0    /* out */ HW_FORMAT_UNKNOWN VC_NOTHING 0 0>;
+						vc2 = </* in */ 2 HW_FORMAT_UNKNOWN DATA_NONE 0 0    /* out */ HW_FORMAT_UNKNOWN VC_NOTHING 0 0>;
+						vc3 = </* in */ 3 HW_FORMAT_UNKNOWN DATA_NONE 0 0    /* out */ HW_FORMAT_UNKNOWN VC_NOTHING 0 0>;
+					};
+					/* 4 : 3472x2388_30FPS */
+					mode4 {
+						common = <3472 2388 30 0 4 CSI_DATA_LANES_4 1587 CSI_MODE_VC_ONLY LRTE_DISABLE PD_NONE EX_NONE>;
+						vc0 = </* in */ 0 HW_FORMAT_RAW10 DATA_IMG 3472 2388    /* out */ HW_FORMAT_RAW10 VC_NOTHING 3472 2388>;
+						vc1 = </* in */ 1 HW_FORMAT_UNKNOWN DATA_NONE 0 0    /* out */ HW_FORMAT_UNKNOWN VC_NOTHING 0 0>;
+						vc2 = </* in */ 2 HW_FORMAT_UNKNOWN DATA_NONE 0 0    /* out */ HW_FORMAT_UNKNOWN VC_NOTHING 0 0>;
+						vc3 = </* in */ 3 HW_FORMAT_UNKNOWN DATA_NONE 0 0    /* out */ HW_FORMAT_UNKNOWN VC_NOTHING 0 0>;
+					};
+					/* 5 : 2000x1128_120FPS */
+					mode5 {
+						common = <2000 1128 120 0 5 CSI_DATA_LANES_4 1587 CSI_MODE_VC_ONLY LRTE_DISABLE PD_NONE EX_NONE>;
+						vc0 = </* in */ 0 HW_FORMAT_RAW10 DATA_IMG 2000 1128    /* out */ HW_FORMAT_RAW10 VC_NOTHING 2000 1128>;
+						vc1 = </* in */ 1 HW_FORMAT_UNKNOWN DATA_NONE 0 0    /* out */ HW_FORMAT_UNKNOWN VC_NOTHING 0 0>;
+						vc2 = </* in */ 2 HW_FORMAT_UNKNOWN DATA_NONE 0 0    /* out */ HW_FORMAT_UNKNOWN VC_NOTHING 0 0>;
+						vc3 = </* in */ 3 HW_FORMAT_UNKNOWN DATA_NONE 0 0    /* out */ HW_FORMAT_UNKNOWN VC_NOTHING 0 0>;
+					};
+					/* 6 : 2000x1496_120FPS */
+					mode6 {
+						common = <2000 1496 120 0 6 CSI_DATA_LANES_4 1587 CSI_MODE_VC_ONLY LRTE_DISABLE PD_NONE EX_NONE>;
+						vc0 = </* in */ 0 HW_FORMAT_RAW10 DATA_IMG 2000 1496    /* out */ HW_FORMAT_RAW10 VC_NOTHING 2000 1496>;
+						vc1 = </* in */ 1 HW_FORMAT_UNKNOWN DATA_NONE 0 0    /* out */ HW_FORMAT_UNKNOWN VC_NOTHING 0 0>;
+						vc2 = </* in */ 2 HW_FORMAT_UNKNOWN DATA_NONE 0 0    /* out */ HW_FORMAT_UNKNOWN VC_NOTHING 0 0>;
+						vc3 = </* in */ 3 HW_FORMAT_UNKNOWN DATA_NONE 0 0    /* out */ HW_FORMAT_UNKNOWN VC_NOTHING 0 0>;
+						option { special_mode = <IS_SPECIAL_MODE_FASTAE>; };
+					};
+					/* 7 : 4000x3000_30FPS_R12 */
+					mode7 {
+						common = <4000 3000 30 0 7 CSI_DATA_LANES_4 1587 CSI_MODE_VC_ONLY LRTE_DISABLE PD_NONE EX_NONE>;
+						vc0 = </* in */ 0 HW_FORMAT_RAW12 DATA_IMG 4000 3000    /* out */ HW_FORMAT_RAW12 VC_NOTHING 4000 3000>;
+						vc1 = </* in */ 1 HW_FORMAT_UNKNOWN DATA_NONE 0 0    /* out */ HW_FORMAT_UNKNOWN VC_NOTHING 0 0>;
+						vc2 = </* in */ 2 HW_FORMAT_UNKNOWN DATA_NONE 0 0    /* out */ HW_FORMAT_UNKNOWN VC_NOTHING 0 0>;
+						vc3 = </* in */ 3 HW_FORMAT_UNKNOWN DATA_NONE 0 0    /* out */ HW_FORMAT_UNKNOWN VC_NOTHING 0 0>;
+					};
+					/* 8 : 4000x2256_30FPS_R12 */
+					mode8 {
+						common = <4000 2256 30 0 8 CSI_DATA_LANES_4 1587 CSI_MODE_VC_ONLY LRTE_DISABLE PD_NONE EX_NONE>;
+						vc0 = </* in */ 0 HW_FORMAT_RAW12 DATA_IMG 4000 2256    /* out */ HW_FORMAT_RAW12 VC_NOTHING 4000 2256>;
+						vc1 = </* in */ 1 HW_FORMAT_UNKNOWN DATA_NONE 0 0    /* out */ HW_FORMAT_UNKNOWN VC_NOTHING 0 0>;
+						vc2 = </* in */ 2 HW_FORMAT_UNKNOWN DATA_NONE 0 0    /* out */ HW_FORMAT_UNKNOWN VC_NOTHING 0 0>;
+						vc3 = </* in */ 3 HW_FORMAT_UNKNOWN DATA_NONE 0 0    /* out */ HW_FORMAT_UNKNOWN VC_NOTHING 0 0>;
+					};
+					/* 9 : 2000x1128_60FPS */
+					mode9 {
+						common = <2000 1128 60 0 9 CSI_DATA_LANES_4 1587 CSI_MODE_VC_ONLY LRTE_DISABLE PD_NONE EX_NONE>;
+						vc0 = </* in */ 0 HW_FORMAT_RAW10 DATA_IMG 2000 1128    /* out */ HW_FORMAT_RAW10 VC_NOTHING 2000 1128>;
+						vc1 = </* in */ 1 HW_FORMAT_UNKNOWN DATA_NONE 0 0    /* out */ HW_FORMAT_UNKNOWN VC_NOTHING 0 0>;
+						vc2 = </* in */ 2 HW_FORMAT_UNKNOWN DATA_NONE 0 0    /* out */ HW_FORMAT_UNKNOWN VC_NOTHING 0 0>;
+						vc3 = </* in */ 3 HW_FORMAT_UNKNOWN DATA_NONE 0 0    /* out */ HW_FORMAT_UNKNOWN VC_NOTHING 0 0>;
+					};
+					/* 10 : 2000x1496_30FPS */
+					mode10 {
+						common = <2000 1496 30 0 10 CSI_DATA_LANES_4 1587 CSI_MODE_VC_ONLY LRTE_DISABLE PD_NONE EX_NONE>;
+						vc0 = </* in */ 0 HW_FORMAT_RAW10 DATA_IMG 2000 1496    /* out */ HW_FORMAT_RAW10 VC_NOTHING 2000 1496>;
+						vc1 = </* in */ 1 HW_FORMAT_UNKNOWN DATA_NONE 0 0    /* out */ HW_FORMAT_UNKNOWN VC_NOTHING 0 0>;
+						vc2 = </* in */ 2 HW_FORMAT_UNKNOWN DATA_NONE 0 0    /* out */ HW_FORMAT_UNKNOWN VC_NOTHING 0 0>;
+						vc3 = </* in */ 3 HW_FORMAT_UNKNOWN DATA_NONE 0 0    /* out */ HW_FORMAT_UNKNOWN VC_NOTHING 0 0>;
+					};
+				};
+
+				power_seq {
+					use = <1>;
+					gpio_mclk = <&gpg0 3 0x1>;
+
+					scenario_normal_on {
+						sensor_scenario = <SENSOR_SCENARIO_NORMAL>;
+						gpio_scenario = <GPIO_SCENARIO_ON>;
+
+						/* A start node number should be over the 10 for reserved number 0~9. */
+						/* pname = "name"; pin = <act value delay voltage>; gpio = <gpx# # 0x1>; */
+						10 { pname = "sen_rst"; pin = <PIN_OUTPUT 0 1000>; gpio = <&gpp0 6 0x1>; };
+						20 { pname = "vdd_ldo26"; pin = <PIN_REGULATOR 1 1000>; };
+						30 { pname = "FCAM_AVDD_2P8"; pin = <PIN_REGULATOR 1 1000>; };
+						40 { pname = "FCAM_DVDD_1P05"; pin = <PIN_REGULATOR 1 1000 1056000>; };
+						50 { pname = "sen_rst"; pin = <PIN_OUTPUT 1 1000>; gpio = <&gpp0 6 0x1>; };
+						60 { pname = "MCLK"; pin = <PIN_MCLK 1 1750>; };
+						70 { pname = "pin"; pin = <PIN_FUNCTION 1 1500>; };
+						80 { pname = "on_i2c"; pin = <PIN_I2C 1 6750>; };
+					};
+
+					scenario_normal_off {
+						sensor_scenario = <SENSOR_SCENARIO_NORMAL>;
+						gpio_scenario = <GPIO_SCENARIO_OFF>;
+
+						/* A start node number should be over the 10 for reserved number 0~9. */
+						/* pname = "name"; pin = <act value delay voltage>; gpio = <gpx# # 0x1>; */
+						10 { pname = "sen_rst"; pin = <PIN_OUTPUT 0 1000>; gpio = <&gpp0 6 0x1>; };
+						20 { pname = "MCLK"; pin = <PIN_MCLK 0 0>; };
+						30 { pname = "off_i2c"; pin = <PIN_I2C 0 0>; };
+						40 { pname = "pin"; pin = <PIN_FUNCTION 0 0>; };
+						50 { pname = "FCAM_DVDD_1P05"; pin = <PIN_REGULATOR 0 1000>; };
+						60 { pname = "FCAM_AVDD_2P8"; pin = <PIN_REGULATOR 0 2000>; };
+						70 { pname = "vdd_ldo26"; pin = <PIN_REGULATOR 0 2000>; };
+					};
+
+					scenario_vision_on {
+						sensor_scenario = <SENSOR_SCENARIO_VISION>;
+						gpio_scenario = <GPIO_SCENARIO_ON>;
+
+						/* A start node number should be over the 10 for reserved number 0~9. */
+						/* pname = "name"; pin = <act value delay voltage>; gpio = <gpx# # 0x1>; */
+						10 { pname = "sen_rst"; pin = <PIN_OUTPUT 0 1000>; gpio = <&gpp0 6 0x1>; };
+						20 { pname = "vdd_ldo26"; pin = <PIN_REGULATOR 1 0>; };
+						30 { pname = "FCAM_AVDD_2P8"; pin = <PIN_REGULATOR 1 1000>; };
+						40 { pname = "FCAM_DVDD_1P05"; pin = <PIN_REGULATOR 1 1000 1056000>; };
+						50 { pname = "sen_rst"; pin = <PIN_OUTPUT 1 1000>; gpio = <&gpp0 6 0x1>; };
+						60 { pname = "MCLK"; pin = <PIN_MCLK 1 1750>; };
+						70 { pname = "pin"; pin = <PIN_FUNCTION 1 1500>; };
+						80 { pname = "on_i2c"; pin = <PIN_I2C 1 6750>; };
+					};
+
+					scenario_vision_off {
+						sensor_scenario = <SENSOR_SCENARIO_VISION>;
+						gpio_scenario = <GPIO_SCENARIO_OFF>;
+
+						/* A start node number should be over the 10 for reserved number 0~9. */
+						/* pname = "name"; pin = <act value delay voltage>; gpio = <gpx# # 0x1>; */
+						10 { pname = "sen_rst"; pin = <PIN_OUTPUT 0 1000>; gpio = <&gpp0 6 0x1>; };
+						20 { pname = "MCLK"; pin = <PIN_MCLK 0 0>; };
+						30 { pname = "off_i2c"; pin = <PIN_I2C 0 0>; };
+						40 { pname = "pin"; pin = <PIN_FUNCTION 0 0>; };
+						50 { pname = "FCAM_DVDD_1P05"; pin = <PIN_REGULATOR 0 1000>; };
+						60 { pname = "FCAM_AVDD_2P8"; pin = <PIN_REGULATOR 0 2000>; };
+						70 { pname = "vdd_ldo26"; pin = <PIN_REGULATOR 0 2000>; };
+					};
+
+					scenario_read_rom_on {
+						sensor_scenario = <SENSOR_SCENARIO_READ_ROM>;
+						gpio_scenario = <GPIO_SCENARIO_ON>;
+
+						/* A start node number should be over the 10 for reserved number 0~9. */
+						/* pname = "name"; pin = <act value delay voltage>; gpio = <gpx# # 0x1>; */
+						5 { pname = "delay"; pin = <PIN_NONE 0 20000>; };
+						10 { pname = "vdd_ldo26"; pin = <PIN_REGULATOR 1 0>; };
+						20 { pname = "on_i2c"; pin = <PIN_I2C 1 5000>; };
+					};
+
+					scenario_read_rom_off {
+						sensor_scenario = <SENSOR_SCENARIO_READ_ROM>;
+						gpio_scenario = <GPIO_SCENARIO_OFF>;
+
+						/* A start node number should be over the 10 for reserved number 0~9. */
+						/* pname = "name"; pin = <act value delay voltage>; gpio = <gpx# # 0x1>; */
+						10 { pname = "off_i2c"; pin = <PIN_I2C 0 0>; };
+						20 { pname = "vdd_ldo26"; pin = <PIN_REGULATOR 0 0>; };
+					};
+				};
+			};
+		}; /* end of __overlay__ */
+	}; /* end of fragment */
+}; /* end of root */

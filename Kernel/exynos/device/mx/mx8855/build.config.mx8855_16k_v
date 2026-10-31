@@ -1,0 +1,18 @@
+BOARD_NAME=mx8855
+BOARD_DIR=${ROOT_DIR}/exynos/device/mx/${BOARD_NAME}
+ADDITIONAL_FRAGMENTS=${BOARD_DIR}/arch/arm64/configs/s5e8855-bazel_defconfig
+
+MAIN_KERNEL_VERSION=6.6
+
+. ${ROOT_DIR}/exynos/soc-series/s-android15/build.config.s5e8855_v
+
+DTC_INCLUDE="${DTC_INCLUDE}${ROOT_DIR}/exynos/device/mx/${BOARD_NAME}/include "
+
+EXYNOS_EXT_MODULES_DIR=${ROOT_DIR}/${EXYNOS_BASE_DIR}/external-modules
+KCONFIG_EXT_MODULES_PREFIX=$(realpath ${EXYNOS_EXT_MODULES_DIR} --relative-to ${KERNEL_DIR})/
+
+: ${PAGE_16K_SUPPORT:=1}
+SKIP_ABI_UPDATE=1
+VENDOR_BOOTCONFIG="
+buildtime_bootconfig=enable
+"

@@ -1,0 +1,2298 @@
+config VIDEO_EXYNOS_PABLO_ISP
+	tristate "Exynos Pablo Camera Driver"
+	default n
+	help
+	  This is a v4l2 driver for Exynos Pablo IS.
+
+config DISABLE_CAMERA_MEM_ATTR
+	bool "Disable memory attr change"
+	depends on VIDEO_EXYNOS_PABLO_ISP
+	default n
+
+config DISABLE_CAMERA_SIMD
+	bool "Disable simd ops"
+	depends on VIDEO_EXYNOS_PABLO_ISP
+	default n
+
+config CAMERA_MEM_V2
+	bool "Use memory helper V2"
+	depends on VIDEO_EXYNOS_PABLO_ISP
+	default n
+	help
+	  Use memory helper version 2.0.
+
+config PABLO_CRTA_BUFMGR
+	bool "Use pablo_crta_bufmgr"
+	depends on VIDEO_EXYNOS_PABLO_ISP
+	default n
+
+config CAMERA_DVFS_V2
+	bool "Use Camera DVFS V2"
+	depends on VIDEO_EXYNOS_PABLO_ISP
+	default n
+	help
+	  Enable Camera DVFS v2 feature.
+
+config PABLO_SOCKET_LAYER
+	bool "Enable socket layer for Pablo"
+	depends on VIDEO_EXYNOS_PABLO_ISP
+	default n
+	help
+	  Enable socket layer for Pablo.
+
+config PABLO_OBTE_SUPPORT
+	tristate "Enable obte driver for Pablo"
+	depends on VIDEO_EXYNOS_PABLO_ISP
+	default n
+	help
+	  Enable obte driver for Pablo.
+
+config PABLO_KUNIT_TEST
+	tristate "KUNIT Test for Pablo"
+	depends on VIDEO_EXYNOS_PABLO_ISP && KUNIT
+	default n
+	help
+	  Enable kunit test for Pablo.
+
+config PABLO_UNIT_TEST
+	tristate "PUNIT Test for Pablo"
+	depends on VIDEO_EXYNOS_PABLO_ISP
+	default n
+	help
+	  Enable punit test for Pablo.
+
+config EXYNOS_DEVICE_MIPI_CSIS_VER4
+	bool "Use Sensor driver (Sensor Group)"
+	depends on VIDEO_EXYNOS_PABLO_ISP
+	default n
+	help
+	  Enable Device MIPI-CSIS S/W Version 4(Including WDMA and Sensor Group)
+
+config PABLO_CAMIF_BNS
+	bool "Use CAMIF BNS driver"
+	depends on VIDEO_EXYNOS_PABLO_ISP
+	depends on EXYNOS_DEVICE_MIPI_CSIS_VER4
+	default n
+	help
+	  Enable Pablo CAMIF-BNS driver
+
+# Chain driver
+#source "drivers/media/platform/exynos/camera/post/Kconfig"
+#
+# Exynos Camera PostProcessing IP device drivers
+#
+config VIDEO_EXYNOS_CAMERA_POSTPROCESS
+	tristate "Exynos Camera Post-Processing Devices"
+	depends on VIDEO_EXYNOS_PABLO_ISP
+	select V4L2_MEM2MEM_DEV
+	select MEDIA_M2M1SHOT
+	select VIDEOBUF2_DMA_SG
+	default n
+	help
+		This is a representative exynos Camera PostProcessing device.
+
+#source "drivers/media/platform/exynos/camera/post/dof/Kconfig"
+menuconfig VIDEO_EXYNOS_CAMERA_POSTPROCESS_DOF
+	tristate "EXYNOS CAMERA POSTPROCESS DOF Driver"
+	depends on VIDEO_EXYNOS_CAMERA_POSTPROCESS
+	default n
+	help
+		This is a representative exynos CAMERA-PP DOF device.
+
+config CAMERA_PP_DOF_V13_0_0_OBJ
+	tristate "use DOF v13.0"
+	depends on VIDEO_EXYNOS_CAMERA_POSTPROCESS_DOF
+	default n
+	help
+		Use to build DOF v13.0 driver
+
+#source "drivers/media/platform/exynos/camera/post/lme/Kconfig"
+menuconfig VIDEO_EXYNOS_CAMERA_POSTPROCESS_LME
+	tristate "EXYNOS CAMERA POSTPROCESS LME Driver"
+	depends on VIDEO_EXYNOS_CAMERA_POSTPROCESS
+	default n
+	help
+		This is a representative exynos CAMERA-PP LME device.
+
+config CAMERA_PP_LME_V13_0_0_OBJ
+	tristate "use LME v13.0"
+	depends on VIDEO_EXYNOS_CAMERA_POSTPROCESS_LME
+	default n
+	help
+		Use to build LME v13.0 driver
+
+#source "drivers/media/platform/exynos/camera/post/gdc/Kconfig"
+menuconfig VIDEO_EXYNOS_CAMERA_POSTPROCESS_GDC
+	tristate "EXYNOS CAMERA POSTPROCESS GDC Driver"
+	depends on VIDEO_EXYNOS_CAMERA_POSTPROCESS
+	default n
+	help
+		This is a representative exynos CAMERA-PP GDC device.
+
+config CAMERA_PP_GDC_V1_0_0_OBJ
+	tristate "use GDC v1.0"
+	depends on VIDEO_EXYNOS_CAMERA_POSTPROCESS_GDC
+	default n
+	help
+		Use to build GDC v1.0 driver
+
+config CAMERA_PP_GDC_V2_0_0_OBJ
+	tristate "use GDC v2.0"
+	depends on VIDEO_EXYNOS_CAMERA_POSTPROCESS_GDC
+	default n
+	help
+		Use to build GDC v2.0 driver
+
+config CAMERA_PP_GDC_V2_1_0_OBJ
+	tristate "use GDC v2.1"
+	depends on VIDEO_EXYNOS_CAMERA_POSTPROCESS_GDC
+	default n
+	help
+		Use to build GDC v2.1 driver
+
+config CAMERA_PP_GDC_V2_2_0_OBJ
+	tristate "use GDC v2.2"
+	depends on VIDEO_EXYNOS_CAMERA_POSTPROCESS_GDC
+	default n
+	help
+		Use to build GDC v2.2 driver
+
+config CAMERA_PP_GDC_V3_0_0_OBJ
+	tristate "use GDC v3.0"
+	depends on VIDEO_EXYNOS_CAMERA_POSTPROCESS_GDC
+	default n
+	help
+		Use to build GDC v3.0 driver
+
+config CAMERA_PP_GDC_V3_1_0_OBJ
+	tristate "use GDC v3.1"
+	depends on VIDEO_EXYNOS_CAMERA_POSTPROCESS_GDC
+	default n
+	help
+		Use to build GDC v3.1 driver
+
+config CAMERA_PP_GDC_V3_10_0_OBJ
+	tristate "use GDC v3.10"
+	depends on VIDEO_EXYNOS_CAMERA_POSTPROCESS_GDC
+	default n
+	help
+		Use to build GDC v3.10 driver
+
+config CAMERA_PP_GDC_V4_1_0_OBJ
+	tristate "use GDC v4.1"
+	depends on VIDEO_EXYNOS_CAMERA_POSTPROCESS_GDC
+	default n
+	help
+		Use to build GDC v4.1 driver
+
+config CAMERA_PP_GDC_V10_0_0_OBJ
+	tristate "use GDC v10.0"
+	depends on VIDEO_EXYNOS_CAMERA_POSTPROCESS_GDC
+	default n
+	help
+		Use to build GDC v10.0 driver
+
+config CAMERA_PP_GDC_V10_1_1_OBJ
+	tristate "use GDC v10.1.1"
+	depends on VIDEO_EXYNOS_CAMERA_POSTPROCESS_GDC
+	default n
+	help
+		Use to build GDC v10.1.1 driver
+
+config CAMERA_PP_GDC_V11_0_0_OBJ
+	tristate "use GDC v11.0"
+	depends on VIDEO_EXYNOS_CAMERA_POSTPROCESS_GDC
+	default n
+	help
+		Use to build GDC v11.0 driver
+
+config CAMERA_PP_GDC_V11_20_0_OBJ
+	tristate "use GDC v11.20"
+	depends on VIDEO_EXYNOS_CAMERA_POSTPROCESS_GDC
+	default n
+	help
+		Use to build GDC v11.20 driver
+
+config CAMERA_PP_GDC_V12_0_0_OBJ
+	tristate "use GDC v12.0"
+	depends on VIDEO_EXYNOS_CAMERA_POSTPROCESS_GDC
+	default n
+	help
+		Use to build GDC v12.0 driver
+
+config CAMERA_PP_GDC_V13_0_0_OBJ
+	tristate "use GDC v13.0"
+	depends on VIDEO_EXYNOS_CAMERA_POSTPROCESS_GDC
+	default n
+	help
+		Use to build GDC v13.0 driver
+
+config CAMERA_PP_GDC_V13_20_0_OBJ
+	tristate "use GDC v13.20"
+	depends on VIDEO_EXYNOS_CAMERA_POSTPROCESS_GDC
+	default n
+	help
+		Use to build GDC v13.20 driver
+
+config CAMERA_PP_GDC_HAS_HDR10P
+	tristate "use GDC HDR10+"
+	depends on VIDEO_EXYNOS_CAMERA_POSTPROCESS_GDC
+	default n
+	help
+		Use to build GDC HDR10+ related code
+
+config CAMERA_PP_GDC_VOTF_USE_MFC_API
+	tristate "use MFC API for vOTF"
+	depends on VIDEO_EXYNOS_CAMERA_POSTPROCESS_GDC
+	default n
+	help
+		Use to configure GDC to use the MFC API for VOTF operation. \
+		A version of GDC v13.0 or higher is required.
+
+#source "drivers/media/platform/exynos/camera/post/str/Kconfig"
+menuconfig VIDEO_EXYNOS_CAMERA_POSTPROCESS_STR
+	bool "EXYNOS CAMERA POSTPROCESS STR Driver"
+	depends on VIDEO_EXYNOS_CAMERA_POSTPROCESS
+	default n
+	help
+		This is a representative exynos CAMERA-PP STR device.
+
+config CAMERA_PP_STR_V1_0_0_OBJ
+	bool "Use camera post-processing STR V1.0.0"
+	depends on VIDEO_EXYNOS_CAMERA_POSTPROCESS_STR
+	default n
+	help
+		Use to build STR v1.0 driver
+
+		When this config is enabled,
+		STR device driver will use the API defined for STR v1.0.0.
+		The user interface to control STR driver must be matched with this API version.
+
+#source "drivers/media/platform/exynos/camera/post/vra/Kconfig"
+menuconfig VIDEO_EXYNOS_CAMERA_POSTPROCESS_VRA
+	tristate "EXYNOS CAMERA POSTPROCESS VRA Driver"
+	depends on VIDEO_EXYNOS_CAMERA_POSTPROCESS
+	default n
+	help
+		This is a representative exynos CAMERA-PP VRA device.
+
+config CAMERA_PP_VRA_V6_0_0_OBJ
+	tristate "use VGA v6.0.0"
+	depends on VIDEO_EXYNOS_CAMERA_POSTPROCESS_VRA
+	default n
+	help
+		Use to build VGA v6.0.0 driver
+
+#source "drivers/media/platform/exynos/camera/lib/votf/Kconfig"
+menuconfig VIDEO_EXYNOS_PABLO_LIB_VOTF
+	tristate "EXYNOS PABLO VOTF Driver"
+	default n
+	help
+		This is a representative exynos camera VOTF device.
+
+# TODO: deprecate CONFIG_VIDEO_EXYNOS_CAMERA_POSTPROCESS_VOTF
+menuconfig VIDEO_EXYNOS_CAMERA_POSTPROCESS_VOTF
+	tristate "EXYNOS PABLO VOTF Driver"
+	default n
+	help
+		This is a representative exynos camera VOTF device.
+
+#source "drivers/media/platform/exynos/camera/ischain/Kconfig"
+config PABLO_V10_1_0
+	bool "Use PABLO v10.1.0"
+	depends on SOC_S5E9925
+	depends on !SOC_S5E9925_EVT0
+	default y
+	select EXYNOS_DEVICE_MIPI_CSIS_VER4
+	select CSIS_V8_0
+	select PABLO_CAMIF_BNS
+	select CAMERA_CIS_SELECT
+	select CAMERA_ACT_SELECT
+	select CAMERA_FLASH_SELECT
+	select CAMERA_PDP
+	select CAMERA_DVFS_V2
+	select CAMERA_MEM_V2
+	select PDP_V4_1
+	select CSTAT_V1_1
+	select BYRP_V1_1
+	select RGBP_V1_1
+	select MCFP_V10_1
+	select YUVP_V1_1
+	select LME_V2_1
+	select COMMON_DMA_V1_0
+	select PABLO_HW_HELPER_V1
+	select PABLO_SENSOR_VC_VIDEO_NODE
+	help
+	  PABLO ISP version 10.1.0
+
+config PABLO_V10_20_0
+	bool "Use PABLO v10.20.0"
+	depends on SOC_S5E8825
+	default y
+	select EXYNOS_DEVICE_MIPI_CSIS_VER4
+	select CSIS_V5_4
+	select CAMERA_CIS_SELECT
+	select CAMERA_ACT_SELECT
+	select CAMERA_FLASH_SELECT
+	select CAMERA_PDP
+	select CAMERA_DVFS_V2
+	select CAMERA_MEM_V2
+	select PDP_V3_1
+	select TAA_V9_20
+	select ORBMCH_V2_1
+	select MCFP_V10_20
+	select DNS_V1_20
+	select ITP_V1_20
+	select COMMON_DMA_V1_0
+	select PABLO_HW_HELPER_V1
+	select PABLO_SENSOR_VC_VIDEO_NODE
+	help
+	  PABLO ISP version 10.20.0
+
+config PABLO_V11_0_0
+	bool "Use PABLO v11.0.0"
+	depends on SOC_S5E9935
+	default y
+	select PABLO_ICPU_HW_V1_0
+	select EXYNOS_DEVICE_MIPI_CSIS_VER4
+	select CSIS_V8_1
+	select CSIS_PDP_TOP_API
+	select CSIS_PDP_TOP_V5_0
+	select PABLO_CAMIF_BNS
+	select CAMERA_CIS_SELECT
+	select CAMERA_ACT_SELECT
+	select CAMERA_FLASH_SELECT
+	select CAMERA_PDP
+	select CAMERA_DVFS_V2
+	select CAMERA_MEM_V2
+	select PDP_V5_0
+	select CSTAT_V2_0
+	select COMMON_DMA_V2_0
+	select PABLO_HW_HELPER_V2
+	select PABLO_ICPU_ADT_V2
+	select PABLO_SENSOR_ADT
+	select PABLO_CRTA_BUFMGR
+	help
+	  PABLO ISP version 11.0.0
+
+config PABLO_V11_20_0
+	bool "Use PABLO v11.20.0"
+	depends on SOC_S5E8835
+	default y
+	select PABLO_ICPU_HW_V1_0
+	select EXYNOS_DEVICE_MIPI_CSIS_VER4
+	select CSIS_V5_4_8
+	select PABLO_CAMIF_BNS
+	select CAMERA_CIS_SELECT
+	select CAMERA_ACT_SELECT
+	select CAMERA_FLASH_SELECT
+	select CAMERA_PDP
+	select CAMERA_DVFS_V2
+	select CAMERA_MEM_V2
+	select PDP_V4_4
+	select CSTAT_V1_20
+	select COMMON_DMA_V1_0
+	select PABLO_HW_HELPER_V2
+	select PABLO_ICPU_ADT_V2
+	select PABLO_SENSOR_ADT
+	select PABLO_CRTA_BUFMGR
+	help
+	  PABLO ISP version 11.20.0
+
+config PABLO_V11_30_0
+	bool "Use PABLO v11.30.0"
+	depends on SOC_S5E8535
+	default y
+	select PABLO_ICPU_HW_V1_0
+	select EXYNOS_DEVICE_MIPI_CSIS_VER4
+	select CSIS_V5_4_8
+	select PABLO_CAMIF_BNS
+	select CAMERA_CIS_SELECT
+	select CAMERA_ACT_SELECT
+	select CAMERA_FLASH_SELECT
+	select CAMERA_PDP
+	select CAMERA_DVFS_V2
+	select CAMERA_MEM_V2
+	select PDP_V4_4
+	select CSTAT_V1_40
+	select COMMON_DMA_V1_0
+	select PABLO_HW_HELPER_V2
+	select PABLO_ICPU_ADT_V2
+	select PABLO_SENSOR_ADT
+	select PABLO_CRTA_BUFMGR
+	select PABLO_SENSOR_VC_VIDEO_NODE
+	help
+	  PABLO ISP version 11.30.0
+
+config PABLO_V12_0_0
+	bool "Use PABLO v12.0.0"
+	depends on SOC_S5E9945_EVT0
+	default y
+	select PABLO_ICPU_HW_V2_0
+	select EXYNOS_DEVICE_MIPI_CSIS_VER4
+	select CSIS_V6_0
+	select CSIS_PDP_TOP_API
+	select CSIS_PDP_TOP_V6_0
+	select PABLO_CAMIF_BNS
+	select CAMERA_CIS_SELECT
+	select CAMERA_ACT_SELECT
+	select CAMERA_FLASH_SELECT
+	select CAMERA_PDP
+	select CAMERA_DVFS_V2
+	select CAMERA_MEM_V2
+	select PDP_V6_0
+	select CSTAT_V3_0
+	select COMMON_DMA_V2_0
+	select PABLO_HW_HELPER_V2
+	select PABLO_ICPU_ADT_V2
+	select PABLO_SENSOR_ADT
+	select PABLO_CRTA_BUFMGR
+	select PABLO_DLFE
+	select DLFE_API_V1_0
+	help
+	  PABLO ISP version 12.0.0
+
+config PABLO_V12_1_0
+	bool "Use PABLO v12.1.0"
+	depends on SOC_S5E9945 && !SOC_S5E9945_EVT0
+	default y
+	select PABLO_ICPU_HW_V2_0
+	select EXYNOS_DEVICE_MIPI_CSIS_VER4
+	select CSIS_V6_0
+	select CSIS_PDP_TOP_API
+	select CSIS_PDP_TOP_V6_1
+	select PABLO_CAMIF_BNS
+	select CAMERA_CIS_SELECT
+	select CAMERA_ACT_SELECT
+	select CAMERA_FLASH_SELECT
+	select CAMERA_PDP
+	select CAMERA_DVFS_V2
+	select CAMERA_MEM_V2
+	select PDP_V6_0
+	select CSTAT_V3_0
+	select COMMON_DMA_V2_0
+	select PABLO_HW_HELPER_V2
+	select PABLO_ICPU_ADT_V2
+	select PABLO_SENSOR_ADT
+	select PABLO_CRTA_BUFMGR
+	select PABLO_DLFE
+	select DLFE_API_V1_0
+	select PABLO_CMN_CTRL
+	select PABLO_CMN_CTRL_API_V1_4
+	help
+	  PABLO ISP version 12.1.0
+
+config PABLO_V12_20_0
+	bool "Use PABLO v12.20.0"
+	depends on SOC_S5E8845
+	default y
+	select PABLO_ICPU_HW_V2_0
+	select EXYNOS_DEVICE_MIPI_CSIS_VER4
+	select CSIS_V5_20
+	select CSIS_PDP_TOP_API
+	select CSIS_PDP_TOP_V5_20
+	select PABLO_CAMIF_BNS
+	select CAMERA_CIS_SELECT
+	select CAMERA_ACT_SELECT
+	select CAMERA_FLASH_SELECT
+	select CAMERA_PDP
+	select CAMERA_DVFS_V2
+	select CAMERA_MEM_V2
+	select PDP_V5_0
+	select CSTAT_V2_20
+	select COMMON_DMA_V2_0
+	select PABLO_HW_HELPER_V2
+	select PABLO_ICPU_ADT_V2
+	select PABLO_SENSOR_ADT
+	select PABLO_CRTA_BUFMGR
+	help
+	  PABLO ISP version 12.20.0
+
+config PABLO_V13_0_0
+	bool "Use PABLO v13.0.0"
+	depends on SOC_S5E9955
+	default y
+	select PABLO_ICPU_HW_V13_0
+	select EXYNOS_DEVICE_MIPI_CSIS_VER4
+	select CSIS_V6_0
+	select CSIS_PDP_TOP_API
+	select CSIS_PDP_TOP_V13_0
+	select PABLO_CAMIF_BNS
+	select CAMERA_CIS_SELECT
+	select CAMERA_ACT_SELECT
+	select CAMERA_FLASH_SELECT
+	select CAMERA_PDP
+	select CAMERA_DVFS_V2
+	select CAMERA_MEM_V2
+	select PDP_V13_0
+	select COMMON_DMA_V2_0
+	select PABLO_MTNR
+	select PABLO_MSNR
+	select MTNR_API_V13_0
+	select PABLO_HW_HELPER_V2
+	select PABLO_ICPU_ADT_V2
+	select PABLO_SENSOR_ADT
+	select PABLO_CRTA_BUFMGR
+	select PABLO_CMN_CTRL
+	select PABLO_CMN_CTRL_API_V1_4
+	select PABLO_CMN_CTRL_API_V2_0
+	select BYRP_API_V4_0
+	select PABLO_YUVSC
+	select YUVSC_API_V13_0
+	select PABLO_RGBP
+	select RGBP_API_V13_0
+	select PABLO_MLSC
+	select MLSC_API_V13_0
+	select PABLO_MCSC
+	select MCSC_API_V13_0
+	help
+	  PABLO ISP version 13.0.0
+
+config PABLO_V13_20_0
+	bool "Use PABLO v13.20.0"
+	depends on SOC_S5E8855
+	default y
+	select PABLO_ICPU_HW_V2_0
+	select EXYNOS_DEVICE_MIPI_CSIS_VER4
+	select CSIS_V5_20
+	select CSIS_PDP_TOP_API
+	select CSIS_PDP_TOP_V5_20
+	select PABLO_CAMIF_BNS
+	select CAMERA_CIS_SELECT
+	select CAMERA_ACT_SELECT
+	select CAMERA_FLASH_SELECT
+	select CAMERA_PDP
+	select CAMERA_DVFS_V2
+	select CAMERA_MEM_V2
+	select PDP_V5_0
+	select CSTAT_V3_20
+	select COMMON_DMA_V2_0
+	select PABLO_HW_HELPER_V2
+	select PABLO_ICPU_ADT_V2
+	select PABLO_SENSOR_ADT
+	select PABLO_CRTA_BUFMGR
+	help
+	  PABLO ISP version 13.20.0
+
+config PABLO_V14_0_0
+	bool "Use PABLO v14.0.0"
+	depends on SOC_S5E9965
+	default y
+	select PABLO_ICPU_HW_V13_0
+	select EXYNOS_DEVICE_MIPI_CSIS_VER4
+	select CSIS_V6_0
+	select CSIS_PDP_TOP_API
+	select CSIS_PDP_TOP_V14_0
+	select PABLO_CAMIF_BNS
+	select CAMERA_CIS_SELECT
+	select CAMERA_ACT_SELECT
+	select CAMERA_FLASH_SELECT
+	select CAMERA_PDP
+	select CAMERA_DVFS_V2
+	select CAMERA_MEM_V2
+	select PDP_V14_0
+	select COMMON_DMA_V2_0
+	select PABLO_MTNR
+	select PABLO_MSNR
+	select MTNR_API_V13_0
+	select PABLO_HW_HELPER_V2
+	select PABLO_ICPU_ADT_V2
+	select PABLO_SENSOR_ADT
+	select PABLO_CRTA_BUFMGR
+	select PABLO_CMN_CTRL
+	select PABLO_CMN_CTRL_API_V1_4
+	select PABLO_CMN_CTRL_API_V2_0
+	select BYRP_API_V4_0
+	select PABLO_YUVSC
+	select YUVSC_API_V13_0
+	select PABLO_RGBP
+	select RGBP_API_V13_0
+	select PABLO_MLSC
+	select MLSC_API_V13_0
+	select PABLO_MCSC
+	select MCSC_API_V13_0
+	help
+	  PABLO ISP version 14.0.0
+
+#source "drivers/media/platform/exynos/camera/hardware/Kconfig"
+config CAMERA_PDP
+	bool "Use PDP"
+	depends on EXYNOS_DEVICE_CAMERA_MODULE
+	depends on VIDEO_EXYNOS_PABLO_ISP
+	default n
+	help
+	  Use to build PDP.
+
+config PABLO_RGBP
+	bool "Use Pablo RGBP HW Driver"
+	depends on EXYNOS_DEVICE_CAMERA_MODULE
+	depends on VIDEO_EXYNOS_PABLO_ISP
+	default n
+	help
+	  Use to build RGBP HW driver.
+
+config PABLO_DLFE
+	bool "Use Pablo DLFE HW Driver"
+	depends on EXYNOS_DEVICE_CAMERA_MODULE
+	depends on VIDEO_EXYNOS_PABLO_ISP
+	default n
+	help
+	  Use to build DLFE HW driver.
+
+config PABLO_YUVSC
+	bool "Use Pablo YUVSC HW Driver"
+	depends on EXYNOS_DEVICE_CAMERA_MODULE
+	depends on VIDEO_EXYNOS_PABLO_ISP
+	default n
+	help
+	  Use to build YUVSC HW driver.
+
+config PABLO_MTNR
+	bool "Use Pablo MTNR HW Driver"
+	depends on EXYNOS_DEVICE_CAMERA_MODULE
+	depends on VIDEO_EXYNOS_PABLO_ISP
+	default n
+	help
+	  Use to build MTNR(Multiframe temporal noise reduction) HW driver.
+
+config PABLO_MSNR
+	bool "Use Pablo MSNR HW Driver"
+	depends on EXYNOS_DEVICE_CAMERA_MODULE
+	depends on VIDEO_EXYNOS_PABLO_ISP
+	default n
+	help
+	  Use to build MSNR(Multi-layer spatial noise reduction) HW driver.
+
+config PABLO_MLSC
+	bool "Use Pablo MLSC HW Driver"
+	depends on EXYNOS_DEVICE_CAMERA_MODULE
+	depends on VIDEO_EXYNOS_PABLO_ISP
+	default n
+	help
+	  Use to build MLSC HW driver.
+
+config PABLO_MCSC
+	bool "Use Pablo MCSC HW Driver"
+	depends on EXYNOS_DEVICE_CAMERA_MODULE
+	depends on VIDEO_EXYNOS_PABLO_ISP
+	default n
+	help
+	  Use to build MCSC HW driver.
+
+config PABLO_HW_HELPER_V1
+	bool "HW HELPER V1"
+	default n
+	help
+	  Use HW HELPER V1.
+
+config PABLO_HW_HELPER_V2
+	bool "HW HELPER V2"
+	default n
+	help
+	  Use HW HELPER V2.
+
+#source "drivers/media/platform/exynos/camera/hardware/api/Kconfig"
+config VRA_V2_0
+	bool "Use VRA H/W v2.0"
+	depends on PABLO_V8_20_0
+	default n
+	help
+	  use vra v2.0
+
+config CSIS_PDP_TOP_API
+	bool "Use CSIS_PDP_TOP H/W API"
+	depends on VIDEO_EXYNOS_PABLO_ISP
+	default n
+	help
+	  use CSIS_PDP_TOP H/W API
+
+config CSIS_PDP_TOP_V5_0
+        bool "Use CSIS_PDP_TOP H/W v5.0"
+	depends on CSIS_PDP_TOP_API && PABLO_V11_0_0
+        default n
+        help
+          use CSIS_PDP_TOP v5.0
+
+config CSIS_PDP_TOP_V5_20
+        bool "Use CSIS_PDP_TOP H/W v5.20"
+	depends on CSIS_PDP_TOP_API && (PABLO_V12_20_0 || PABLO_V13_20_0)
+        default n
+        help
+          use CSIS_PDP_TOP v5.20
+
+config CSIS_PDP_TOP_V6_0
+        bool "Use CSIS_PDP_TOP H/W v6.0"
+	depends on CSIS_PDP_TOP_API && PABLO_V12_0_0
+        default n
+        help
+          use CSIS_PDP_TOP v6.0
+
+config CSIS_PDP_TOP_V6_1
+        bool "Use CSIS_PDP_TOP H/W v6.1"
+	depends on CSIS_PDP_TOP_API && PABLO_V12_1_0
+        default n
+        help
+          use CSIS_PDP_TOP v6.1
+
+config CSIS_PDP_TOP_V13_0
+	bool "Use CSIS_PDP_TOP H/W v13.0"
+	depends on CSIS_PDP_TOP_API && PABLO_V13_0_0
+	default n
+	help
+	  CSIS_PDP_TOP API gives the set of functions on HW level to driver
+	  that makes it control the modules reside in CSIS_PDP_TOP domain.
+	  The API version v13.0 is only valid for the Pablo ISP v13.0 &
+	  To enable this configuration, it needs to select both API & version.
+
+config CSIS_PDP_TOP_V14_0
+    bool "Use CSIS_PDP_TOP H/W v14.0"
+	depends on CSIS_PDP_TOP_API && PABLO_V14_0_0
+    default n
+    help
+      use CSIS_PDP_TOP v14.0
+
+config PDP_V1_0_0
+        bool "Use PDP H/W v1.0.0"
+	depends on  PABLO_V8_1_0 || PABLO_V8_10_0
+        default n
+        help
+          use PDP v1.0.0
+
+config PDP_V3_1
+        bool "Use PDP H/W v3.1"
+	depends on PABLO_V9_1_0 || PABLO_V9_10_0 || PABLO_V10_20_0
+        default n
+        help
+          use PDP v3.1
+
+config PDP_V4_1
+	bool "Use PDP H/W v4.1"
+	depends on PABLO_V10_1_0
+	default n
+	help
+	  use PDP v4.1
+
+config PDP_V4_4
+	bool "Use PDP H/W v4.4"
+	depends on PABLO_V11_30_0 || PABLO_V11_20_0
+	default n
+	help
+	  use PDP v4.4
+
+config PDP_V5_0
+	bool "Use PDP H/W v5.0"
+	depends on PABLO_V11_0_0 || PABLO_V12_20_0 || PABLO_V13_20_0
+	default n
+	help
+	  use PDP v5.0
+
+config PDP_V6_0
+	bool "Use PDP H/W v6.0"
+	depends on PABLO_V12_0_0 || PABLO_V12_1_0
+	default n
+	help
+	  use PDP v6.0
+
+config PDP_V13_0
+	bool "Use PDP H/W v13.0"
+	depends on PABLO_V13_0_0 || PABLO_V14_0_0
+	default n
+	help
+	  Use PDP v13.0 HW API.
+	  Sine select this configuration,
+	  the PDP hw_ip driver uses the API set provided for PDP v13.0.
+	  Compared to PDP v6.0, there is only single new CR to configure input mux.
+
+config PDP_V14_0
+	bool "Use PDP H/W v14.0"
+	depends on PABLO_V14_0_0
+	default n
+	help
+	  use PDP v14.0
+	  Compared to PDP v13.0, only ROI stat bitwidth is different.
+
+config CSTAT_V1_1
+	bool "Use CSTAT H/W v1.1"
+	depends on PABLO_V10_1_0
+	default n
+	help
+	 use CSTAT v1.1
+
+config CSTAT_V2_0
+	bool "Use CSTAT H/W v2.0"
+	depends on PABLO_V11_0_0
+	default n
+	help
+	 use CSTAT v2.0
+
+config CSTAT_V1_20
+	bool "Use CSTAT H/W v1.20"
+	depends on PABLO_V11_20_0
+	default n
+	help
+	 use CSTAT v1.20
+
+config CSTAT_V1_40
+	bool "Use CSTAT H/W v1.40"
+	depends on PABLO_V11_30_0
+	default n
+	help
+	 use CSTAT v1.40
+
+config CSTAT_V2_20
+	bool "Use CSTAT H/W v2.20"
+	depends on PABLO_V12_20_0
+	default n
+	help
+	 use CSTAT v2.20
+
+config CSTAT_V3_0
+	bool "Use CSTAT H/W v3.0"
+	depends on PABLO_V12_0_0 || PABLO_V12_1_0
+	default n
+	help
+	 use CSTAT v3.0
+
+config CSTAT_V3_20
+	bool "Use CSTAT H/W v3.20"
+	depends on PABLO_V13_20_0
+	default n
+	help
+	 use CSTAT v3.20
+
+config YUVPP_V2_1
+        bool "Use YUVPP H/W v2.1"
+	depends on PABLO_V9_1_0 || PABLO_V9_10_0 || PABLO_V10_20_0
+        default n
+	help
+	  use YUVPP v2.1
+
+config BYRP_V1_1
+        bool "Use BYRP H/W v1.1"
+	depends on PABLO_V10_1_0
+        default n
+        help
+          use BYRP v1.1
+
+config BYRP_API_V4_0
+	bool "Use BYRP H/W API v4.0"
+	depends on PABLO_V13_0_0 || PABLO_V14_0_0
+	default n
+	help
+	  This option enable or disable byrp hw api v4.0.
+
+config RGBP_V1_1
+        bool "Use RGBP H/W v1.1"
+	depends on PABLO_V10_1_0
+        default n
+        help
+          use RGBP v1.1
+
+config LME_V1_1
+	bool "Use LME H/W v1.1"
+	depends on PABLO_V9_1_0 || PABLO_V9_10_0
+	default n
+	help
+	  use LME v1.1
+
+config LME_V2_1
+	bool "Use LME H/W v2.1"
+	depends on PABLO_V10_1_0
+	default n
+	help
+	  use LME v2.1
+
+config LME_V2_20
+	bool "Use LME H/W v2.20"
+	depends on PABLO_V11_30_0 || PABLO_V11_20_0
+	default n
+	help
+	  use LME v2.20
+
+config LME_V3_0
+	bool "Use LME H/W v3.0"
+	depends on PABLO_V11_0_0
+	default n
+	help
+	  use LME v3.0
+
+config LME_V4_0
+	bool "Use LME H/W v4.0"
+	depends on PABLO_V12_0_0 || PABLO_V12_1_0 || PABLO_V12_20_0 || PABLO_V13_0_0
+	default n
+	help
+	  use LME v4.0
+
+config COMMON_DMA_V1_0
+	bool "Use Common DMA"
+	depends on PABLO_V8_1_0 || PABLO_V8_10_0 || PABLO_V8_20_0 ||  PABLO_V9_1_0 || PABLO_V9_10_0 || PABLO_V10_1_0 || PABLO_V10_20_0 || PABLO_V11_20_0 || PABLO_V11_30_0
+	default n
+	help
+	  use COMMON DMA
+
+config COMMON_DMA_V2_0
+	bool "Use Common DMA V2"
+	depends on PABLO_V11_0_0 || PABLO_V12_0_0 || PABLO_V12_1_0 || PABLO_V12_20_0 || PABLO_V13_0_0 || PABLO_V13_20_0 || PABLO_V14_0_0
+	default n
+	help
+	  use COMMON DMA V2
+
+config MCFP_V10_1
+        bool "Use MCFP H/W v10.1"
+	depends on PABLO_V10_1_0
+        default n
+        help
+          use MCFP v10.1
+
+config MCFP_V11_0
+        bool "Use MCFP H/W v11.0"
+	depends on PABLO_V11_0_0 || PABLO_V11_30_0
+        default n
+        help
+          use MCFP v11.0
+
+config MCFP_V11_20
+        bool "Use MCFP H/W v11.20"
+	depends on PABLO_V11_30_0 || PABLO_V11_20_0
+        default n
+        help
+          use MCFP v11.20
+
+config YUVP_V1_1
+        bool "Use YUVP H/W v1.1"
+	depends on PABLO_V10_1_0
+        default n
+        help
+          use YUVP v1.1
+
+config TAA_V9_20
+        bool "Use TAA H/W v9.20"
+	depends on PABLO_V10_20_0
+        default n
+        help
+          use 3AA v9.20
+
+config ORBMCH_V2_1
+	bool "Use ORBMCH H/W v2.1"
+	depends on PABLO_V10_20_0
+	default n
+	help
+	  use ORBMCH v2.1
+
+config DNS_V1_20
+        bool "Use DNS H/W v1.20"
+	depends on PABLO_V10_20_0
+        default n
+        help
+          use DNS v1.20
+
+config ITP_V1_20
+        bool "Use ITP H/W v1.20"
+	depends on PABLO_V10_20_0
+        default n
+        help
+          use ITP v1.0
+
+config MCFP_V10_20
+	bool "Use MCFP H/W v10.20"
+	depends on PABLO_V10_20_0
+	default n
+	help
+	  use MCFP v10.20
+
+config RGBP_API_V13_0
+	bool "Use RGBP H/W API v13.0"
+	depends on PABLO_RGBP
+	default n
+	help
+	  use RGBP HW API v13.0
+
+config DLFE_API_V1_0
+	bool "Use DLFE H/W API v1.0"
+	depends on PABLO_DLFE
+	default n
+	help
+	  use DLFE HW API v1.0
+
+config YUVSC_API_V13_0
+	bool "Use YUVSC H/W API v13.0"
+	depends on PABLO_YUVSC
+	default n
+	help
+	  use YUVSC HW API v13.0
+
+config MLSC_API_V13_0
+	bool "Use MLSC H/W API v13.0"
+	depends on PABLO_MLSC
+	default n
+	help
+	  use MLSC HW API v13.0
+
+config MCSC_API_V13_0
+	bool "Use MCSC H/W API v13.0"
+	depends on PABLO_MCSC
+	default n
+	help
+	  use MCSC HW API v13.0
+
+config PABLO_CMN_CTRL
+	bool "Use Pablo Common CTRL"
+	default n
+	help
+	  Pablo Common-CTRL gives the commonized API for each HW_IP driver
+	  who has ISP common-ctrl CR set to configure the HW.
+	  As enabling this feature, it doesn't necessary to care about the
+	  SW control sequence to configure the HW as guided by common-ctrl.
+
+config PABLO_CMN_CTRL_API_V1_4
+	bool "Use Pablo Common CTRL API v1.4"
+	depends on PABLO_CMN_CTRL
+	default n
+	help
+	  Use Pablo Common_CTRL API v1.4
+
+config PABLO_CMN_CTRL_API_V2_0
+	bool "Use Pablo Common CTRL API v2.0"
+	depends on PABLO_CMN_CTRL
+	default n
+	help
+	  Use Pablo Common_CTRL API v2.0
+
+config MTNR_API_V13_0
+	bool "Use MTNR H/W v13.0"
+	depends on PABLO_V13_0_0 || PABLO_V14_0_0
+	default n
+	help
+	  use MTNR v13.0
+
+#source "drivers/media/platform/exynos/camera/vendor/Kconfig"
+#menu depth2
+menu "Vendor Feature Setting"
+	depends on VIDEO_EXYNOS_PABLO_ISP
+
+choice VENDOR_FEATURES
+	prompt "Use vendor features"
+	depends on VIDEO_EXYNOS_PABLO_ISP
+	default CAMERA_VENDOR_DEFAULT
+	help
+	  Use the vendor specific features.
+
+config CAMERA_VENDOR_DEFAULT
+        bool "Default"
+config CAMERA_VENDOR_MCD
+        bool "MCD"
+endchoice
+endmenu
+
+#source "drivers/media/platform/exynos/camera/vendor/default/Kconfig"
+#source "drivers/media/platform/exynos/camera/vendor/mcd/Kconfig"
+#
+# Generic vendor feature config states
+#
+
+# Enable the vendor features
+config SECURE_CAMERA_USE
+	tristate "Use secure camera"
+	depends on CAMERA_VENDOR_DEFAULT
+	default n
+	help
+	  Use secure camera.
+
+# Enable the vendor mcd features
+config CAMERA_HW_BIG_DATA
+        tristate "Enable hw big data"
+        depends on CAMERA_VENDOR_MCD
+        default n
+        help
+          Enable hw big data.
+config COMPANION_DCDC_USE
+        bool "Use companion DCDC regulator"
+        depends on CAMERA_VENDOR_MCD
+        default n
+        help
+          Use companion DCDC regulator.
+config SENSOR_RETENTION_USE
+        bool "Use sensor retention"
+        depends on CAMERA_VENDOR_MCD
+        default n
+        help
+          Use sensor retention.
+config OIS_USE
+        bool "Use ois"
+        depends on CAMERA_VENDOR_MCD
+        default n
+        help
+          Use ois.
+config OIS_FW_UPDATE_THREAD_USE
+        bool "Enable ois fw update thread"
+        depends on OIS_USE
+        default n
+        help
+          Enable ois fw update thread.
+config AF_HOST_CONTROL
+        bool "Enable host af control"
+        depends on CAMERA_VENDOR_MCD
+        default n
+        help
+          Enable host af control.
+config TORCH_CURRENT_CHANGE_SUPPORT
+        bool "Change torch current in recording mode"
+        depends on CAMERA_VENDOR_MCD
+        default n
+        help
+          Change torch current in recording mode.
+config FLASH_CURRENT_CHANGE_SUPPORT
+        bool "Change flash current in capturing image"
+        depends on CAMERA_VENDOR_MCD
+        default n
+        help
+           Change torch current in capturing image.
+config USE_SIGNED_BINARY
+        bool "Enable signed binary processing."
+        depends on CAMERA_VENDOR_MCD
+        default n
+        help
+          Enable signed binary processing.
+config USE_CAMERA_LDU
+        bool "Use Camera LDU"
+        depends on CAMERA_VENDOR_MCD
+        default n
+        help
+          Use Camera LDU.
+config CAMERA_CIS_TOF_BUCK_USE
+        bool "Use isl91128 for tof"
+        depends on CAMERA_VENDOR_MCD
+        default n
+        help
+          Use isl91128.
+config CAMERA_USE_MCU
+        bool "Use Camera mcu"
+        depends on CAMERA_VENDOR_MCD
+        default n
+        help
+          Use Camera MCU.
+config SENSORCORE_MCU_CONTROL
+        bool "Use sensor core mcu control"
+        depends on CAMERA_VENDOR_MCD
+        default n
+        help
+          Use sensor control mcu.
+config CAMERA_USE_INTERNAL_MCU
+        bool "Use internal MCU for OIS"
+        depends on CAMERA_VENDOR_MCD
+        default n
+        help
+          Use internal MCU for OIS.
+config CAMERA_AAY_V56X
+        bool "This camera is aay_v56x"
+        depends on CAMERA_VENDOR_MCD
+        default n
+        help
+          This camera is aay_v56x.
+config CAMERA_STY_V50
+        bool "This camera is sty_v50"
+        depends on CAMERA_VENDOR_MCD
+        default n
+        help
+          This camera is sty_v50.
+config CAMERA_FSY_V01
+        bool "This camera is fsy_v01"
+        depends on CAMERA_VENDOR_MCD
+        default n
+        help
+          This camera is fsy_v01.
+config CAMERA_FSY_V02
+        bool "This camera is fsy_v02"
+        depends on CAMERA_VENDOR_MCD
+        default n
+        help
+          This camera is fsy_v02.
+config CAMERA_FSY_V03
+        bool "This camera is fsy_v03"
+        depends on CAMERA_VENDOR_MCD
+        default n
+        help
+          This camera is fsy_v03.
+config CAMERA_RSX_V12
+        bool "This camera is rsx_v12"
+        depends on CAMERA_VENDOR_MCD
+        default n
+        help
+          This camera is rsx_v12.
+config USE_OIS_TAMODE_CONTROL
+	bool "Use ois TAMODE control"
+        depends on CAMERA_VENDOR_MCD
+        default n
+        help
+          Use ois TAMODE control.
+config MCU_S5E9925_EVT0
+	bool "Mcu s5e9925 evt0"
+        depends on CAMERA_VENDOR_MCD
+        default n
+        help
+          Mcu s5e9925 evt0.
+
+#source "drivers/media/platform/exynos/camera/interface/Kconfig"
+config PABLO_ICPU_ADT_V2
+	bool "Use icpu adt v2"
+	default n
+	help
+	  Use icpu adt v2.
+
+config PABLO_SENSOR_ADT
+	bool "Use sensor adt"
+	default n
+	help
+	  Use sensor adt.
+
+# Sensor driver
+#source "drivers/media/platform/exynos/camera/sensor/Kconfig"
+config EXYNOS_DEVICE_CAMERA_MODULE
+	bool "Use Camera modules"
+	depends on VIDEO_EXYNOS_PABLO_ISP
+	default y
+	help
+	  Select camera module.
+
+config PABLO_SENSOR_VC_VIDEO_NODE
+	bool "Use Pablo Sensor VC subdev video nodes"
+	depends on VIDEO_EXYNOS_PABLO_ISP
+	default n
+	help
+	  Select whether this SOC should give
+	  the interface to get the video buffer from user
+	  through physical V4L2 video node or not.
+	  When it set into 'false', the buffer should be delivered
+	  through LVN node interface.
+
+#source "drivers/media/platform/exynos/camera/sensor/module_framework/cis/Kconfig"
+menuconfig CAMERA_CIS_SELECT
+	bool "CIS select"
+	depends on EXYNOS_DEVICE_CAMERA_MODULE
+	help
+	  Say Y here to enable support for platform-specific V4L drivers.
+
+config CAMERA_CIS_6B2_OBJ
+        tristate "Use 6B2 camera cis"
+	depends on CAMERA_CIS_SELECT
+        default n
+        help
+          Use to build 6B2 camera sensor.
+
+config CAMERA_CIS_5E2_OBJ
+        tristate "Use 5E2 camera cis"
+	depends on CAMERA_CIS_SELECT
+        default n
+        help
+          Use to build 5E2 camera sensor.
+
+config CAMERA_CIS_5E3_OBJ
+        tristate "Use 5E3 camera cis"
+	depends on CAMERA_CIS_SELECT
+        default n
+        help
+          Use to build 5E3 camera sensor.
+
+config CAMERA_CIS_4H5YC_OBJ
+        tristate "Use 4H5YC camera cis"
+	depends on CAMERA_CIS_SELECT
+        default n
+        help
+          Use to build 4H5YC camera sensor.
+
+config CAMERA_CIS_4H5_OBJ
+        tristate "Use 4H5 camera cis"
+	depends on CAMERA_CIS_SELECT
+        default n
+        help
+          Use to build 4H5 camera sensor.
+
+config CAMERA_CIS_2P2_OBJ
+		tristate "Use 2P2 camera cis"
+	depends on CAMERA_CIS_SELECT
+		default n
+		help
+		  Use to build 2P2 camera sensor.
+
+config CAMERA_CIS_2P6_OBJ
+		tristate "Use 2P6 camera cis"
+	depends on CAMERA_CIS_SELECT
+		default n
+		help
+		  Use to build 2P6 camera sensor.
+
+config CAMERA_CIS_2P8_OBJ
+		tristate "Use 2P8 camera cis"
+	depends on CAMERA_CIS_SELECT
+		default n
+		help
+		  Use to build 2P8 camera sensor.
+
+config CAMERA_CIS_2X5_OBJ
+	tristate "Use 2X5 camera cis"
+	depends on CAMERA_CIS_SELECT
+	default n
+	help
+	  Use to build 2X5 camera sensor.
+
+config CAMERA_CIS_3P3_OBJ
+		tristate "Use 3P3 camera cis"
+	depends on CAMERA_CIS_SELECT
+		default n
+		help
+		  Use to build 3P3 camera sensor.
+
+config CAMERA_CIS_3L2_OBJ
+		tristate "Use 3L2 camera cis"
+	depends on CAMERA_CIS_SELECT
+		default n
+		help
+		  Use to build 3L2 camera sensor.
+
+config CAMERA_CIS_3L6_OBJ
+		tristate "Use 3L6 camera cis"
+	depends on CAMERA_CIS_SELECT
+		default n
+		help
+		  Use to build 3L6 camera sensor.
+
+config CAMERA_CIS_3H1_OBJ
+		tristate "Use 3H1 camera cis"
+	depends on CAMERA_CIS_SELECT
+		default n
+		help
+		  Use to build 3H1 camera sensor.
+
+config CAMERA_CIS_3H1_C3_OBJ
+		tristate "Use 3H1 camera cis for companion"
+	depends on CAMERA_CIS_SELECT
+		default n
+		help
+		  Use to build 3H1 camera sensor.
+
+config CAMERA_CIS_3J1_OBJ
+		tristate "Use 3J1 camera cis"
+	depends on CAMERA_CIS_SELECT
+		default n
+		help
+		  Use to build 3J1 camera sensor.
+
+config CAMERA_CIS_4E6_OBJ
+		tristate "Use 4E6 camera cis"
+	depends on CAMERA_CIS_SELECT
+		default n
+		help
+		  Use to build 4E6 camera sensor.
+
+config CAMERA_CIS_5E6_OBJ
+		tristate "Use 5E6 camera cis"
+	depends on CAMERA_CIS_SELECT
+		default n
+		help
+		  Use to build 5E6 camera sensor.
+
+config CAMERA_CIS_5F1_OBJ
+		tristate "Use 5F1 camera cis"
+	depends on CAMERA_CIS_SELECT
+		default n
+		help
+		  Use to build 5F1 camera sensor.
+
+config CAMERA_CIS_3M2_OBJ
+		tristate "Use 3M2 camera cis"
+	depends on CAMERA_CIS_SELECT
+		default n
+		help
+		  Use to build 3M2 camera sensor.
+
+config CAMERA_CIS_3M3_OBJ
+		tristate "Use 3M3 camera cis"
+	depends on CAMERA_CIS_SELECT
+		default n
+		help
+		  Use to build 3M3 camera sensor.
+
+config CAMERA_CIS_3M5_OBJ
+		tristate "Use 3M5 camera cis"
+	depends on CAMERA_CIS_SELECT
+		default n
+		help
+		  Use to build 3M5 camera sensor.
+
+config CAMERA_CIS_GH1_OBJ
+		tristate "Use GH1 camera cis"
+	depends on CAMERA_CIS_SELECT
+		default n
+		help
+		  Use to build GH1 camera sensor.
+
+config CAMERA_CIS_GW2_OBJ
+		tristate "Use GW2 camera cis"
+	depends on CAMERA_CIS_SELECT
+		default n
+		help
+		  Use to build GW2 camera sensor.
+
+config CAMERA_CIS_2L1_OBJ
+		tristate "Use 2L1 camera cis"
+	depends on CAMERA_CIS_SELECT
+		default n
+		help
+		  Use to build 2L1 camera sensor.
+
+config CAMERA_CIS_3P8_OBJ
+		tristate "Use 3P8 camera cis"
+	depends on CAMERA_CIS_SELECT
+		default n
+		help
+		  Use to build 3P8 camera sensor.
+
+config CAMERA_CIS_3P9_OBJ
+		tristate "Use 3P9 camera cis"
+	depends on CAMERA_CIS_SELECT
+		default n
+		help
+		  Use to build 3P9 camera sensor.
+
+config CAMERA_CIS_3P8SP_OBJ
+		tristate "Use 3P8SP camera cis"
+	depends on CAMERA_CIS_SELECT
+		default n
+		help
+		  Use to build 3P8SP camera sensor.
+
+config CAMERA_CIS_2P7SX_OBJ
+		tristate "Use 2P7SX camera cis"
+	depends on CAMERA_CIS_SELECT
+		default n
+		help
+		  Use to build 2P7SX camera sensor.
+
+config CAMERA_CIS_2P7SQ_OBJ
+		tristate "Use 2P7SQ camera cis"
+	depends on CAMERA_CIS_SELECT
+		default n
+		help
+		  Use to build 2P7SQ camera sensor.
+
+config CAMERA_CIS_2T7SX_OBJ
+		tristate "Use 2T7SX camera cis"
+	depends on CAMERA_CIS_SELECT
+		default n
+		help
+		  Use to build 2T7SX camera sensor.
+
+config CAMERA_CIS_2L2_OBJ
+		tristate "Use 2L2 camera cis"
+	depends on CAMERA_CIS_SELECT
+		default n
+		help
+		  Use to build 2L2 camera sensor.
+
+config CAMERA_CIS_2L3_OBJ
+		tristate "Use 2L3 camera cis"
+	depends on CAMERA_CIS_SELECT
+		default n
+		help
+		  Use to build 2L3 camera sensor.
+
+config CAMERA_CIS_2L4_OBJ
+		tristate "Use 2L4 camera cis"
+	depends on CAMERA_CIS_SELECT
+		default n
+		help
+		  Use to build 2L4 camera sensor.
+
+config CAMERA_CIS_2LA_OBJ
+		tristate "Use 2LA camera cis"
+	depends on CAMERA_CIS_SELECT
+		default n
+		help
+		  Use to build 2LA camera sensor.
+
+config CAMERA_CIS_2LD_OBJ
+		tristate "Use 2LD camera cis"
+	depends on CAMERA_CIS_SELECT
+		default n
+		help
+		  Use to build 2LD camera sensor.
+
+config CAMERA_CIS_GN3_OBJ
+		tristate "Use GN3 camera cis"
+	depends on CAMERA_CIS_SELECT
+		default n
+		help
+		  Use to build GN3 camera sensor.
+
+config CAMERA_CIS_HM1_OBJ
+		tristate "Use HM1 camera cis"
+	depends on CAMERA_CIS_SELECT
+		default n
+		help
+		  Use to build HM1 camera sensor.
+
+config CAMERA_CIS_HM3_OBJ
+	tristate "Use HM3 camera cis"
+	depends on CAMERA_CIS_SELECT
+	default n
+	help
+	  Use to build HM3 camera sensor.
+
+config CAMERA_CIS_HP2_OBJ
+		tristate "Use HP2 camera cis"
+	depends on CAMERA_CIS_SELECT
+		default n
+		help
+		  Use to build HP2 camera sensor.
+
+config CAMERA_CIS_IMX260_OBJ
+		tristate "Use IMX260 camera cis"
+	depends on CAMERA_CIS_SELECT
+		default n
+		help
+		  Use to build IMX260 camera sensor.
+
+config CAMERA_CIS_IMX333_OBJ
+		tristate "Use IMX333 camera cis"
+	depends on CAMERA_CIS_SELECT
+		default n
+		help
+		  Use to build IMX333 camera sensor.
+
+config CAMERA_CIS_IMX374_OBJ
+		tristate "Use IMX374 camera cis"
+	depends on CAMERA_CIS_SELECT
+		default n
+		help
+		  Use to build IMX374 camera sensor.
+
+config CAMERA_CIS_IMX682_OBJ
+		tristate "Use IMX682 camera cis"
+	depends on CAMERA_CIS_SELECT
+		default n
+		help
+		  Use to build IMX682 camera sensor.
+
+config CAMERA_CIS_2L7_OBJ
+		tristate "Use 2L7 camera cis"
+	depends on CAMERA_CIS_SELECT
+		default n
+		help
+		  Use to build 2L7 camera sensor.
+
+config CAMERA_CIS_IMX320_OBJ
+		tristate "Use IMX320 camera cis"
+	depends on CAMERA_CIS_SELECT
+		default n
+		help
+		  Use to build IMX320 camera sensor.
+
+config CAMERA_CIS_IMX320_C3_OBJ
+		tristate "Use IMX320_C3 camera cis"
+	depends on CAMERA_CIS_SELECT
+		default n
+		help
+		  Use to build IMX320_C3 camera sensor.
+
+config CAMERA_CIS_IMX219_OBJ
+		tristate "Use IMX219 camera cis"
+	depends on CAMERA_CIS_SELECT
+		default n
+		help
+		  Use to build IMX219 camera sensor.
+
+config CAMERA_CIS_IMX258_OBJ
+		tristate "Use IMX258 camera cis"
+	depends on CAMERA_CIS_SELECT
+		default n
+		help
+		  Use to build IMX258 camera sensor.
+
+config CAMERA_CIS_IMX241_OBJ
+		tristate "Use IMX241 camera cis"
+	depends on CAMERA_CIS_SELECT
+		default n
+		help
+		  Use to build IMX241 camera sensor.
+
+config CAMERA_CIS_IMX355_OBJ
+		tristate "Use IMX355 camera cis"
+	depends on CAMERA_CIS_SELECT
+		default n
+		help
+		  Use to build IMX355 camera sensor.
+
+config CAMERA_CIS_SR259_OBJ
+		tristate "Use SR259 camera cis"
+	depends on CAMERA_CIS_SELECT
+		default n
+		help
+		  Use to build SR259 camera sensor.
+
+config CAMERA_CIS_4HA_OBJ
+		tristate "Use 4HA camera cis"
+	depends on CAMERA_CIS_SELECT
+		default n
+		help
+		  Use to build 4HA camera sensor.
+
+config CAMERA_CIS_HM6_OBJ
+		tristate "Use HM6 camera cis"
+	depends on CAMERA_CIS_SELECT
+		default n
+		help
+		  Use to build HM6 camera sensor.
+
+config CAMERA_CIS_IMX563_OBJ
+	tristate "Use IMX563 camera cis"
+	depends on CAMERA_CIS_SELECT
+	default n
+	help
+	  Use to build IMX563 camera sensor.
+
+config CAMERA_CIS_IMX576_OBJ
+		tristate "Use IMX576 camera cis"
+	depends on CAMERA_CIS_SELECT
+		default n
+		help
+		  Use to build IMX576 camera sensor.
+
+config CAMERA_CIS_IMX316_OBJ
+		tristate "Use IMX316 camera cis"
+	depends on CAMERA_CIS_SELECT
+		default n
+		help
+		  Use to build IMX316 camera sensor.
+
+config CAMERA_CIS_IMX516_OBJ
+		tristate "Use IMX516 camera cis"
+	depends on CAMERA_CIS_SELECT
+		default n
+		help
+		  Use to build IMX516 camera sensor.
+
+config CAMERA_CIS_IMX518_OBJ
+		tristate "Use IMX518 camera cis"
+	depends on CAMERA_CIS_SELECT
+		default n
+		help
+		  Use to build IMX518 camera sensor.
+
+config CAMERA_CIS_5E9_OBJ
+		tristate "Use S5K5E9 camera cis"
+	depends on CAMERA_CIS_SELECT
+		default n
+		help
+		  Use to build S5K5E9 camera sensor.
+
+config CAMERA_CIS_GC5035_OBJ
+	tristate "Use GC5035 camera cis"
+	depends on CAMERA_CIS_SELECT
+	default n
+	help
+	  Use to build GC5035 camera sensor.
+
+config CAMERA_CIS_GC05A3_OBJ
+	tristate "Use GC05a3 camera cis"
+	depends on CAMERA_CIS_SELECT
+	default n
+	help
+	  Use to build GC05A3 camera sensor.
+
+config CAMERA_CIS_GC02M1_OBJ
+	tristate "Use GC02M1 camera cis"
+	depends on CAMERA_CIS_SELECT
+	default n
+	help
+	  Use to build GC02M1 camera sensor.
+
+config CAMERA_CIS_GM1SP_OBJ
+		tristate "Use GM1SP camera cis"
+	depends on CAMERA_CIS_SELECT
+		default n
+		help
+		  Use to build GM1SP camera sensor.
+
+config CAMERA_CIS_VIRTUAL_OBJ
+		tristate "Use VIRTUAL camera cis"
+	depends on CAMERA_CIS_SELECT
+		default n
+		help
+		  Use to build VIRTUAL camera sensor.
+
+config CAMERA_CIS_ZEBU_OBJ
+	tristate "Use ZEBU camera cis"
+	depends on CAMERA_CIS_SELECT
+	default n
+	help
+	  Use to build ZEBU camera sensor.
+
+config CAMERA_CIS_IMX582_OBJ
+	tristate "Use IMX582 camera cis"
+	depends on CAMERA_CIS_SELECT
+	default n
+	help
+	  Use to build IMX582 camera sensor.
+
+config CAMERA_CIS_IMX616_OBJ
+	tristate "Use IMX616 camera cis"
+	depends on CAMERA_CIS_SELECT
+	default n
+	help
+	  Use to build IMX616 camera sensor.
+
+config CAMERA_CIS_GD1_OBJ
+	tristate "Use GD1 camera cis"
+	depends on CAMERA_CIS_SELECT
+	default n
+	help
+	  Use to build GD1 camera sensor.
+
+config CAMERA_CIS_HI1336_OBJ
+	tristate "Use HI1336 camera cis"
+	depends on CAMERA_CIS_SELECT
+	default n
+	help
+	  Use to build HI1336 camera sensor.
+
+config CAMERA_CIS_HI1337_OBJ
+	tristate "Use HI1337 camera cis"
+	depends on CAMERA_CIS_SELECT
+	default n
+	help
+	  Use to build HI1337 camera sensor.
+
+config CAMERA_CIS_OV13A10_OBJ
+	tristate "Use OV13A10 camera cis"
+	depends on CAMERA_CIS_SELECT
+	default n
+	help
+	  Use to build OV13A10 camera sensor.
+
+config CAMERA_CIS_GM2_OBJ
+	tristate "Use GM2 camera cis"
+	depends on CAMERA_CIS_SELECT
+	default n
+	help
+	  Use to build GM2 camera sensor.
+
+config CAMERA_CIS_IMX586_OBJ
+	tristate "Use IMX586 camera cis"
+	depends on CAMERA_CIS_SELECT
+	default n
+	help
+	  Use to build IMX586 camera sensor.
+
+config CAMERA_CIS_GW1_OBJ
+	tristate "Use GW1 camera cis"
+	depends on CAMERA_CIS_SELECT
+	default n
+	help
+	  Use to build GW1 camera sensor.
+
+config CAMERA_CIS_GW1_V2_OBJ
+	tristate "Use GW1-v2 camera cis"
+	depends on CAMERA_CIS_SELECT
+	default n
+	help
+	  Use to build GW1-v2 camera sensor.
+
+config CAMERA_CIS_IMX686_OBJ
+	tristate "Use IMX686 camera cis"
+	depends on CAMERA_CIS_SELECT
+	default n
+	help
+	  Use to build IMX686 camera sensor.
+
+config CAMERA_CIS_HI846_OBJ
+	tristate "Use HI846 camera cis"
+	depends on CAMERA_CIS_SELECT
+	default n
+	help
+	  Use to build HI846 camera sensor.
+
+config CAMERA_CIS_GD1_TELE_OBJ
+	tristate "Use GD1_TELE camera cis"
+	depends on CAMERA_CIS_SELECT
+	default n
+	help
+	  Use to build GD1_TELE camera sensor.
+
+config CAMERA_CIS_3M5_FOLD_OBJ
+	tristate "Use 3M5_FOLD camera cis"
+	depends on CAMERA_CIS_SELECT
+	default n
+	help
+	  Use to build 3M5_FOLD camera sensor.
+
+config CAMERA_CIS_IMX754_OBJ
+	tristate "Use IMX754 camera cis"
+	depends on CAMERA_CIS_SELECT
+	default n
+	help
+	  Use to build IMX754 camera sensor.
+
+config CAMERA_CIS_IMX906_OBJ
+	tristate "Use IMX906 camera cis"
+	depends on CAMERA_CIS_SELECT
+	default n
+	help
+	  Use to build IMX906 camera sensor.
+
+config CAMERA_CIS_3K1_OBJ
+	tristate "Use 3K1 camera cis"
+	depends on CAMERA_CIS_SELECT
+	default n
+	help
+	  Use to build 3K1 camera sensor.
+
+config CAMERA_CIS_JN1_OBJ
+	tristate "Use JN1 camera cis"
+	depends on CAMERA_CIS_SELECT
+	default n
+	help
+	  Use to build JN1 camera sensor.
+
+config CAMERA_CIS_GD2_OBJ
+	tristate "Use GD2 camera cis"
+	depends on CAMERA_CIS_SELECT
+	default n
+	help
+	  Use to build GD2 camera sensor.
+
+config CAMERA_CIS_3LU_OBJ
+	tristate "Use 3LU camera cis"
+	depends on CAMERA_CIS_SELECT
+	default n
+	help
+	  Use to build 3LU camera sensor.
+
+config CAMERA_CIS_3LC_OBJ
+	tristate "Use 3LC camera cis"
+	depends on CAMERA_CIS_SELECT
+	default n
+	help
+	  Use to build 3LC camera sensor.
+
+config CAMERA_CIS_IMX564_OBJ
+	tristate "Use IMX564 camera cis"
+	depends on CAMERA_CIS_SELECT
+	default n
+	help
+	  Use to build IMX564 camera sensor.
+
+config CAMERA_CIS_IMX766_OBJ
+	tristate "Use IMX766 camera cis"
+	depends on CAMERA_CIS_SELECT
+	default n
+	help
+	  Use to build IMX766 camera sensor.
+
+config CAMERA_CIS_IMX823_OBJ
+	tristate "Use IMX823 camera cis"
+	depends on CAMERA_CIS_SELECT
+	default n
+	help
+	  Use to build IMX823 camera sensor.
+
+#source "drivers/media/platform/exynos/camera/sensor/module_framework/actuator/Kconfig"
+menuconfig CAMERA_ACT_SELECT
+	tristate "Actuator select"
+	depends on EXYNOS_DEVICE_CAMERA_MODULE
+	help
+	  Say Y here to enable support for platform-specific V4L drivers.
+
+config CAMERA_ACT_AK7348_OBJ
+        tristate "Use actuator AK7348"
+	depends on CAMERA_ACT_SELECT
+        default n
+        help
+          Use to build AK7348 driver.
+
+config CAMERA_ACT_AK7345_OBJ
+        tristate "Use actuator AK7345"
+	depends on CAMERA_ACT_SELECT
+        default n
+        help
+          Use to build AK7345 driver.
+
+config CAMERA_ACT_AK7371_OBJ
+        tristate "Use actuator AK7371"
+	depends on CAMERA_ACT_SELECT
+        default n
+        help
+          Use to build AK7371 driver.
+
+config CAMERA_ACT_DW9714_OBJ
+        tristate "Use actuator DW9714"
+	depends on CAMERA_ACT_SELECT
+        default n
+        help
+          Use to build DW9714 driver.
+
+config CAMERA_ACT_DW9780_OBJ
+        tristate "Use actuator DW9780"
+	depends on CAMERA_ACT_SELECT
+        default n
+        help
+          Use to build DW9780 driver.
+
+config CAMERA_ACT_DW9804_OBJ
+        tristate "Use actuator DW9804"
+	depends on CAMERA_ACT_SELECT
+        default n
+        help
+          Use to build DW9804 driver.
+
+config CAMERA_ACT_DW9807_OBJ
+        tristate "Use actuator DW9807"
+	depends on CAMERA_ACT_SELECT
+        default n
+        help
+          Use to build DW9807 driver.
+
+config CAMERA_ACT_DW9808_OBJ
+        tristate "Use actuator DW9808"
+	depends on CAMERA_ACT_SELECT
+        default n
+        help
+          Use to build DW9808 driver.
+
+config CAMERA_ACT_DW9823_OBJ
+        tristate "Use actuator DW9823"
+	depends on CAMERA_ACT_SELECT
+        default n
+        help
+          Use to build DW9823 driver.
+
+config CAMERA_ACT_DW9839_OBJ
+        tristate "Use actuator DW9839"
+	depends on CAMERA_ACT_SELECT
+        default n
+        help
+          Use to build DW9839 driver.
+
+config CAMERA_ACT_AK7372_OBJ
+        tristate "Use actuator AK7372"
+	depends on CAMERA_ACT_SELECT
+        default n
+        help
+          Use to build AK7372 driver.
+
+config CAMERA_ACT_LC898217_OBJ
+        tristate "Use actuator LC898217"
+	depends on CAMERA_ACT_SELECT
+        default n
+        help
+          Use to build LC898217 driver.
+
+config CAMERA_ACT_AK737X_OBJ
+        tristate "Use actuator AK737X"
+	depends on CAMERA_ACT_SELECT
+        default n
+        help
+          Use to build AK737X driver.
+
+config CAMERA_ACT_ZC533_OBJ
+        tristate "Use actuator ZC533"
+	depends on CAMERA_ACT_SELECT
+        default n
+        help
+          Use to build ZC533 driver.
+
+config CAMERA_ACT_ZC569_OBJ
+        tristate "Use actuator ZC569"
+	depends on CAMERA_ACT_SELECT
+        default n
+        help
+          Use to build ZC569 driver.
+
+config CAMERA_ACT_LC898219_OBJ
+        tristate "Use actuator LC898219"
+	depends on CAMERA_ACT_SELECT
+        default n
+        help
+          Use to build LC898218 driver.
+
+config CAMERA_ACT_BU64981_OBJ
+        tristate "Use actuator BU64981"
+	depends on CAMERA_ACT_SELECT
+        default n
+        help
+          Use to build BU64981 driver.
+
+config CAMERA_ACT_SEM1215S_OBJ
+        tristate "Use actuator SEM1215S"
+	depends on CAMERA_ACT_SELECT
+        default n
+        help
+          Use to build SEM1215S driver.
+
+config CAMERA_ACT_DW9800_OBJ
+        tristate "Use actuator DW9800"
+	depends on CAMERA_ACT_SELECT
+        default n
+        help
+          Use to build DW9800 driver.
+
+#source "drivers/media/platform/exynos/camera/sensor/module_framework/flash/Kconfig"
+menuconfig CAMERA_FLASH_SELECT
+	bool "Flash select"
+	depends on EXYNOS_DEVICE_CAMERA_MODULE
+	help
+	  Say Y here to enable support for platform-specific V4L drivers.
+
+config CAMERA_FLASH_LM3560_OBJ
+        tristate "Use LM3560"
+	depends on CAMERA_FLASH_SELECT
+        default n
+        help
+          Use to build LM3560 driver.
+
+config CAMERA_FLASH_RT5033_OBJ
+        tristate "Use RT5033"
+	depends on CAMERA_FLASH_SELECT
+        default n
+        help
+          Use to build RT5033 driver.
+
+config CAMERA_FLASH_S2MPB02_OBJ
+        tristate "Use S2MPB02"
+	depends on CAMERA_FLASH_SELECT
+        default n
+        help
+          Use to build S2MPB02 driver.
+
+config CAMERA_FLASH_S2MPB02_I2C_OBJ
+        tristate "Use S2MPB02_I2C"
+	depends on CAMERA_FLASH_SELECT
+        default n
+        help
+          Use to build S2MPB02_I2C driver.
+
+config CAMERA_FLASH_S2MU106_OBJ
+        tristate "Use S2MU106"
+	depends on CAMERA_FLASH_SELECT
+        default n
+        help
+          Use to build S2MU106 driver.
+
+config CAMERA_FLASH_S2MU107_OBJ
+        tristate "Use S2MU107"
+	depends on CAMERA_FLASH_SELECT
+        default n
+        help
+          Use to build S2MU107 driver.
+
+config CAMERA_FLASH_S2MF301_OBJ
+        tristate "Use S2MF301"
+	depends on CAMERA_FLASH_SELECT
+        default n
+        help
+          Use to build S2MF301 driver.
+
+config CAMERA_FLASH_GPIO_OBJ
+        tristate "Use GPIO"
+	depends on CAMERA_FLASH_SELECT
+        default n
+        help
+          Use to build GPIO driver.
+
+config CAMERA_FLASH_I2C_OBJ
+        tristate "Use I2C"
+	depends on CAMERA_FLASH_SELECT
+        default n
+        help
+          Use to build I2C driver.
+
+config CAMERA_FLASH_KTD2692_OBJ
+        tristate "Use KTD2692"
+	depends on CAMERA_FLASH_SELECT
+        default n
+        help
+          Use to build KTD2692 driver.
+
+config CAMERA_FLASH_SM5714_OBJ
+        tristate "Use SM5714"
+	depends on CAMERA_FLASH_SELECT
+        default n
+        help
+          Use to build SM5714 driver.
+
+#source "drivers/media/platform/exynos/camera/sensor/module_framework/ois/Kconfig"
+menuconfig CAMERA_OIS_SELECT
+	bool "OIS select"
+	depends on EXYNOS_DEVICE_CAMERA_MODULE
+	help
+	  Say Y here to enable support for platform-specific V4L drivers.
+
+config CAMERA_OIS_BU24218GWL_OBJ
+        bool "Use BU24218GWL ois"
+	depends on CAMERA_OIS_SELECT
+        default n
+        help
+          Use to build BU24218GWL ois.
+
+config CAMERA_OIS_IDG2030_OBJ
+	bool "Use IDG2030 ois"
+	depends on CAMERA_OIS_SELECT
+	default n
+	help
+	  Use to build IDG2030 ois
+
+config OIS_DIRECT_FW_CONTROL
+	bool "Use ois direct FW control"
+	depends on CAMERA_OIS_SELECT
+	default n
+	help
+	  Use to ois direct FW control.
+
+#source "drivers/media/platform/exynos/camera/sensor/module_framework/aperture/Kconfig"
+menuconfig CAMERA_APERTURE_SELECT
+	bool "Aperture select"
+	depends on EXYNOS_DEVICE_CAMERA_MODULE
+	help
+	  Say Y here to enable support for platform-specific V4L drivers.
+
+config CAMERA_APERTURE_AK7372_OBJ
+	bool "Use aperture AK7372"
+	depends on CAMERA_APERTURE_SELECT
+	default n
+	help
+	  Use to build AK7372 driver.
+
+#source "drivers/media/platform/exynos/camera/sensor/module_framework/eeprom/Kconfig"
+menuconfig CAMERA_EEPROM_SELECT
+	bool "Sensor eeprom select"
+	depends on EXYNOS_DEVICE_CAMERA_MODULE
+	help
+	  Say Y here to enable support for platform-specific V4L drivers.
+
+config CAMERA_EEPROM_GM1_OBJ
+	bool "Use GM1 EEPROM"
+	depends on CAMERA_EEPROM_SELECT
+	default n
+	help
+	  Use to build GM1 eeprom driver.
+
+config CAMERA_EEPROM_5E9_OBJ
+	bool "Use 5E9 EEPROM"
+	depends on CAMERA_EEPROM_SELECT
+	default n
+	help
+	  Use to build 5E9 eeprom driver.
+
+config CAMERA_EEPROM_HM6_OBJ
+        tristate "Use HM6 EEPROM"
+        depends on CAMERA_EEPROM_SELECT
+        default n
+        help
+          Use to build HM6 eeprom driver.
+
+#source "drivers/media/platform/exynos/camera/sensor/module_framework/laser_af/Kconfig"
+menuconfig CAMERA_LASER_AF_SELECT
+	bool "Laser af select"
+	depends on EXYNOS_DEVICE_CAMERA_MODULE
+	help
+		Say Y here to enable support for platform-specific V4L drivers.
+
+config CAMERA_LASER_AF_TOF8801_OBJ
+	bool "Use TOF8801"
+	depends on CAMERA_LASER_AF_SELECT
+	default n
+	help
+		Use to build TOF8801 driver.
+
+config CAMERA_LASER_AF_VL53L5_OBJ
+	tristate "Use VL53L5"
+	depends on EXYNOS_DEVICE_CAMERA_MODULE
+	depends on SENSORS_VL53L5
+	default n
+	help
+		Use to build VL53L5 driver.
+
+config CAMERA_LASER_AF_VL53L8_OBJ
+	tristate "Use VL53L8"
+	depends on EXYNOS_DEVICE_CAMERA_MODULE
+	depends on SENSORS_VL53L8
+	default n
+	help
+		Use to build VL53L8 driver.
+
+#source "drivers/media/platform/exynos/camera/csi/Kconfig"
+config CSIS_V1_2
+	bool "Use CSI H/W v1.2"
+	depends on PABLO_V8_20_0
+	help
+	  csi version 1.2
+
+config CSIS_V5_3
+	bool "Use CSI H/W v5.3"
+	depends on PABLO_V8_1_0 || PABLO_V8_10_0
+	help
+	  csi version 5.3
+
+config CSIS_V5_4
+	bool "Use CSI H/W v5.4"
+	depends on PABLO_V9_1_0 || PABLO_V9_10_0 || PABLO_V10_20_0
+	help
+	  csi version 5.4
+
+config CSIS_V5_4_8
+	bool "Use CSI Link H/W v5.4 and DMA HW v8.0 and MCB HW v8.0"
+	depends on PABLO_V11_30_0 || PABLO_V11_20_0
+	help
+	  csi version 5.4.8
+
+config CSIS_V8_0
+	bool "Use CSI H/W v8.0"
+	depends on PABLO_V10_0_0 || PABLO_V10_1_0
+	help
+	  csi version 8.0
+
+config CSIS_V8_1
+	bool "Use CSI H/W v8.1"
+	depends on PABLO_V11_0_0
+	help
+	  csi version 8.1
+
+config CSIS_V6_0
+	bool "Use CSI H/W v8.1"
+	depends on PABLO_V12_0_0 || PABLO_V12_1_0 || PABLO_V13_0_0 || PABLO_V14_0_0
+	help
+	  csi version 6.0
+
+config CSIS_V5_20
+	bool "Use CSI H/W v5.20"
+	depends on PABLO_V12_20_0 || PABLO_V13_20_0
+	help
+	  csi version 5.20
+
+# ICPU driver
+#source "drivers/media/platform/exynos/camera/icpu/Kconfig"
+config PABLO_ICPU
+	tristate "Exynos Pablo ICPU Driver"
+	default n
+	help
+	  This is a ICPU driver for Exynos Pablo IS.
+
+config PABLO_ICPU_HW_V1_0
+	tristate "Exynos Pablo ICPU HW V1_0"
+	default n
+	select PABLO_ICPU
+	help
+	  This is a hw variant of ICPU.
+
+config PABLO_ICPU_HW_V2_0
+	tristate "Exynos Pablo ICPU HW V2_0"
+	default n
+	select PABLO_ICPU
+	help
+	  This is a hw variant of ICPU.
+
+config PABLO_ICPU_HW_V13_0
+	tristate "Exynos Pablo ICPU HW V13_0"
+	default n
+	select PABLO_ICPU
+	help
+	  This is a hw variant of ICPU.

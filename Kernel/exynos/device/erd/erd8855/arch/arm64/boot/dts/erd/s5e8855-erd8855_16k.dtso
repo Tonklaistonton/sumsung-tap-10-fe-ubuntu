@@ -1,0 +1,98 @@
+/*
+ * SAMSUNG S5E8855 board device tree source
+ *
+ * Copyright (c) 2023 Samsung Electronics Co., Ltd.
+ *		http://www.samsung.com
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+/dts-v1/;
+/plugin/;
+
+#include "s5e8855-erd8855_common.dtsi"
+#include <dt-bindings/gpio/gpio.h>
+#include "panel/samsung-s6e3had-1080-2400-command-panel.dtsi"
+
+#define BOARD_ID	0x0
+#define BOARD_REV	0x0
+
+/ {
+	compatible = "samsung,s5e8855", "samsung,ERD8855";
+	board_id = <BOARD_ID>;
+	board_rev = <BOARD_REV>;
+
+	fragment@model {
+		target-path = "/";
+		__overlay__ {
+			#address-cells = <2>;
+			#size-cells = <1>;
+
+			model = "Samsung ERD8855 board based on S5E8855";
+		}; /* end of __overlay__ */
+	}; /* end of fragment */
+}; /* end of root */
+
+&serial_0 {
+	status = "okay";
+};
+
+&drmdsim_0 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	drmpanel {
+		compatible = "samsung,command-ctrl";
+		/* reset, power */
+		reset-gpios = <&gpc5 0 GPIO_ACTIVE_HIGH>;
+		reg = <0>;
+		vddi-supply = <&dp_ldo1>;
+		vddr-supply = <&dp_buck>;
+		vci-supply = <&dp_ldo4>;
+		//pinctrl-names = "default";
+		//pinctrl-0 = <&ddi_rst>;
+
+		default-panel = "s6e3had_1080_2400_cmd";
+	};
+};
+
+&log_kevents_small {
+	reg = <0x8 0xAD600000 0xA8000>;
+};
+
+&log_backtrace {
+	size = <0x4000>;
+};
+
+&log_itmon_history {
+	reg = <0x8 0xADB00000 0x4000>;
+};
+
+&wdtmsg {
+	reg = <0x8 0xADB10000 0x4000>;
+};
+
+&log_arrdumprst {
+	reg = <0 0xFEC10000 0x4A8000>;
+};
+
+&mfc_fw_rmem {
+	size = <0x2000000>;
+};
+
+&icpu_fw_rmem {
+	size = <0x2000000>;
+};
+
+&crypto {
+	size = <0x2000000>;
+};
+
+&vstream {
+	size = <0x8000000>;
+};
+
+&tui {
+	size = <0x6000000>;
+};

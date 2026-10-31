@@ -1,0 +1,68 @@
+/*
+ * SAMSUNG S5E8855 SoC device tree source
+ *
+ * Copyright (c) 2023 Samsung Electronics Co., Ltd.
+ *             http://www.samsung.com
+ *
+ * SAMSUNG S5E8855 SoC device nodes are listed in this file.
+ * EXYNOS based board files can include this file and provide
+ * values for board specfic bindings.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+/dts-v1/;
+/plugin/;
+
+#include "s5e8855-erd8855_common.dtsi"
+#include "panel/samsung-emulation-video-panel.dtsi"
+
+#define BOARD_ID	0x0
+
+/ {
+	compatible = "samsung,armv9", "samsung,s5e8855";
+	board_id = <BOARD_ID>;
+	board_rev = <0x0>;
+
+	fragment@model {
+		target-path = "/";
+		__overlay__ {
+			#address-cells = <2>;
+			#size-cells = <1>;
+
+			model = "Samsung S5E8855 board based on S5E8855";
+		};
+	};
+};
+
+&chosen {
+        bootargs_ext = "panic_on_warn=1";
+};
+
+&serial_0 {
+	status = "okay";
+};
+
+&drmdsim_0 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	drmpanel {
+		compatible = "samsung,command-ctrl";
+		/* reset, power */
+		//reset-gpios = <&gpc5 0 GPIO_ACTIVE_HIGH>;
+		reg = <0>;
+		//vddi-supply = <&dp_ldo1>;
+		//vddr-supply = <&dp_buck>;
+		//vci-supply = <&dp_ldo4>;
+		//pinctrl-names = "default";
+		//pinctrl-0 = <&ddi_rst>;
+
+		default-panel = "samsung_emulation_video_panel";
+	};
+};
+
+&drmdecon0 {
+	op_mode = <0>;
+};

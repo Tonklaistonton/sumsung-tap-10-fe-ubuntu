@@ -1,0 +1,333 @@
+#include "../../cmucal.h"
+#include "cmucal-node.h"
+#include "cmucal-vclk.h"
+#include "cmucal-vclklut.h"
+
+/* DVFS VCLK -> Clock Node List */
+enum clk_id cmucal_VDD_ALIVE[] = {
+    ALIVE_MUX_CLKALIVE_BOOST,
+    ALIVE_MUX_CLKALIVE_CHUBVTS_NOC,
+    ALIVE_MUX_CLKALIVE_UNPU_NOC,
+    ALIVE_MUX_CLKCMU_CMGP_NOC,
+    ALIVE_MUX_CLKCMU_DBGCORE_NOC,
+    ALIVE_MUX_CLK_ALIVE_DBGCORE_UART,
+    ALIVE_MUX_CLK_ALIVE_NOC,
+    ALIVE_DIV_CLKALIVE_DBGCORE_NOC,
+    ALIVE_DIV_CLKALIVE_UNPU_NOC,
+    ALIVE_DIV_CLK_ALIVE_DBGCORE_UART,
+    ALIVE_DIV_CLK_ALIVE_NOC,
+    ALIVE_DIV_CLK_ALIVE_NOC_PMULH,
+    ALIVE_DIV_CLK_ALIVE_SPMI,
+    CMGP_DIV_CLK_CMGP_NOC,
+    CMGP_DIV_CLK_CMGP_USI0,
+    CMGP_DIV_CLK_CMGP_USI1,
+    CMGP_DIV_CLK_CMGP_USI2,
+    CMGP_DIV_CLK_CMGP_USI3,
+    CMGP_DIV_CLK_CMGP_USI4,
+    CMGP_DIV_CLK_CMGP_USI5,
+    CMGP_DIV_CLK_CMGP_USI6,
+    HSI0_DIV_CLK_HSI0_EUSB,
+    PSP_DIV_CLK_PSP_NOCP,
+    UFD_MUX_CLK_UFD_I2C,
+    UFD_DIV_CLK_UFD_NOC,
+    UNPU_DIV_CLK_UNPU_NOCD_LH,
+    UNPU_DIV_CLK_UNPU_NOCP,
+};
+enum clk_id cmucal_VDD_MM[] = {
+    AUD_PLL_AUD,
+    AUD_MUX_CLK_AUD_CPU,
+    AUD_MUX_CLK_AUD_NOC,
+    AUD_MUX_CLK_AUD_SERIAL_LIF,
+    AUD_MUX_CLK_AUD_SERIAL_LIF_CORE,
+    AUD_DIV_CLKAUD_HSI0_NOC,
+    AUD_DIV_CLK_AUD_AUDIF,
+    AUD_DIV_CLK_AUD_CPU_PCLKDBG,
+    AUD_DIV_CLK_AUD_NOCP,
+    AUD_DIV_CLK_AUD_SERIAL_LIF_CORE,
+    DPUB_DIV_CLK_DPUB_NOCP,
+    ICPU_DIV_CLK_ICPU_NOCP,
+    ICPU_DIV_CLK_ICPU_PCLKDBG,
+};
+enum clk_id cmucal_VDD_CAM[] = {
+    BYRP_DIV_CLK_BYRP_NOCP,
+    DLFE_DIV_CLK_DLFE_NOCP,
+    MCSC_DIV_CLK_MCSC_NOCP,
+    MFC_DIV_CLK_MFC_NOCP,
+    MFD_DIV_CLK_MFD_NOCP,
+    MLSC_DIV_CLK_MLSC_NOCP,
+    MSNR_DIV_CLK_MSNR_NOCP,
+    MTNR_DIV_CLK_MTNR_NOCP,
+    RGBP_DIV_CLK_RGBP_NOCP,
+    YUVP_DIV_CLK_YUVP_NOCP,
+};
+enum clk_id cmucal_VDD_CHUBVTS[] = {
+    CHUB_DIV_CLK_CHUB_CPU,
+    CHUB_DIV_CLK_CHUB_I2C,
+    CHUB_DIV_CLK_CHUB_SPI_I2C0,
+    CHUB_DIV_CLK_CHUB_SPI_I2C1,
+    CHUB_DIV_CLK_CHUB_USI0,
+    CHUB_DIV_CLK_CHUB_USI1,
+    CHUB_DIV_CLK_CHUB_USI2,
+    CHUB_DIV_CLK_CHUB_USI3,
+    VTS_DIV_CLK_VTS_AUD_DMIC,
+    VTS_DIV_CLK_VTS_CPU,
+    CHUBVTS_DIV_CLK_CHUBVTS_I2C,
+    CHUBVTS_DIV_CLK_CHUBVTS_NOC,
+};
+enum clk_id cmucal_VDDI[] = {
+    TOP_MUX_CLKCMU_AUD_CPU,
+    TOP_MUX_CLKCMU_AUD_NOC,
+    TOP_MUX_CLKCMU_CPUCL0_DBG_NOC,
+    TOP_MUX_CLKCMU_CPUCL0_NOCP,
+    TOP_MUX_CLKCMU_CPUCL0_SWITCH,
+    TOP_MUX_CLKCMU_CPUCL2_SWITCH,
+    TOP_MUX_CLKCMU_CPUCL1_SWITCH,
+    TOP_MUX_CLKCMU_CPUCL3_SWITCH,
+    TOP_MUX_CLKCMU_DNC_NOC,
+    TOP_MUX_CLKCMU_DPUB_NOC_A0,
+    TOP_MUX_CLKCMU_DPUF_NOC_A0,
+    TOP_MUX_CLKCMU_DSP_NOC_A0,
+    TOP_MUX_CLKCMU_DSU_SWITCH,
+    TOP_MUX_CLKCMU_CPUCL0_SWITCH_COMP,
+    TOP_MUX_CLKCMU_G3D_SWITCH,
+    TOP_MUX_CLKCMU_GNPU1_NOC_A0,
+    TOP_MUX_CLKCMU_GNPU1_XMAA_A0,
+    TOP_MUX_CLKCMU_GNPU_NOC_A0,
+    TOP_MUX_CLKCMU_GNPU_XMAA_A0,
+    TOP_MUX_CLKCMU_NPUMEM_NOC_A0,
+    TOP_MUX_CLKCMU_SNPU0_NOC_A0,
+    TOP_MUX_CLKCMU_SNPU1_NOC_A0,
+    TOP_MUX_CLKCMU_SNPU0_XMAA_A0,
+    TOP_MUX_CLKCMU_SNPU1_XMAA_A0,
+    TOP_MUX_CLKCMU_SNPU0_CU_A0,
+    TOP_MUX_CLKCMU_SNPU1_CU_A0,
+    TOP_MUX_CLKCMU_HSI1_NOC,
+    TOP_MUX_CLKCMU_ICPU_NOC0_A0,
+    TOP_MUX_CLKCMU_ICPU_NOC1,
+    TOP_MUX_CLKCMU_LME_NOC,
+    TOP_MUX_CLKCMU_DOF_NOC,
+    TOP_MUX_CLKCMU_M2M_JPEG,
+    TOP_MUX_CLKCMU_M2M_JSQZ,
+    TOP_MUX_CLKCMU_M2M_NOC,
+    TOP_MUX_CLKCMU_MFC_MFC,
+    TOP_MUX_CLKCMU_AOCCSIS_NOC,
+    TOP_MUX_CLKCMU_AOCCSIS_YUVSC,
+    TOP_MUX_CLKCMU_DLFE_NOC,
+    TOP_MUX_CLKCMU_MLSC_NOC,
+    TOP_MUX_CLKCMU_BYRP_NOC,
+    TOP_MUX_CLKCMU_MCSC_NOC,
+    TOP_MUX_CLKCMU_YUVP_NOC,
+    TOP_MUX_CLKCMU_RGBP_NOC,
+    TOP_MUX_CLKCMU_MTNR_NOC,
+    TOP_MUX_CLKCMU_MSNR_NOC,
+    TOP_MUX_CLKCMU_MFC_WFD,
+    TOP_MUX_CLKCMU_MFD_MFD,
+    TOP_MUX_CLKCMU_MIF_NOCP,
+    TOP_MUX_CLKCMU_NOCL0_NOC,
+    TOP_MUX_CLKCMU_G3D_NOCD,
+    TOP_MUX_CLKCMU_NOCL1_NOC,
+    TOP_MUX_CLKCMU_NOCL2A_NOC,
+    TOP_MUX_CLKCMU_NOCL2B_NOC,
+    TOP_MUX_CLKCMU_PERIS_GIC,
+    TOP_MUX_CLKCMU_PERIS_NOC,
+    TOP_MUX_CLKCMU_SDMA_NOC,
+    TOP_MUX_CLKCMU_UFS_NOC,
+    TOP_MUX_CLKCMU_DSP_NOC,
+    TOP_MUX_CLKCMU_GNPU1_NOC,
+    TOP_MUX_CLKCMU_GNPU1_XMAA,
+    TOP_MUX_CLKCMU_GNPU_NOC,
+    TOP_MUX_CLKCMU_GNPU_XMAA,
+    TOP_MUX_CLKCMU_SNPU0_NOC,
+    TOP_MUX_CLKCMU_SNPU1_NOC,
+    TOP_MUX_CLKCMU_SNPU0_XMAA,
+    TOP_MUX_CLKCMU_SNPU1_XMAA,
+    TOP_MUX_CLKCMU_SNPU0_CU,
+    TOP_MUX_CLKCMU_SNPU1_CU,
+    TOP_MUX_CLKCMU_ICPU_NOC0,
+    TOP_DIV_CLKCMU_AOCCSIS_OIS_MCU,
+    TOP_DIV_CLKCMU_AUD_CPU,
+    TOP_DIV_CLKCMU_AUD_NOC,
+    TOP_DIV_CLKCMU_CMU_BOOST,
+    TOP_DIV_CLKCMU_CPUCL0_DBG_NOC,
+    TOP_DIV_CLKCMU_CPUCL0_HTU,
+    TOP_DIV_CLKCMU_G3D_HTU,
+    TOP_DIV_CLKCMU_CPUCL0_NOCP,
+    TOP_DIV_CLKCMU_CPUCL0_SWITCH,
+    TOP_DIV_CLKCMU_CPUCL1_SWITCH,
+    TOP_DIV_CLKCMU_DNC_NOC,
+    TOP_DIV_CLKCMU_DPUB_NOC_A0,
+    TOP_DIV_CLKCMU_DPUF_NOC_A0,
+    TOP_DIV_CLKCMU_DSP_NOC_A0,
+    TOP_DIV_CLKCMU_DSU_SWITCH,
+    TOP_DIV_CLKCMU_CPUCL0_SWITCH_COMP,
+    TOP_DIV_CLKCMU_G3D_SWITCH,
+    TOP_DIV_CLKCMU_NPUMEM_NOC_A0,
+    TOP_DIV_CLKCMU_HSI0_NOC,
+    TOP_DIV_CLKCMU_HSI1_NOC,
+    TOP_DIV_CLKCMU_ICPU_NOC0_A0,
+    TOP_DIV_CLKCMU_ICPU_NOC1,
+    TOP_DIV_CLKCMU_LME_NOC,
+    TOP_DIV_CLKCMU_DOF_NOC,
+    TOP_DIV_CLKCMU_M2M_JPEG,
+    TOP_DIV_CLKCMU_M2M_JSQZ,
+    TOP_DIV_CLKCMU_M2M_NOC,
+    TOP_DIV_CLKCMU_MFC_MFC,
+    TOP_DIV_CLKCMU_AOCCSIS_NOC,
+    TOP_DIV_CLKCMU_AOCCSIS_YUVSC,
+    TOP_DIV_CLKCMU_DLFE_NOC,
+    TOP_DIV_CLKCMU_MLSC_NOC,
+    TOP_DIV_CLKCMU_BYRP_NOC,
+    TOP_DIV_CLKCMU_MCSC_NOC,
+    TOP_DIV_CLKCMU_YUVP_NOC,
+    TOP_DIV_CLKCMU_RGBP_NOC,
+    TOP_DIV_CLKCMU_MTNR_NOC,
+    TOP_DIV_CLKCMU_MSNR_NOC,
+    TOP_DIV_CLKCMU_MFC_WFD,
+    TOP_DIV_CLKCMU_MFD_MFD,
+    TOP_DIV_CLKCMU_NOCL0_NOC,
+    TOP_DIV_CLKCMU_G3D_NOCD,
+    TOP_DIV_CLKCMU_NOCL1_NOC,
+    TOP_DIV_CLKCMU_NOCL2A_NOC,
+    TOP_DIV_CLKCMU_NOCL2B_NOC,
+    TOP_DIV_CLKCMU_PERIS_GIC,
+    TOP_DIV_CLKCMU_PERIS_NOC,
+    TOP_DIV_CLKCMU_SDMA_NOC,
+    TOP_DIV_CLKCMU_PSP_NOC,
+    TOP_DIV_CLKCMU_UFS_MMC_CARD,
+    TOP_DIV_CLKCMU_UFS_NOC,
+    DOF_DIV_CLK_DOF_NOCP,
+    LME_DIV_CLK_LME_NOCP,
+    M2M_DIV_CLK_M2M_NOCP,
+    NOCL0_DIV_CLK_NOCL0_NOCP,
+    NOCL1_DIV_CLK_NOCL1_NOCP,
+    NOCL2A_DIV_CLK_NOCL2A_NOCP,
+    NOCL2B_DIV_CLK_NOCL2B_NOCP,
+    PERIS_DIV_CLK_PERIS_DIV_OSCCLK,
+    PERIS_DIV_CLK_PERIS_NOCP,
+};
+enum clk_id cmucal_VDD_CPUCL0[] = {
+    CPUCL0_PLL_CPUCL0,
+    CPUCL0_GLB_DIV_CLK_CPUCL0_DBG_PCLKDBG,
+    CPUCL1_PLL_CPUCL1,
+    CPUCL2_PLL_CPUCL2,
+    CPUCL3_PLL_CPUCL3,
+    DSU_PLL_DSU,
+};
+enum clk_id cmucal_VDD_NPU[] = {
+    DNC_DIV_CLK_DNC_NOCP,
+    NPUMEM_DIV_CLK_NPUMEM_NOCP,
+    SDMA_DIV_CLK_SDMA_NOCP,
+    SNPU0_DIV_CLK_SNPU_NOCP,
+    SNPU1_DIV_CLK_SNPU_NOCP,
+};
+enum clk_id cmucal_VDD_G3D[] = {
+    G3DCORE_PLL_G3D,
+    G3DCORE_PLL_G3D1,
+};
+enum clk_id cmucal_VDD_MIF[] = {
+    S2D_DIV_CLK_MIF_NOCD_S2D,
+};
+
+/* SPECIAL VCLK -> Clock Node List */
+
+/* GATE VCLK -> Clock Node List */
+
+/* SPECIAL VCLK -> LUT List */
+
+/* DVFS VCLK -> LUT List */
+struct vclk_lut cmucal_VDD_ALIVE_lut[] = {
+    { 429190, cmucal_VDD_ALIVE_SOD_lut_params },
+    { 429190, cmucal_VDD_ALIVE_OD_lut_params },
+    { 429190, cmucal_VDD_ALIVE_NM_lut_params },
+    { 429190, cmucal_VDD_ALIVE_UD_lut_params },
+    { 429190, cmucal_VDD_ALIVE_SUD_lut_params },
+    { 429190, cmucal_VDD_ALIVE_MUD_lut_params },
+};
+struct vclk_lut cmucal_VDD_MM_lut[] = {
+    { 1500000, cmucal_VDD_MM_SOD_lut_params },
+    { 1500000, cmucal_VDD_MM_OD_lut_params },
+    { 1200000, cmucal_VDD_MM_NM_lut_params },
+    { 800000, cmucal_VDD_MM_UD_lut_params },
+    { 400000, cmucal_VDD_MM_SUD_lut_params },
+    { 200000, cmucal_VDD_MM_MUD_lut_params },
+};
+struct vclk_lut cmucal_VDD_CAM_lut[] = {
+    { 749910, cmucal_VDD_CAM_SOD_lut_params },
+    { 749910, cmucal_VDD_CAM_OD_lut_params },
+    { 749910, cmucal_VDD_CAM_NM_lut_params },
+    { 532840, cmucal_VDD_CAM_UD_lut_params },
+    { 355220, cmucal_VDD_CAM_SUD_lut_params },
+    { 177610, cmucal_VDD_CAM_MUD_lut_params },
+};
+struct vclk_lut cmucal_VDD_CHUBVTS_lut[] = {
+    { 429190, cmucal_VDD_CHUBVTS_SOD_lut_params },
+    { 429190, cmucal_VDD_CHUBVTS_OD_lut_params },
+    { 429190, cmucal_VDD_CHUBVTS_NM_lut_params },
+    { 429190, cmucal_VDD_CHUBVTS_UD_lut_params },
+    { 429190, cmucal_VDD_CHUBVTS_SUD_lut_params },
+    { 429190, cmucal_VDD_CHUBVTS_MUD_lut_params },
+};
+struct vclk_lut cmucal_VDDI_lut[] = {
+    { 1065650, cmucal_VDDI_SOD_lut_params },
+    { 1065650, cmucal_VDDI_OD_lut_params },
+    { 1065650, cmucal_VDDI_NM_lut_params },
+    { 0, cmucal_VDDI_UD_lut_params },
+    { 0, cmucal_VDDI_SUD_lut_params },
+    { 0, cmucal_VDDI_MUD_lut_params },
+};
+struct vclk_lut cmucal_VDD_CPUCL0_lut[] = {
+    { 2000000, cmucal_VDD_CPUCL0_SOD_lut_params },
+    { 2000000, cmucal_VDD_CPUCL0_OD_lut_params },
+    { 1800000, cmucal_VDD_CPUCL0_NM_lut_params },
+    { 1300000, cmucal_VDD_CPUCL0_UD_lut_params },
+    { 710000, cmucal_VDD_CPUCL0_SUD_lut_params },
+    { 380000, cmucal_VDD_CPUCL0_MUD_lut_params },
+};
+struct vclk_lut cmucal_VDD_NPU_lut[] = {
+    { 934060, cmucal_VDD_NPU_SOD_lut_params },
+    { 934060, cmucal_VDD_NPU_OD_lut_params },
+    { 800000, cmucal_VDD_NPU_NM_lut_params },
+    { 532840, cmucal_VDD_NPU_UD_lut_params },
+    { 266420, cmucal_VDD_NPU_SUD_lut_params },
+    { 266420, cmucal_VDD_NPU_MUD_lut_params },
+};
+struct vclk_lut cmucal_VDD_G3D_lut[] = {
+    { 990000, cmucal_VDD_G3D_SOD_lut_params },
+    { 990000, cmucal_VDD_G3D_OD_lut_params },
+    { 990000, cmucal_VDD_G3D_NM_lut_params },
+    { 665000, cmucal_VDD_G3D_UD_lut_params },
+    { 475000, cmucal_VDD_G3D_SUD_lut_params },
+    { 295000, cmucal_VDD_G3D_MUD_lut_params },
+};
+struct vclk_lut cmucal_VDD_MIF_lut[] = {
+    { 78000, cmucal_VDD_MIF_SOD_lut_params },
+    { 78000, cmucal_VDD_MIF_OD_lut_params },
+    { 78000, cmucal_VDD_MIF_NM_lut_params },
+    { 78000, cmucal_VDD_MIF_UD_lut_params },
+    { 78000, cmucal_VDD_MIF_SUD_lut_params },
+    { 78000, cmucal_VDD_MIF_MUD_lut_params },
+};
+
+/* Switch VCLK -> LUT Parameter List */
+
+/*================================ SWPLL List =================================*/
+
+/*================================ VCLK List =================================*/
+struct vclk cmucal_vclk_list[] = {
+
+/* DVFS VCLK*/
+    CMUCAL_VCLK(VCLK_VDD_ALIVE, cmucal_VDD_ALIVE_lut, cmucal_VDD_ALIVE, NULL, NULL),
+    CMUCAL_VCLK(VCLK_VDD_MM, cmucal_VDD_MM_lut, cmucal_VDD_MM, NULL, NULL),
+    CMUCAL_VCLK(VCLK_VDD_CAM, cmucal_VDD_CAM_lut, cmucal_VDD_CAM, NULL, NULL),
+    CMUCAL_VCLK(VCLK_VDD_CHUBVTS, cmucal_VDD_CHUBVTS_lut, cmucal_VDD_CHUBVTS, NULL, NULL),
+    CMUCAL_VCLK(VCLK_VDDI, cmucal_VDDI_lut, cmucal_VDDI, NULL, NULL),
+    CMUCAL_VCLK(VCLK_VDD_CPUCL0, cmucal_VDD_CPUCL0_lut, cmucal_VDD_CPUCL0, NULL, NULL),
+    CMUCAL_VCLK(VCLK_VDD_NPU, cmucal_VDD_NPU_lut, cmucal_VDD_NPU, NULL, NULL),
+    CMUCAL_VCLK(VCLK_VDD_G3D, cmucal_VDD_G3D_lut, cmucal_VDD_G3D, NULL, NULL),
+    CMUCAL_VCLK(VCLK_VDD_MIF, cmucal_VDD_MIF_lut, cmucal_VDD_MIF, NULL, NULL),
+
+/* SPECIAL VCLK*/
+
+/* GATE VCLK*/
+};
+unsigned int cmucal_vclk_size = 9;

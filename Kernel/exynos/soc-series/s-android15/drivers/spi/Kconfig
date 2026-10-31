@@ -1,0 +1,18 @@
+# SPDX-License-Identifier: GPL-2.0-only
+#
+# External SPI driver configuration
+#
+comment "SPI Drivers"
+
+config SPI_S3C64XX_EXT
+	tristate "Samsung S3C64XX/Exynos SoC series type SPI"
+	depends on (PLAT_SAMSUNG || ARCH_EXYNOS || COMPILE_TEST)
+	help
+	  SPI driver for Samsung S3C64XX, Exynos SoCs.
+	  Choose Y/M here only if you build for such Samsung SoC.
+
+config SPI_S3C64XX_EXT_KUNIT_TEST
+	tristate "Kunit test for Samsung S3C64XX/Exynos SoC series type SPI" if !KUNIT_ALL_TESTS
+	depends on KUNIT
+	depends on SPI_S3C64XX_EXT
+	default KUNIT_ALL_TESTS

@@ -1,0 +1,1 @@
+obj-$(CONFIG_IS_VENDOR_INTERFACE) += is-vendor-interface.o

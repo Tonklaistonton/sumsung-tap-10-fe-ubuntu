@@ -1,0 +1,68 @@
+/ {
+	/* performance mode - default */
+	set2: set@200 {
+		/* Boosting margin applied to frequency selection */
+		freqboost {			/* LIT MED-L MED-H BIG */
+			top-app			= <  5   5   5   5>;
+		};
+
+		/* Ontime Migration */
+		ontime {
+			foreground 	= <1>;
+			top-app		= <1>;
+
+			domain0 {
+				cpus = CPU_CL0;
+				lower-boundary = <0>;
+				upper-boundary = <5>;
+			};
+			domain1 {
+				cpus = CPU_CL1L;
+				lower-boundary = <1>;
+				upper-boundary = <63>;
+			};
+			domain2 {
+				cpus = CPU_CL1H;
+				lower-boundary = <1>;
+				upper-boundary = <63>;
+			};
+			domain3 {
+				cpus = CPU_CL2;
+				lower-boundary = <39>;
+				upper-boundary = <100>;
+			};
+		};
+
+		fclamp {
+			monitor-group {
+				top-app         = <1>;
+			};
+		};
+
+		cpufreq_gov {
+				/* LIT MED-L MED-H BIG */
+			ptb-margin = < 30 30 30 30 >;
+			ptb-min-freq = < 1248000 1632000 1824000 1920000 >;
+
+				/* LIT MED-L MED-H BIG */
+			pelt-margin = < 6 6 6 6 >;
+			pelt-margin-freq = <1056000 1920000 2016000 2016000 >;
+			up-rate-limit-ms = < 16 16 16 16 >;
+			up-rate-limit-freq = <1056000 1920000 2016000 2016000 >;
+		};
+
+		dslt {
+			runnable-sensitivity {
+				top-app    = <50>;
+				foreground = <30>;
+			};
+			running-sensitivity {
+				top-app    = <110>;
+			};
+		};
+
+		frt {
+			scale-freq-threshold = < 53 80 80 100 >;
+		};
+	};
+};

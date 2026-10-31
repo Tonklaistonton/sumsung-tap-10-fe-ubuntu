@@ -1,0 +1,45 @@
+/*
+ * SAMSUNG S5E8855 Power Management device tree source
+ *
+ * Copyright (c) 2024 Samsung Electronics Co., Ltd.
+ *		http://www.samsung.com
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+*/
+/ {
+	fragment@model {
+		target-path = "/";
+		__overlay__ {
+			sec_pm_cpupm {
+				compatible = "samsung,sec-pm-cpupm";
+				status = "okay";
+			};
+
+			sec_pm_debug {
+				compatible = "samsung,sec-pm-debug";
+				status = "okay";
+				main_pmic_cnt = <1>;
+				sub_pmic_cnt = <1>;
+				onsrc_reg_cnt = <2>;
+				offsrc_reg_cnt = <2>;
+			};
+
+			sec_pm_tmu {
+				compatible = "samsung,sec-pm-tmu";
+				status = "okay";
+			};
+
+			sec_pm_regulator {
+				compatible = "samsung,sec-pm-regulator";
+				status = "okay";
+			};
+
+			secgpio_dvs {
+				compatible = "samsung,s5e8855-secgpio-dvs";
+				status = "okay";
+			};
+		}; /* end of __overlay__ */
+	}; /* end of fragment */
+}; /* end of root */

@@ -1,0 +1,44 @@
+config SCSC_BT
+	tristate "SCSC MX BT support"
+	depends on (SCSC_CORE || SCSC_BT_KUNIT_TEST)
+
+config SCSC_BT_BLUEZ
+	default N
+	tristate "SCSC MX BlueZ support"
+	depends on SCSC_CORE
+
+config SCSC_ANT
+	default N
+	tristate "SCSC MX ANT support"
+	depends on SCSC_CORE
+	depends on !CONFIG_SCSC_INDEPENDENT_SUBSYSTEM
+	help
+	  This module adds support for using a ANT character device.
+
+config SCSC_BT_ADDRESS_IN_FILE
+	default N
+	tristate "SCSC MX BT support"
+	depends on SCSC_CORE
+	help
+	  Allow BT address to be read from a file
+
+config SCSC_BT_ADDRESS_FILENAME
+	string "BT address filename"
+	depends on SCSC_CORE
+	default "/mnt/vendor/efs/bluetooth/bt_addr"
+	help
+	  Select the named BT address override file.
+
+config SCSC_BT_USE_HCI_UART
+	bool "Enable SCSC BT HCI UART with the bt virtual uart"
+	depends on SCSC_BT && BT_HCIUART && BT_HCIUART_SERDEV && SERIAL_CORE
+	default n
+	help
+	  Select to use bt driver as hci uart driver.
+
+config SCSC_BT_KUNIT_TEST
+	bool "Enable SCSC BT kunit test"
+	depends on KUNIT
+	default n
+	help
+	  Select to unittest on KUnit framework

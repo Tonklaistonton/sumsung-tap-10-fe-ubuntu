@@ -1,0 +1,31 @@
+# SPDX-License-Identifier: GPL-2.0-or-later
+
+load("//build/kernel/kleaf:kernel.bzl", "kernel_dtstree")
+
+kernel_dtstree(
+    name = "mx8855_dt",
+    srcs = glob([
+        "Makefile",
+        "samsung/Makefile",
+        "samsung/**/Makefile",
+        "samsung/**/*.dtsi",
+        "samsung/**/*.dtso",
+        "exynos-base-dts/Makefile",
+        "exynos-base-dts/**/*.dts",
+        "exynos-base-dts/**/*.dtsi",
+    ],
+        exclude = [
+            "**/.*",
+            "**/.*/**",
+            "**/BUILD.bazel",
+            "**/*.bzl",
+        ],
+    ) + [
+        "//exynos/soc-series/s-android15:exynos.dt-bindings",
+        "//exynos/device/mx/mx8855:mx8855.dt-bindings",
+        "//exynos/device/erd/erd8855/arch/arm64/boot/dts:erd8855_dt_sources",
+    ],
+    visibility = [
+        "//exynos/device/mx/mx8855:__pkg__",
+    ],
+)

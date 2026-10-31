@@ -1,0 +1,13 @@
+# drivers/mmc/host/Kconfig
+#
+# Copyright (c) 2010-2024 Samsung Electronics Co., Ltd.
+#		http://www.samsung.com/
+#
+# Licensed under GPLv2
+#
+comment "Samsung Mobile MMC Options"
+menuconfig SEC_MMC
+	bool "Samsung MMC feature"
+	default n
+	help
+	  Enable Samsung mmc feature.

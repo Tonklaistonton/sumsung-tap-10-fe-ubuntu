@@ -1,0 +1,44 @@
+&contexthub_0 {
+	multi-os = "disabled";
+};
+
+
+/ {
+	fragment@model {
+		target-path = "/";
+		__overlay__ {
+			shub {
+				compatible = "shub";
+			};
+		};
+	};
+};
+
+/* /home/dpi/qb5_8814/workspace/P4_1716/kernel/kmodule/sensorhub/lsi/s5e8855/dts/sensorhub_s5e8855.gts10fe.dtsi */
+/ {
+	fragment@model {
+		target-path = "/";
+		__overlay__ {
+			shub {
+				acc-lsm6dsvtr-position = <2>;
+				mag-ak09918c-position = <3>;
+				mag-ak09918c-array = /bits/ 8 <167 84 21 13 149 11 1 130 216 53 239 158 65 28 251 232 223 135 45 135 188 252 151 65 9 77 82>;
+				light-dual;
+				light-position = /bits/ 32 <154 3 128 4 2 1 62 80 (-3) 30 2 1>;
+				model-name = "X526";
+			};
+		};
+	};
+};
+
+/* /home/dpi/qb5_8814/workspace/P4_1716/kernel/kmodule/sensorhub/lsi/s5e8855/dts/sensorhub_s5e8855.gts10fe.04.dtsi */
+/ {
+	fragment@model {
+		target-path = "/";
+		__overlay__ {
+			shub {
+				mag-ak09918c-array = /bits/ 8 <222 82 154 13 63 172 0 130 217 54 239 141 159 28 253 232 223 35 25 61 188 253 250 17 9 77 203>;
+			};
+		};
+	};
+};

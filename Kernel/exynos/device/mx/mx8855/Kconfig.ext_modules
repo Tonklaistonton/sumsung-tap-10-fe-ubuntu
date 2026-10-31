@@ -1,0 +1,2 @@
+source "$(KCONFIG_EXT_MODULES_PREFIX)sgpu/Kconfig"
+source "$(KCONFIG_EXT_MODULES_PREFIX)camera/camera/Kconfig"

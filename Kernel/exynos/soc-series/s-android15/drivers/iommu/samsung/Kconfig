@@ -1,0 +1,51 @@
+# SPDX-License-Identifier: GPL-2.0-only
+config SAMSUNG_IOMMU
+	tristate "Samsung IOMMU Support"
+	select ARM_DMA_USE_IOMMU
+	select IOMMU_DMA
+	select SAMSUNG_IOMMU_GROUP
+	help
+	  Support for IOMMU on Samsung Exynos SoCs.
+
+config SAMSUNG_IOMMU_GROUP
+	tristate "Samsung IOMMU Group Support"
+	help
+	  Support for IOMMU group on Samsung Exynos SoCs.
+
+config SAMSUNG_SECURE_IOVA
+	tristate "Samsung Secure IOVA Support"
+	help
+	  Support secure device virtual address management for Samsung Exynos SoCs.
+
+config SAMSUNG_IOMMU_V9
+	tristate "Samsung IOMMU V9 Support"
+	select ARM_DMA_USE_IOMMU
+	select IOMMU_DMA
+	select SAMSUNG_IOMMU_GROUP_V9
+	help
+	  Support for IOMMU V9 on Samsung Exynos SoCs.
+
+config SAMSUNG_IOMMU_GROUP_V9
+	tristate "Samsung IOMMU Group V9 Support"
+	help
+	  Support for IOMMU group on Samsung Exynos SoCs.
+
+config SYSMMU_EXYNOS_KUNIT_TEST
+	tristate "Samsung IOMMU KUNIT Test Support" if !KUNIT_ALL_TESTS
+	depends on KUNIT
+	depends on SAMSUNG_IOMMU_V9
+	default KUNIT_ALL_TESTS
+	help
+	  Support for IOMMU KUNIT test on Samsung Exynos SoCs.
+
+config EXYNOS_CPIF_IOMMU_V9
+        tristate "Enable Exynos CPIF IOMMU for version 9"
+        depends on EXYNOS_MODEM_IF
+        help
+          enable IOMMU V9 feature for Exynos CPIF
+
+config EXYNOS_PCIE_IOMMU
+        tristate "Enable Exynos PCIe IOMMU"
+        depends on PCI_EXYNOS_HOST
+        help
+          enable IOMMU feature for Exynos PCIe

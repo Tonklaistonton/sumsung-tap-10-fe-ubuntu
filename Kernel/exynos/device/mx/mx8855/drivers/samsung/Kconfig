@@ -1,0 +1,73 @@
+source "$(KCONFIG_EXT_PREFIX)drivers/samsung/pm/Kconfig"
+source "$(KCONFIG_EXT_PREFIX)drivers/samsung/debug/Kconfig"
+
+config SEC_BOOTSTAT
+	tristate "Enable TN Bootstat logging"
+  depends on DRV_SAMSUNG
+	default n
+	help
+	  This adds support for Samsung boot-stat
+	  To compile this driver as a module, choose M here.
+
+config SEC_KEY_NOTIFIER
+	tristate "Enable Samsung key event notifier"
+	default n
+	help
+	  Samsung Key input event notifier
+
+config SEC_KN_WATCH
+	bool "Change keys to support watch in event notifier"
+	default n
+	help
+		Enable this option for watch devices.
+		This will change the hold, primary, and secondary key to
+		support crash key and hard reset hook in watch devices.
+
+		          |     Phone      |     Watch
+		------------------------------------------
+		Hold      | KEY_VOLUMEDOWN | KEY_APPSELECT
+		------------------------------------------
+		Primary   | KEY_POWER      | KEY_APPSELECT
+		------------------------------------------
+		Secondary | KEY_VOLUMEUP   | KEY_POWER
+		------------------------------------------
+
+config CRASH_KEY_USER
+	tristate "Enable Samsung Crash Key 953"
+	depends on SEC_KEY_NOTIFIER
+	default n
+	help
+		This adds support for user crash key. To panic the device, while pressing
+		the hold key (not for watch, since hold and primary keys are identical)
+		press the primary key 9 times, secondary key 5 times, and finally
+		primary key 3 times. Keep pressing the hold key (primary key for watch)
+		until upload mode appears.
+
+config HARD_RESET_HOOK
+	tristate "Enable 7s hard reset hook"
+	depends on SEC_KEY_NOTIFIER
+	default n
+	help
+		This adds support for hard reset.
+		To panic the device, keep pressing both the hold key
+		and the primary(secondary for watch) key for 7 seconds.
+
+# drivers/samsung/Kconfig
+#
+# Copyright (c) 2010-2020 Samsung Electronics Co., Ltd.
+#               http://www.samsung.com/
+#
+# Licensed under GPLv2
+config SEC_REBOOT
+	tristate "Enable Samsung reboot features"
+	default n
+	help
+	  Samsung TN reboot extension Feature. Do additional work when reboot.
+
+
+comment "Samsung sysfs Feature"
+config DRV_SAMSUNG
+	tristate "Samsung sec class/sysfs Feature"
+	default n
+	help
+	  Samsung sysfs name 'sec' directory create.

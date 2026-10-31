@@ -1,0 +1,45 @@
+# drivers/samsung/pm/Kconfig
+#
+# Copyright (c) 2010-2024 Samsung Electronics Co., Ltd.
+#		http://www.samsung.com/
+#
+# Licensed under GPLv2
+#
+comment "Samsung Mobile Power Management Options"
+menuconfig SEC_PM
+	bool "Samsung Mobile Power Management"
+	default n
+	help
+	  This option enables support for various drivers and features for
+	  Samsung Mobile Power Management.
+
+config SEC_PM_CPUPM
+	tristate "Enable Samsung Mobile Power management to control CPU PM"
+	default n
+	depends on SEC_PM
+	help
+	  This option enables Samsung Mobile Power management CPU PM control support.
+	  Intended for controlling CPU power mode.
+
+config SEC_PM_DEBUG
+	tristate "Enable Samsung Mobile Power management debug support"
+	default n
+	depends on SEC_PM
+	help
+	  This option enables Samsung Mobile Power management debug support.
+	  Intended for test and debug only.
+
+config SEC_PM_TMU
+	tristate "Enable Samsung Mobile TMU driver for debugging Thermal Management Unit"
+	default n
+	depends on SEC_PM && EXYNOS_THERMAL_V2
+	help
+	  This option enables Samsung Mobile Power management Exynos TMU debugging support.
+	  Intended for debugging TMU.
+
+config SEC_PM_REGULATOR
+	tristate "Enable Samsung Mobile Regulator control driver"
+	default n
+	depends on SEC_PM && REGULATOR
+	help
+	  This option enables Samsung Mobile Power regulator control and debugging support.

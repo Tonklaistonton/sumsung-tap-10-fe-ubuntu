@@ -1,0 +1,8 @@
+#
+# CLO (Cross-layer Optimizer For Mobile Network configuration
+#
+config CLO
+	tristate "CLO configuration"
+	default n
+	help
+		Optimization Solutions for Mobile Networks

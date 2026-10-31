@@ -1,0 +1,103 @@
+# SPDX-License-Identifier: GPL-2.0-only
+#
+# Samsung SoC CPU drivers
+#
+
+config VENDOR_NR_CPUS
+	int "Maximum number of CPUs (2-4096) governed by vendor"
+	range 2 4096
+	default "2"
+
+config SCHED_EMS
+	tristate "Exynos Mobile Scheduler"
+	depends on SMP
+	default n
+	help
+	  This option supports Exynos mobile scheduler. It is designed to
+	  secure the limits of energy aware scheduler. This option provides
+	  features such as independent boosting functinos such as on-time migration,
+	  and prefer_perf and enhanced prefer_idle that work in conjunction with
+	  SCHEDTUNE.
+
+	  If unsure, say N.
+
+config EMS_EXYNOS_KUNIT_TEST
+	tristate "KUnit tests for EMS" if !KUNIT_ALL_TESTS
+	depends on KUNIT
+	depends on SCHED_EMS
+	default KUNIT_ALL_TESTS
+	help
+		This option supports unit test of EMS(Exynos Mobile Scheduler).
+		It use Kunit frameworks.
+
+config SCHED_EMS_IDLE_SELECT
+	bool "Idle selection for Exynos Mobile Scheduler"
+	depends on SCHED_EMS
+	default n
+	help
+	  This option supports idle selection for Exynos mobile scheduler.
+
+	  If unsure, say N.
+
+config SCHED_EMS_FREQ_SELECT
+	bool "Freq selction for Exynos Mobile Scheduler"
+	depends on SCHED_EMS
+	default n
+	help
+	  This option supports frequency selection for Exynos mobile scheduler.
+
+	  If unsure, say N.
+
+config SCHED_EMS_PAGO
+	bool "PAGO for Exynos Mobile Scheduler"
+	depends on SCHED_EMS
+	default n
+	help
+	  This option supports PAGO for Exynos mobile scheduler.
+
+	  If unsure, say N.
+
+config SCHED_EMS_DSU_FREQ_SELECT
+	bool "DSU frequency selction for Exynos Mobile Scheduler"
+	depends on SCHED_EMS
+	default n
+	help
+	  This option supports dsu frequency selection for Exynos mobile scheduler.
+
+	  If unsure, say N.
+
+config SCHED_EMS_CORE_SELECT
+	bool "Core selection for Exynos Mobile Scheduler"
+	depends on SCHED_EMS
+	default n
+	help
+	  This option supports core selection for Exynos mobile scheduler.
+
+	  If unsure, say N.
+
+config SCHED_EMS_DEBUG
+	bool "Exynos Mobile Scheduler Debug"
+	depends on SCHED_EMS
+	default n
+	help
+	This option supports exynos mobile scheduler debug.
+
+	If unsure, say N.
+
+config SCHED_EMS_TASK_GROUP
+	bool "Exynos Mobile Scheduler Task Group"
+	depends on SCHED_EMS
+	default n
+	help
+	  This option supports exynos mobile scheduler task group.
+
+	  If unsure, say N.
+
+config SCHED_EMS_DSU_SLICE_DOWN
+	bool "Exynos Mobile Scheduler DSU slice down control"
+	depends on SCHED_EMS
+	default n
+	help
+	  This option supports DSU slice down control.
+
+	  If unsure, say N.

@@ -1,0 +1,12 @@
+#  SPDX-License-Identifier: GPL-2.0
+
+config VENDOR_ZRAM_LZO_HW_DECOMP
+	tristate "Exynos HW Decompression engin driver"
+	depends on CRYPTO_LZO
+	default n
+
+config VENDOR_ZRAM_LZO_HW_DECOMP_KUNIT_TEST
+	tristate "KUnit tests for Exynos HW Decompression engin driver" if !KUNIT_ALL_TESTS
+	depends on KUNIT
+	depends on VENDOR_ZRAM_LZO_HW_DECOMP
+	default KUNIT_ALL_TESTS

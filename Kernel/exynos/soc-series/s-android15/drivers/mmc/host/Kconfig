@@ -1,0 +1,75 @@
+# SPDX-License-Identifier: GPL-2.0-only
+#
+# MMC/SD host controller drivers
+#
+
+comment "MMC/SD/SDIO Host Controller Drivers"
+
+config MMC_DW_SAMSUNG
+	tristate "Synopsys DesignWare Memory Card Interface"
+	depends on ARC || ARM || ARM64 || MIPS || RISCV || CSKY || COMPILE_TEST
+	help
+	  This selects support for the Synopsys DesignWare Mobile Storage IP
+	  block, this provides host support for SD and MMC interfaces, in both
+	  PIO, internal DMA mode and external DMA mode.
+
+config MMC_DW_PLTFM_SAMSUNG
+	tristate "Synopsys Designware MCI Support as platform device"
+	depends on MMC_DW_SAMSUNG
+	default y
+	help
+	  This selects the common helper functions support for Host Controller
+	  Interface based platform driver. Please select this option if the IP
+	  is present as a platform device. This is the common interface for the
+	  Synopsys Designware IP.
+
+	  If you have a controller with this interface, say Y or M here.
+
+	  If unsure, say Y.
+
+config MMC_DW_EXYNOS_SAMSUNG
+	tristate "Exynos specific extensions for Synopsys DW Memory Card Interface"
+	depends on MMC_DW_SAMSUNG
+	select MMC_DW_PLTFM_SAMSUNG
+	help
+	  This selects support for Samsung Exynos SoC specific extensions to the
+	  Synopsys DesignWare Memory Card Interface driver. Select this option
+	  for platforms based on Exynos4 and Exynos5 SoC's.
+
+config MMC_DW_DEBUG
+	tristate "Samsung DWMCI debug feature"
+	depends on MMC_DW_SAMSUNG
+	help
+	  This selects support for information logging for debugging.
+	  Select this option if this feature is needed on working.
+
+config MMC_DW_EXYNOS_FMP
+        bool "EXYNOS Flash Memory Protector for MMC_DW"
+	depends on MMC_DW_EXYNOS_SAMSUNG && MMC_CRYPTO
+	help
+	  This selects the EXYNOS MMC_DW FMP Driver.
+	  If you have a controller with this interface, say Y or M here.
+	  If unsure, say N.
+
+config MMC_DW_EXYNOS_DUMP_TO_CONSOLE
+	tristate "EXYNOS specific dump to console to MMC controller platform driver"
+	depends on MMC_DW_DEBUG && (ARCH_EXYNOS || COMPILE_TEST)
+	help
+	  This selects dumping and printing debuggin information of the EXYNOS
+	  specific additions to MMC platform driver.
+	  Select this if you have MMC host controller on EXYNOS chipset.
+	  If unsure, say N.
+
+config MMC_SRPMB
+        tristate "MMC Secure RPMB Support"
+	depends on MMC_DW_SAMSUNG
+	help
+	  This option activates mmc secure rpmb.
+
+config SEC_MMC_FEATURE
+	tristate "SEC specific MMC/SD feature"
+	depends on MMC_DW_SAMSUNG
+	help
+	  Enable Samsung MMC/SD feature support.
+	  Enabling this allows kernel to use SEC specific feature
+	  defined and implemented by SEC.

@@ -1,0 +1,21 @@
+# SPDX-License-Identifier: GPL-2.0
+
+config UFS_SRPMB
+	tristate "UFS Secure RPMB support"
+	depends on SCSI
+	help
+	  This option activates ufs secure rpmb.
+
+config UFS_ADVANCED_SRPMB
+	bool "UFS Secure Advanced RPMB support"
+	default y
+	depends on UFS_SRPMB
+	help
+	  This option activates ufs advanced secure rpmb.
+
+config UFS_SRPMB_MEMLOG
+	bool "Secure RPMB Memlog support"
+	default y
+	depends on UFS_SRPMB
+	help
+	  This option activates srpmb memlog.

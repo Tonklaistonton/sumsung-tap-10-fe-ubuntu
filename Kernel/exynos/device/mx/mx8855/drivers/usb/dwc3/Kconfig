@@ -1,0 +1,12 @@
+# SPDX-License-Identifier: GPL-2.0
+#
+# SEC USB Gadget support on a system involves
+#
+config SEC_USB_HOOK
+	tristate "Exynos SoC series is mapping to sec usb function"
+	depends on SEC_USB_CB
+	help
+	 Enable Sec HOOK CB to support for SEC function.
+	 This driver provides OWN sec function to SOC series.
+	 If you choose to build this driver is a dynamically linked
+	 module, the module will be called sec_usb_hook.ko.

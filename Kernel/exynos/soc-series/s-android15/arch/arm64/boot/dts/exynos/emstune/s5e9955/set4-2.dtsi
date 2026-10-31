@@ -1,0 +1,66 @@
+/ {
+	/* balance mode - app boost */
+	set4_2: set@402{
+		/* Ontime Migration */
+		ontime {
+			foreground 	= <1>;
+			top-app		= <1>;
+
+			domain0 {
+				cpus = CPU_CL0;
+				lower-boundary = <0>;
+				upper-boundary = <21>;
+			};
+			domain1 {
+				cpus = CPU_CL1L;
+				lower-boundary = <8>;
+				upper-boundary = <66>;
+			};
+			domain2 {
+				cpus = CPU_CL1H;
+				lower-boundary = <8>;
+				upper-boundary = <66>;
+			};
+			domain3 {
+				cpus = CPU_CL2;
+				lower-boundary = <43>;
+				upper-boundary = <100>;
+			};
+		};
+
+		ecs_dynamic { };
+
+		tex {
+			top-app = <110>;
+			foreground = <110>;
+		};
+
+		ntu {
+			top-app			= <0>;
+		};
+
+		cpufreq_gov {
+			/* for B7 */
+			pelt-margin = < 6 6 6 6 >;
+			pelt-margin-freq = <1056000 1920000 2016000 2016000 >;
+			up-rate-limit-ms = < 16 16 16 16 >;
+			up-rate-limit-freq = <1056000 1920000 2016000 2016000 >;
+		};
+
+		cgroup_boost {
+			top-app = <1>;
+			foreground = <1>;
+		};
+
+		util_est {
+			top-app	= <1>;
+		};
+
+		dslt {
+			running-sensitivity {
+				background = <100>;
+				system-background = <100>;
+			};
+		};
+	};
+};

@@ -1,0 +1,6 @@
+# Exynos DEVFREQ Drivers
+
+subdir-ccflags-y += -I${ROOT_DIR}/${KERNEL_DIR}/drivers/dma
+
+obj-$(CONFIG_SAMSUNG_PDMA)		+= samsung-pdma.o
+samsung-pdma-objs	+= samsung-pl330.o samsung-pdma-interface.o

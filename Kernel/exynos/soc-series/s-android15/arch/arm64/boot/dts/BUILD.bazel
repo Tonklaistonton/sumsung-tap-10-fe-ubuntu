@@ -1,0 +1,25 @@
+# SPDX-License-Identifier: GPL-2.0-or-later
+
+load("//build/kernel/kleaf:kernel.bzl", "kernel_dtstree")
+
+kernel_dtstree(
+    name = "exynos_soc.dt",
+    srcs = glob([
+            "exynos/**/*.dtsi",
+            "exynos/**/*.dts",
+        ],
+        exclude = [
+            "**/.*",
+            "**/.*/**",
+            "**/BUILD.bazel",
+            "**/*.bzl",
+        ],
+    ) + [
+        "Makefile",
+        "exynos/Makefile",
+        "//exynos/soc:exynos.dt-bindings",
+    ] ,
+    visibility = [
+        "//exynos/soc:__pkg__",
+    ],
+)

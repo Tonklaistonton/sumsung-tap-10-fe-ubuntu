@@ -1,0 +1,92 @@
+# SPDX-License-Identifier: GPL-2.0-or-later
+
+load("@bazel_skylib//rules:write_file.bzl", "write_file")
+load("@bazel_skylib//lib:selects.bzl", "selects")
+load("@bazel_skylib//rules:common_settings.bzl", "string_flag")
+load("//build/kernel/kleaf:kernel.bzl",
+    "kernel_module",
+)
+load(":s5e9945_modules.bzl", "register_s5e9945_soc_module")
+load(":s5e9955_modules.bzl", "register_s5e9955_soc_module")
+load(":s5e8855_modules.bzl", "register_s5e8855_soc_module")
+
+package(
+    default_visibility = [
+        "//exynos/device:__subpackages__",
+        "//exynos/soc-series:__subpackages__",
+    ],
+)
+
+filegroup(
+    name = "exynos.soc_kconfig",
+    srcs = glob([
+        "**/Kconfig",
+    ]) + [
+        "Kconfig.ext",
+    ],
+    visibility = [
+        "//exynos/device:__subpackages__",
+    ],
+)
+
+filegroup(
+    name = "exynos.dt-bindings",
+    srcs = glob([
+        "include/dt-bindings/**",
+        "include/dtc/**",
+    ]),
+    visibility = [
+        "//exynos/device:__subpackages__",
+    ],
+)
+
+filegroup(
+    name = "exynos.soc_sources",
+    srcs = glob(
+        ["**"],
+        exclude = [
+            ".*",
+            ".*/**",
+            "BUILD.bazel",
+            "**/*.bzl",
+            "build.config.*",
+        ],
+    ),
+    visibility = [
+        "//exynos/device:__subpackages__",
+    ],
+)
+
+filegroup(
+    name = "exynos.soc_headers",
+    srcs = glob([
+        "**/*.h",
+    ] + [
+        "Makefile.include",
+    ]),
+    visibility = [
+        "//exynos/device:__subpackages__",
+        "//exynos/external-modules:__subpackages__",
+    ],
+)
+
+filegroup(
+    name = "exynos.soc_fragment",
+    srcs = glob([
+        "arch/**/configs/*.fragment",
+    ]),
+    visibility = [
+        "//exynos/device:__subpackages__",
+    ],
+)
+exports_files([
+    "build.config.s5e9945_v",
+    "build.config.s5e9955_v",
+    "build.config.s5e8855_v",
+])
+
+
+# Register all SoC modules
+register_s5e9945_soc_module()
+register_s5e9955_soc_module()
+register_s5e8855_soc_module()

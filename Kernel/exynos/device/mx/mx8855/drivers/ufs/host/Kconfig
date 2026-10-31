@@ -1,0 +1,13 @@
+# drivers/ufs/host/Kconfig
+#
+# Copyright (c) 2010-2024 Samsung Electronics Co., Ltd.
+#		http://www.samsung.com/
+#
+# Licensed under GPLv2
+#
+comment "Samsung Mobile UFS Options"
+menuconfig SEC_UFS
+	bool "Samsung UFS feature"
+	default n
+	help
+	  Enable Samsung ufs feature.

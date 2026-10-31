@@ -1,0 +1,60 @@
+&smd {
+	sec_auth_ds28e30: sec-auth-ds28e30 {
+			status = "okay";
+			compatible = "samsung,sec_auth_ds28e30";
+			/* read bit out low loop count , write bit out low loop count for main battery*/
+			ds28e30,rw_out_low_loop_cnt = <3 3>;
+			ds28e30,read_bit_vamm_cnt = <6>;
+			/* read bit out low loop count , write bit out low loop count for sub battery*/
+			ds28e30,rw_out_low_loop_cnt2 = <3 3>;
+			ds28e30,read_bit_vamm_cnt2 = <6>;
+#if 1
+			sec_auth_ds28e30,swi_gpio = <
+				SEC_GPIO_REF(AP,gpm12,gpm12,0) 0 /* SWI_GPIO */
+#if 0
+				SEC_GPIO_REF(${swi_gpio_2}) 0 /* SWI_GPIO_2 */
+#endif
+			>;
+#endif
+			};
+};
+
+
+/* /home/dpi/qb5_8814/workspace/P4_1716/kernel/kmodule/battery/suwon/battery_auth/ds28e30/gts10fewifi/sec_auth_ds28e30.dtsi */
+#if 1
+&pinctrl_1 {
+		sec_auth_gpio_init: sec_auth_gpio_init {
+			GPIO_CONFIG_PUD(AP,gpm12,gpm12,0, FUNC_OUTPUT_HIGH, PULL_NONE);
+		};
+		sec_auth_gpio_sleep: sec_auth_gpio_sleep {
+			GPIO_CONFIG_PUD(AP,gpm12,gpm12,0, FUNC_OUTPUT_HIGH, PULL_NONE);
+		};
+	};
+#endif
+
+&smd {
+	sec_auth_ds28e30: sec-auth-ds28e30 {
+		status = "okay";
+		compatible = "samsung,sec_auth_ds28e30";
+#if 1
+		/* SWI_GPIO */
+		ds28e30,swi_gpio = <SEC_GPIO_REF(AP,gpm12,gpm12,0) 0 >;
+		/* s5e8855.dts (gpm12[0])--> Change according to AP and GPIO */
+		ds28e30,base_phys_addr = <0x12030000 0x1000>;
+		/* Control register, Data register --> Change according to AP and GPIO */
+		ds28e30,offset = <0x0180 0x0184>;
+		/* Control bit is 0th , Data bit is 0th --> Change according to AP and GPIO */
+		ds28e30,bit_pos = <0 0>;
+		/* Set CPU mask */
+		ds28e30,cpu_start = <4>;
+		ds28e30,cpu_end = <6>;
+		pinctrl-names = "init", "sleep";
+		pinctrl-0 = <&sec_auth_gpio_init>;
+		pinctrl-1 = <&sec_auth_gpio_sleep>;
+#endif
+#if 1
+		/*EUR_DETECTION_NODE*/
+		ds28e30,eur_detection = <SEC_GPIO_REF(PM,s2mpu16_gpio,gpio_s,7) 0 >;
+#endif
+	};
+};

@@ -1,0 +1,131 @@
+# SPDX-License-Identifier: GPL-2.0
+#
+# Samsung SoC drivers
+#
+menuconfig SOC_SAMSUNG
+	bool "Samsung SoC driver support" if COMPILE_TEST
+
+config SOC_S5E9945
+	bool "Samsung S5E9945"
+	select ARCH_EXYNOS
+	help
+	Support Samsung SOC S5E9945.
+
+config EXYNOS_BCM_DBG
+	tristate "EXYNOS_BCM_DBG driver support"
+	help
+	  Enable exynos-bcm_dbg driver support
+
+config EXYNOS_BCM_DBG_GNR
+	tristate "EXYNOS_BCM_DBG_GNR driver support"
+	help
+	  Enable exynos-bcm_dbg driver support
+
+config EXYNOS_BCM_TIME_SYNC
+	depends on EXYNOS_BCM_DBG
+	default n
+	bool "EXYNOS_BCM_TIME_SYNC support"
+	help
+	  Enable exynos-bcm_dbg time sync support
+
+config EXYNOS_BCM_DBG_AUTO
+	tristate "EXYNOS_BCM_DBG_AUTO support"
+	default n
+	depends on EXYNOS_BCM_DBG
+	depends on !(USE_SIGNED_BINARY)
+	help
+	  Enable exynos-bcm_dbg_auto support
+
+config EXYNOS_BCM_DBG_DUMP
+	tristate "EXYNOS_BCM_DBG dump support"
+	depends on EXYNOS_BCM_DBG
+	help
+	  Enable exynos-bcm_dbg dump support
+
+config EXYNOS_MIFGOV
+	tristate "Exynos MIF GOVERNOR"
+	default n
+	help
+	  Exynos MIF GOVERNOR (MIFGOV) driver support
+
+config EXYNOS_SCI
+	tristate "EXYNOS SCI interface driver support"
+	help
+	Enable exynos sci interface driver support
+
+config BUS_EXYNOS_KUNIT_TEST
+	tristate "Kunit test for EXYNOS SCI interface driver" if !KUNIT_ALL_TESTS
+	depends on KUNIT
+	default KUNIT_ALL_TESTS
+	help
+	Test for exynos sci interface driver
+
+config EXYNOS_LLCGOV
+	tristate "EXYNOS SCI governor support"
+	depends on EXYNOS_SCI
+	help
+	Enable exynos sci governor support
+
+config EXYNOS_SCI_DBG
+	tristate "EXYNOS SCI DBG interface driver support"
+	depends on EXYNOS_SCI
+	help
+	Enable exynos sci debug interface driver support
+
+config EXYNOS_MPAM_ARCH
+	tristate "MPAM module based architecture driver"
+	depends on EXYNOS_CPUPM
+
+config EXYNOS_MSC_DSU
+	tristate "MSC driver for DSU"
+	depends on EXYNOS_MPAM_ARCH
+
+config EXYNOS_MSC_LLC
+	tristate "MSC driver for LLC"
+	depends on EXYNOS_MPAM_ARCH
+
+config EXYNOS_MSC_SMC
+	tristate "MSC driver for SMC"
+	depends on EXYNOS_MPAM_ARCH
+
+config EXYNOS_MPAM_POLICY
+	tristate "MPAM policy module"
+	depends on EXYNOS_MPAM_ARCH
+
+config EXYNOS_UFCC
+	tristate "User Frequency & C-state & EMSTune Control"
+	depends on EXYNOS_CPUFREQ
+	default n
+	help
+	  Control Frequency & C-state & EMSTune by user
+
+config EXYNOS_AFM
+	tristate "Exynos AFM Handler"
+	depends on CPU_FREQ
+	default n
+	help
+	  Enable AFM handler for Exynos SoC.
+
+config EXYNOS_CPUHP
+	tristate "CPU Hotplug driver support"
+	default n
+	help
+	  Support CPU Hotplug interface for Exynos SoC.
+
+config EXYNOS_CPUPM
+	tristate "Exynos CPU Power Management driver"
+	depends on ARCH_EXYNOS && PMUCAL
+	default n
+	help
+	  Support Exynos CPU Power Control for EXYNOS SoC.
+
+config EXYNOS_IDLE_LAT
+	tristate "Exynos CPUIDLE latency test support"
+	depends on ARCH_EXYNOS && EXYNOS_CPUPM
+	default n
+	help
+	  Support Exynos CPUIDLE latency test.
+
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/soc/samsung/xperf/Kconfig"
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/soc/samsung/hts/Kconfig"
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/soc/samsung/hwdecomp/Kconfig"

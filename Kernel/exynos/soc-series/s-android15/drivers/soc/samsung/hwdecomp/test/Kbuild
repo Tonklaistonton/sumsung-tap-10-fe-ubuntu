@@ -1,0 +1,3 @@
+obj-$(CONFIG_VENDOR_ZRAM_LZO_HW_DECOMP_KUNIT_TEST)	+= hwdecomp_exynos_test.o
+
+hwdecomp_exynos_test-y					:= exynos_hw_decomp_test.o

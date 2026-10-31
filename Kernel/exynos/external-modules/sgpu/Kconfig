@@ -1,0 +1,4 @@
+# SPDX-License-Identifier: GPL-2.0
+
+source "$(KCONFIG_EXT_MODULES_PREFIX)sgpu/sgpu/Kconfig"
+source "$(KCONFIG_EXT_MODULES_PREFIX)sgpu/test/Kconfig"

@@ -1,0 +1,1 @@
+exynos/soc-series/common/bazel.WORKSPACE

@@ -1,0 +1,9 @@
+#
+# Exynos Primary Security Processor configuration
+#
+
+config EXYNOS_PSP
+	tristate "Exynos Primary Security Processor"
+	depends on ARCH_EXYNOS
+	help
+	  Support Primary Security Processor

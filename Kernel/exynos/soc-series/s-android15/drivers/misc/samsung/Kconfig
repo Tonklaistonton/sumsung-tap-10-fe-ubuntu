@@ -1,0 +1,11 @@
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/misc/samsung/gpio_debug/Kconfig"
+if SOC_S5E9955
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/misc/samsung/pcie_scsc/Kconfig"
+endif
+if SOC_S5E8855
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/misc/samsung/scsc/Kconfig"
+endif
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/misc/samsung/scsc_bt/Kconfig"
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/misc/samsung/slsi_bt/Kconfig"
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/misc/samsung/kic/Kconfig"
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/misc/samsung/hardening/Kconfig"

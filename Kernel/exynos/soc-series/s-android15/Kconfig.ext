@@ -1,0 +1,152 @@
+# SPDX-License-Identifier: GPL-2.0
+
+menu  "Exynos SOC require Modules"
+
+config VENDOR_NR_CPUS
+	int "Maximum number of CPUs (2-4096) governed by vendor"
+	range 2 4096
+	default "10"
+
+config SOC_S5E9945
+	bool "Samsung S5E9945"
+	select ARCH_EXYNOS
+	help
+	  Support Samsung SOC S5E9945.
+
+config SOC_S5E9955
+	bool "Samsung S5E9955"
+	select ARCH_EXYNOS
+	help
+	  Support Samsung SOC S5E9955.
+
+config SOC_S5E8855
+	bool "Samsung S5E8855"
+	select ARCH_EXYNOS
+	help
+	  Support Samsung SOC S5E8855.
+
+config EXYNOS_EMULATOR
+	bool "Samsung Exynos Emulator"
+	select ARCH_EXYNOS
+	help
+	  Support Samsung Exynos Emulator that has Virtual I/O only.
+
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/clocksources/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/tty/serial/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/i2c/busses/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/spi/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/i3c/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/clk/samsung/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/soc/samsung/exynos/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/power/reset/exynos/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/pinctrl/samsung/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/iommu/samsung/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/dma-buf/heaps/samsung/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/ufs/host/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/mmc/host/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/pwm/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/watchdog/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/bts/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/soc/samsung/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/dma/samsung/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/devfreq/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/thermal/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/dpu/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/mfd/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/regulator/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/rtc/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/input/keyboard/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/iio/adc/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/pinctrl/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/mfd/samsung/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/power/supply/samsung/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/misc/samsung/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/net/wireless/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/soc/samsung/exynos/debug/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/phy/samsung/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/usb/dwc3/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/usb/host/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)sound/usb/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/usb/gadget/function/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)kernel/sched/ems/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/cpufreq/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/vision/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/soc/samsung/exynos/exynos-el2/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/staging/nanohub/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/soc/samsung/exynos/exynos-pkvm-module/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/smfc/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/mfc/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/scaler/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/soc/samsung/exynos/cpif/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/soc/samsung/exynos/gnssif/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/clo/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/pci/controller/dwc/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)sound/soc/samsung/exynos/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)sound/soc/codecs/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/tsmux/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/repeater/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/scsi/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/irqchip/exynos/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/block/zram/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/nfc/samsung/Kconfig"
+
+source "$(KCONFIG_EXT_SOC_PREFIX)mm/sec_mm/Kconfig"
+
+endmenu

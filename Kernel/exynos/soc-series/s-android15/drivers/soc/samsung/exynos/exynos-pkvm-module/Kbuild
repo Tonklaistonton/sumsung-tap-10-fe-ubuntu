@@ -1,0 +1,15 @@
+# SPDX-License-Identifier: GPL-2.0-only
+#
+# Makefile for Exynos pKVM module
+#
+
+obj-$(CONFIG_EXYNOS_PKVM_MODULE) += exynos-pkvm-module.o
+obj-$(CONFIG_EXYNOS_PKVM_S2MPU) += exynos-pkvm-s2mpu-module.o
+
+$(obj)/hyp/kvm_nvhe.o: FORCE
+	$(Q)$(MAKE) $(build)=$(obj)/hyp $(obj)/hyp/kvm_nvhe.o
+
+clean-files := hyp/hyp.lds hyp/hyp-reloc.S
+
+exynos-pkvm-module-y := exynos-pkvm.o hyp/kvm_nvhe.o
+exynos-pkvm-s2mpu-module-y := exynos-pkvm-s2mpu.o hyp/kvm_nvhe.o

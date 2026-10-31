@@ -1,0 +1,20 @@
+{
+    "PROJECT_NAME": "BT_DD",
+    "SRC_PATH": "kernel-dd/drivers/misc/samsung/scsc_bt",
+    "SRC_LANG": "c",
+    "BUILD_PATH": "kernel/",
+    "SCM_TYPE": "git",
+    "SCM_REPO": "ssh://woonki84.lee@10.227.36.179:29418/android14/kernel-dd.git",
+    "SCM_BRANCH": "master",
+    "SCM_KEY": "85140d4f9323362cb2520996a3f1386d264bdfcd",
+    "BUILD_JOB_NAME": "BT_DD-TEM",
+    "BUILD_JOB_ID": "240524",
+    "EXECUTE_TIME": "2024-05-24 13:46:00",
+    "TESTED_LINE_CNT": 1994,
+    "TOTAL_LINE_CNT": 2397,
+    "TESTED_FUNCTION_CNT": 126,
+    "TOTAL_FUNCTION_CNT": 127,
+    "PASSED_TEST_CASE_CNT": 46,
+    "TOTAL_TEST_CASE_CNT": 46,
+    "TEST_TOOL_NAME": "lcov"
+}

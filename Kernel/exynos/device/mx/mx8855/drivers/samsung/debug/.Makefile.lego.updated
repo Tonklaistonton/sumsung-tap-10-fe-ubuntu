@@ -1,0 +1,7 @@
+# SPDX-License-Identifier: GPL-2.0
+
+ccflags-y := -Wformat
+
+# softdog module
+obj-$(CONFIG_SOFT_WATCHDOG_EXT)		+= softdog.o
+softdog-y				+= softdog_ext.o

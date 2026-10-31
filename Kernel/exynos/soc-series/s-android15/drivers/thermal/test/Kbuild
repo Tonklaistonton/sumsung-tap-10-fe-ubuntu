@@ -1,0 +1,6 @@
+obj-$(CONFIG_DTM_EXYNOS_KUNIT_TEST) += dtm_exynos_test.o
+
+dtm_exynos_test-y += exynos-thermal-test.o
+
+ccflags-y += -I $(srctree)/$(src)/../
+

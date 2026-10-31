@@ -1,0 +1,26 @@
+config DPU_EXYNOS_KUNIT_TEST
+	tristate "KUnit tests for DPU" if !KUNIT_ALL_TESTS
+	depends on KUNIT
+	depends on DRM_SAMSUNG_DPU
+	default KUNIT_ALL_TESTS
+
+config DPU_DSIM_BIST_KUNIT_TEST
+	tristate "Support DSIM bist Test"
+	select DPU_KUNIT_HELPER
+	default n
+	help
+	  If this menu is enabled, you can test dsim bist at booting time.
+
+config DPU_DECON_COLORMAP_KUNIT_TEST
+	tristate "Support DECON colormap Test"
+	select DPU_KUNIT_HELPER
+	default n
+	help
+	  If this menu is enabled, you can test decon colormap at booting time.
+
+config DPU_DMA_KUNIT_TEST
+	tristate "Support DPU_DMA with dma buf Test"
+	select DPU_KUNIT_HELPER
+	default n
+	help
+	  If this menu is enabled, you can test DPU_DMA with dma buf at booting time.

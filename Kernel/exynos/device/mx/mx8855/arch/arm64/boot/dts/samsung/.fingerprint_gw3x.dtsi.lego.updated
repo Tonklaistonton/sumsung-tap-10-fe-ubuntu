@@ -1,0 +1,151 @@
+/*
+ * SAMSUNG EXYNOS board device tree source
+ *
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ *		http://www.samsung.com
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+#if 1
+&pinctrl_1 {
+	gfspi_ldopin: gfspi_ldopin {
+		samsung,pins = SEC_GPIO(AP,gpm11,gpm11,0);
+		samsung,pin-function = <1>;
+		samsung,pin-pud = <1>;
+		samsung,pin-drv = <0>;
+		samsung,pin-con-pdn = <3>;
+		samsung,pin-pud-pdn = <1>;
+	};
+};
+#endif
+
+#if 0
+&${fps_regul_vdd_3p3} {
+	regulator-name = "VDD_BTP_3P3";
+	regulator-min-microvolt = <3300000>;
+	regulator-max-microvolt = <3375000>;
+};
+#endif
+
+&pinctrl_0 {
+	gfspi_drdypin_active: gfspi_drdypin_active {
+		samsung,pins = SEC_GPIO(AP,gpa0,gpa0,7);
+		samsung,pin-function = <0xf>;
+		samsung,pin-pud = <0>;
+		samsung,pin-drv = <3>;
+	};
+
+	gfspi_drdypin_suspend: gfspi_drdypin_suspend {
+		samsung,pins = SEC_GPIO(AP,gpa0,gpa0,7);
+		samsung,pin-function = <0>;
+		samsung,pin-pud = <1>;
+		samsung,pin-drv = <3>;
+	};
+};
+
+&pinctrl_0 {
+	gfspi_rstpin: gfspi_rstpin {
+		samsung,pins = SEC_GPIO(AP,gpa0,gpa0,6);
+		samsung,pin-function = <1>;
+		samsung,pin-pud = <1>;
+		samsung,pin-drv = <0>;
+		samsung,pin-con-pdn = <3>;
+		samsung,pin-pud-pdn = <0>;
+	};
+};
+
+&pinctrl_5 {
+	spi_fp_bus_inactive: spi-fp-bus-inactive {
+		samsung,pins = SEC_GPIO(AP,gpp3,gpp3,7), SEC_GPIO(AP,gpp3,gpp3,4), SEC_GPIO(AP,gpp3,gpp3,5);
+		samsung,pin-function = <1>;
+		samsung,pin-pud = <0>;
+		samsung,pin-drv = <2>;
+		samsung,pin-val = <0>;
+	};
+
+	spi_fp_miso_inactive: spi-fp-miso-inactive {
+		samsung,pins = SEC_GPIO(AP,gpp3,gpp3,6);
+		samsung,pin-function = <0>;
+		samsung,pin-pud = <1>;
+		samsung,pin-drv = <2>;
+	};
+
+	spi_fp_clk: spi-fp-clk {
+		samsung,pins = SEC_GPIO(AP,gpp3,gpp3,4);
+		samsung,pin-function = <2>;
+		samsung,pin-pud = <1>;
+		samsung,pin-drv = <2>;
+	};
+
+	spi_fp_cs: spi-fp-cs {
+		samsung,pins = SEC_GPIO(AP,gpp3,gpp3,7);
+		samsung,pin-function = <2>;
+		samsung,pin-pud = <3>;
+		samsung,pin-drv = <2>;
+	};
+
+	spi_fp_miso: spi-fp-miso {
+		samsung,pins = SEC_GPIO(AP,gpp3,gpp3,6);
+		samsung,pin-function = <2>;
+		samsung,pin-pud = <1>;
+		samsung,pin-drv = <2>;
+	};
+
+	spi_fp_mosi: spi-fp-mosi {
+		samsung,pins = SEC_GPIO(AP,gpp3,gpp3,5);
+		samsung,pin-function = <2>;
+		samsung,pin-pud = <1>;
+		samsung,pin-drv = <2>;
+	};
+};
+
+#if defined(CONFIG_SEC_FACTORY) || !1
+&spi_13 {
+	status = "okay";
+	pinctrl-names = "";
+	dma-mode;
+#else
+&smd {
+#endif
+	gw3x {
+		compatible = "goodix,fingerprint";
+		reg = <0>;
+		spi-max-frequency = <9600000>;
+		pinctrl-names = "default", "pins_poweron", "pins_poweroff"
+						, "pins_poweron_tz", "pins_poweroff_tz";
+#if 1
+		pinctrl-0 = <&gfspi_ldopin &gfspi_rstpin &gfspi_drdypin_suspend>;
+#else
+		pinctrl-0 = <&gfspi_rstpin &gfspi_drdypin_suspend>;
+#endif
+		pinctrl-1 = <&gfspi_drdypin_active &spi_fp_clk &spi_fp_cs &spi_fp_miso &spi_fp_mosi>;
+		pinctrl-2 = <&gfspi_drdypin_suspend &spi_fp_bus_inactive &spi_fp_miso_inactive>;
+		pinctrl-3 = <&gfspi_drdypin_active>;
+		pinctrl-4 = <&gfspi_drdypin_suspend>;
+
+		gpio-controller;
+		#gpio-cells = <2>;
+
+#if 1
+		goodix,gpio_pwr = <SEC_GPIO_REF(AP,gpm11,gpm11,0) 0>;
+#endif
+#if 0
+		goodix,btp-regulator = "VDD_BTP_3P3";
+		VDD_BTP_3P3-supply = <&${fps_regul_vdd_3p3}>;
+#endif
+		goodix,gpio_reset = <SEC_GPIO_REF(AP,gpa0,gpa0,6) 0>;
+		goodix,gpio_irq = <SEC_GPIO_REF(AP,gpa0,gpa0,7) 0>;
+		goodix,chip_id = "GW39U";
+		goodix,orient = <0>;
+		goodix,position = "33.25,13.56";
+
+		controller-data {
+			cs-gpio = <SEC_GPIO_REF(AP,gpp3,gpp3,7) 0>;
+			samsung,spi-feedback-delay = <0>;
+			samsung,spi-chip-select-mode = <0>;
+		};
+	};
+};

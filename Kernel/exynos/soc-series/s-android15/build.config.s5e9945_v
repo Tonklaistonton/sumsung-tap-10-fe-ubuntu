@@ -1,0 +1,71 @@
+EXYNOS_BASE_DIR="exynos"
+EXYNOS_SERIES="s-android15"
+EXYNOS_SOC="s5e9945"
+KERNEL_DIR="common"
+
+. ${ROOT_DIR}/${KERNEL_DIR}/build.config.common
+. ${ROOT_DIR}/${KERNEL_DIR}/build.config.aarch64
+. ${ROOT_DIR}/${KERNEL_DIR}/build.config.gki
+
+EXYNOS_SOC_DIR=${EXYNOS_BASE_DIR}/soc-series/${EXYNOS_SERIES}
+
+DTC_FLAGS="-@"
+DTC_INCLUDE="${ROOT_DIR}/${EXYNOS_SOC_DIR}/include/dtc "
+
+KCONFIG_EXT_SOC_PREFIX=$(realpath ${ROOT_DIR}/${EXYNOS_SOC_DIR} --relative-to ${KERNEL_DIR})/
+DEFCONFIG=${EXYNOS_SOC}_gki_defconfig
+
+SOC_FRAGMENT="${ROOT_DIR}/${EXYNOS_SOC_DIR}/arch/arm64/configs/${EXYNOS_SOC}_base.fragment"
+
+#
+# If you need to merge more fragments, use ADDITIONAL_FRAGMENTS
+#
+
+PRE_DEFCONFIG_CMDS="mkdir -p \${OUT_DIR}/arch/arm64/configs/ && \
+    KCONFIG_CONFIG=\${OUT_DIR}/arch/arm64/configs/${DEFCONFIG} \
+        ${ROOT_DIR}/${KERNEL_DIR}/scripts/kconfig/merge_config.sh -m -r \
+        ${ROOT_DIR}/${KERNEL_DIR}/arch/arm64/configs/gki_defconfig \
+        ${SOC_FRAGMENT}  \
+        ${ADDITIONAL_FRAGMENTS} && \
+    true"
+POST_DEFCONFIG_CMDS=""
+
+TRIM_NONLISTED_KMI=""
+
+DTBO_MERGE_OUTPUT=true
+KERNEL_BINARY=Image
+LZ4_RAMDISK=1
+BOOT_IMAGE_HEADER_VERSION=4
+
+# vendor-specific configs
+BUILD_DPM_BINARY_FILES="
+arch/arm64/boot/dts/exynos/dpm/s5e9945/dpm-eng.dts:dpm-eng
+arch/arm64/boot/dts/exynos/dpm/s5e9945/dpm-userdebug.dts:dpm-userdebug
+arch/arm64/boot/dts/exynos/dpm/s5e9945/dpm-user.dts:dpm-user
+arch/arm64/boot/dts/exynos/dpm/s5e9945/dpm-eng-disable-dboot.dts:dpm-eng-disable-dboot
+"
+DPM_ENG_IMG=dpm-eng.img
+DPM_USERDEBUG_IMG=dpm-userdebug.img
+DPM_USER_IMG=dpm-user.img
+
+EXPORT_PLATFORM_BOARD_CONFIG="
+BOARD_RAMDISK_USE_LZ4
+BOARD_AVB_ENABLE
+BOARD_AVB_ALGORITHM
+BOARD_AVB_RECOVERY_ALGORITHM
+BOARD_AVB_RECOVERY_ROLLBACK_INDEX
+BOARD_AVB_RECOVERY_ROLLBACK_INDEX_LOCATION
+BOARD_AVB_BOOT_ROLLBACK_INDEX
+BOARD_FLASH_BLOCK_SIZE
+"
+EXPORT_PLATFORM_DEVICE_CONFIG="
+BOARD_BOOT_HEADER_VERSION
+BOARD_RAMDISK_OFFSET
+BOARD_DTB_OFFSET
+BOARD_KERNEL_TAGS_OFFSET
+BOARD_BOOTIMAGE_PARTITION_SIZE
+BOARD_DTBOIMG_PARTITION_SIZE
+BOARD_VENDOR_BOOTIMAGE_PARTITION_SIZE
+BOARD_INIT_BOOT_IMAGE_PARTITION_SIZE
+"
+

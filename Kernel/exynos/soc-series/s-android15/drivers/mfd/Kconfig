@@ -1,0 +1,124 @@
+# SPDX-License-Identifier: GPL-2.0-only
+#
+# Multifunction miscellaneous devices for samsung pmic
+#
+
+config MFD_S2P
+	tristate "SAMSUNG Electronics S2P PMIC Series Support"
+	depends on I2C=y
+	select MFD_CORE
+	select REGULATOR
+	help
+	  Support for the Samsung Electronics MFD series.
+	  This driver provides common support for accessing the device,
+	  additional drivers must be enabled in order to use the functionality
+	  of the device
+
+config MFD_S2MPS27
+	tristate "SAMSUNG Electronics S2MPS27 PMIC Series Support for s5e9945"
+	depends on I2C=y
+	select MFD_CORE
+	select REGULATOR
+	help
+	  Support for the Samsung Electronics MFD series.
+	  This driver provides common support for accessing the device,
+	  additional drivers must be enabled in order to use the functionality
+	  of the device
+
+config MFD_S2MPS28
+	tristate "SAMSUNG Electronics S2MPS28 PMIC Series Support for s5e9945"
+	depends on I2C=y
+	select MFD_CORE
+	select REGULATOR
+	help
+	  Support for the Samsung Electronics MFD series.
+	  This driver provides common support for accessing the device,
+	  additional drivers must be enabled in order to use the functionality
+	  of the device
+
+config MFD_S2MPM07
+	tristate "SAMSUNG Electronics S2MPM07 PMIC Series Support for s5e9945"
+	depends on I2C=y
+	select MFD_CORE
+	select REGULATOR
+	help
+	  Support for the Samsung Electronics MFD series.
+	  This driver provides common support for accessing the device,
+	  additional drivers must be enabled in order to use the functionality
+	  of the device
+
+config MFD_S2MPA05
+	tristate "SAMSUNG Electronics S2MPA05 PMIC Series Support for s5e9945"
+	depends on I2C=y
+	select MFD_CORE
+	select REGULATOR
+	help
+	  Support for the Samsung Electronics MFD series.
+	  This driver provides common support for accessing the device,
+	  additional drivers must be enabled in order to use the functionality
+	  of the device
+
+config MFD_S2MPB02
+	tristate "Samsung Semiconductor S2MPB02 PMIC Support"
+	depends on I2C=y
+	select MFD_CORE
+	help
+	  Say yes here to support for Samsung Semiconductor S2MPB02.
+	  This is a Power Management IC with Flash on chip.
+	  This driver provides common support for accessing the device;
+	  additional drivers
+
+config MFD_S2SE910
+	tristate "SAMSUNG Electronics S2SE910 PMIC Series Support for soc"
+	depends on I2C=y
+	select MFD_CORE
+	select REGULATOR
+	help
+	  Support for the Samsung Electronics MFD series.
+	  This driver provides common support for accessing the device,
+	  additional drivers must be enabled in order to use the functionality
+	  of the device
+
+config MFD_S2SE911
+	tristate "SAMSUNG Electronics S2SE911 PMIC Series Support for soc"
+	depends on I2C=y
+	select MFD_CORE
+	select REGULATOR
+	help
+	  Support for the Samsung Electronics MFD series.
+	  This driver provides common support for accessing the device,
+	  additional drivers must be enabled in order to use the functionality
+	  of the device
+
+config MFD_S2RP910
+	tristate "SAMSUNG Electronics S2RP910 PMIC Series Support for soc"
+	depends on I2C=y
+	select MFD_CORE
+	select REGULATOR
+	help
+	  Support for the Samsung Electronics MFD series.
+	  This driver provides common support for accessing the device,
+	  additional drivers must be enabled in order to use the functionality
+	  of the device
+
+config MFD_S2MPU15
+	tristate "SAMSUNG Electronics S2MPU15 PMIC Series Support for soc"
+	depends on I2C=y
+	select MFD_CORE
+	select REGULATOR
+	help
+	  Support for the Samsung Electronics MFD series.
+	  This driver provides common support for accessing the device,
+	  additional drivers must be enabled in order to use the functionality
+	  of the device
+
+config MFD_S2MPU16
+	tristate "SAMSUNG Electronics S2MPU16 PMIC Series Support for soc"
+	depends on I2C=y
+	select MFD_CORE
+	select REGULATOR
+	help
+	  Support for the Samsung Electronics MFD series.
+	  This driver provides common support for accessing the device,
+	  additional drivers must be enabled in order to use the functionality
+	  of the device

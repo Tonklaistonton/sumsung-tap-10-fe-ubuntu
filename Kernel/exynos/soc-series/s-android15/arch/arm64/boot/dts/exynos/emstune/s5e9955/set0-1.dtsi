@@ -1,0 +1,80 @@
+/ {
+	/* normal mode - touch boost */
+	set0_1: set@1 {
+		/* Ontime Migration */
+		ontime {
+			domain0 {
+				cpus = CPU_CL0;
+				lower-boundary = <0>;
+				upper-boundary = <21>;
+			};
+			domain1 {
+				cpus = CPU_CL1L;
+				lower-boundary = <8>;
+				upper-boundary = <66>;
+			};
+			domain2 {
+				cpus = CPU_CL1H;
+				lower-boundary = <8>;
+				upper-boundary = <66>;
+			};
+			domain3 {
+				cpus = CPU_CL2;
+				lower-boundary = <43>;
+				upper-boundary = <100>;
+			};
+		};
+
+		ecs_dynamic {
+			dynamic-busy-ratio = <50 50 50 50>;
+			min-cpus = "0-8";
+		};
+
+		fclamp {
+			max-freq          = < 1152000       0      0 3072000>;
+			max-target-period = <       4       0      0       8>;
+			max-target-ratio  = <      80       0      0      95>;
+		};
+
+		cpufreq_gov {
+
+			ptb-margin = < 30 30 30 30 >;
+			ptb-min-freq = < 1248000 1632000 1824000 1920000 >;
+				/* LIT MED-L MED-H BIG */
+			step-latency-enable = < 1 >;
+			step-margin-enable = < 1 >;
+
+			low-pelt-margin = < 6 6 6 2 >;
+			margin-freq = < 1440000 1920000 2304000 2880000 >;
+
+				/* step1 step2 step3 step4 */
+			step-latency-ns = < 4 7 11 15
+					4 9 14 19
+					4 9 14 20
+					4 4 500 500 >;
+			step-latency-freq = < 400000 1056000 1344000 1632000
+					576000 1440000 1920000 2112000
+					768000 1728000 2304000 2592000
+					400000 400000 3072000 3072000 >;
+		};
+
+		gsc { };
+
+		tex {
+			top-app = <119>;
+		};
+
+		should_spread {
+			enabled = <1>;
+		};
+
+		frt {
+			foreground = <1>;
+			scale-freq-threshold = < 53 80 80 100 >;
+		};
+
+		util_est {
+			top-app	= <1>;
+		};
+	};
+};

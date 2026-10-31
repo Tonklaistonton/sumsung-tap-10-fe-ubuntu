@@ -1,0 +1,48 @@
+# SPDX-License-Identifier: GPL-2.0-only
+
+subdir-ccflags-y += -I$(srctree)
+
+# EXYNOS_BCM
+obj-$(CONFIG_EXYNOS_BCM_DBG)    += exynos-bcm.o
+obj-$(CONFIG_EXYNOS_BCM_DBG_DUMP)       += exynos-bcm_dbg-dump.o
+exynos-bcm-y			+= exynos-bcm_dbg.o exynos-bcm_dbg-dt.o
+
+# MIFGOV
+obj-$(CONFIG_EXYNOS_MIFGOV)	+= exynos-mifgov.o
+
+# SCI
+obj-$(CONFIG_EXYNOS_SCI)	+= exynos_sci.o
+exynos_sci-$(CONFIG_EXYNOS_SCI)		+= exynos-sci.o
+exynos_sci-$(CONFIG_EXYNOS_LLCGOV)	+= exynos-llcgov.o
+
+obj-$(CONFIG_EXYNOS_SCI_DBG)	+= exynos-sci_dbg.o
+
+# MPAM
+obj-$(CONFIG_EXYNOS_MPAM_ARCH)		+= mpam/exynos-mpam.o
+obj-$(CONFIG_EXYNOS_MSC_DSU)		+= mpam/exynos-msc-dsu.o
+obj-$(CONFIG_EXYNOS_MSC_LLC)		+= mpam/exynos-msc-llc.o
+obj-$(CONFIG_EXYNOS_MSC_SMC)		+= mpam/exynos-msc-smc.o
+
+# UFCC
+obj-$(CONFIG_EXYNOS_UFCC)	+= exynos-ufcc.o
+
+# AFM
+obj-$(CONFIG_EXYNOS_AFM)	+= exynos-afm.o
+
+#CPUHP
+obj-$(CONFIG_EXYNOS_CPUHP)	+= exynos-cpuhp.o
+
+#CPUIDLE
+obj-$(CONFIG_EXYNOS_CPUPM)	+= exynos-cpupm.o
+obj-$(CONFIG_EXYNOS_IDLE_LAT)	+= exynos-idle-lat.o
+
+# Exynos CPU Performance
+obj-$(CONFIG_EXYNOS_PERF)       += xperf/
+
+# H/W Tailoring System
+obj-$(CONFIG_HTS)               += hts/
+
+# HW Decomp
+obj-$(CONFIG_VENDOR_ZRAM_LZO_HW_DECOMP)	+= hwdecomp/
+
+obj-y				+= test/

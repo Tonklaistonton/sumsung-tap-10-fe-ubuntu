@@ -1,0 +1,13 @@
+config SEC_SND_SYNCHRONIZED_IPC_AW
+	tristate "Samsung SYNC IPC AW"
+	help
+	  Say Y or M if you want to add support for external devices attached to
+	  the Samsung SoC ABOX interface. You will also need to
+	  select the audio interfaces to support below.
+
+config SEC_SND_SYNCHRONIZED_IPC_TI
+	tristate "Samsung SYNC IPC TI"
+	help
+	  Say Y or M if you want to add support for external devices attached to
+	  the Samsung SoC ABOX interface. You will also need to
+	  select the audio interfaces to support below.

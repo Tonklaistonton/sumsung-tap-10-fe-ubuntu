@@ -1,0 +1,7 @@
+# SPDX-License-Identifier: GPL-2.0
+
+obj-$(CONFIG_SPI_S3C64XX_EXT_KUNIT_TEST) += spi_exynos_test.o
+
+spi_exynos_test-y += spi-s3c64xx-ext_test.o
+
+ccflags-y += -I $(srctree)/$(src)/../

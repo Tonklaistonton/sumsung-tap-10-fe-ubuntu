@@ -1,0 +1,70 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * Samsung CP interface device tree source
+ *
+ * Copyright (c) 2019-2022 Samsung Electronics Co., Ltd.
+ *             http://www.samsung.com
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+&cpif {
+	pktproc_dl_support = <0>;
+	pktproc_ul_support = <0>;
+	iodevs {
+		io_device_8 {
+			iod,ul_num_buffers = <0>;
+			iod,dl_num_buffers = <0>;
+		};
+		io_device_9 {
+			iod,ul_num_buffers = <0>;
+			iod,dl_num_buffers = <0>;
+		};
+	};
+};
+
+&cp_shmem {
+	memory-region = <&cp_rmem>;
+	/delete-node/ regions;
+	regions {
+		cp {
+			region,name = "CP";
+			region,index = <SHMEM_CP>;
+			region,rmem = <0>;
+			region,offset = <0x00000000>;
+			region,size = <0x00500000>;
+			region,cached = <0>;
+		};
+		ipc {
+			region,name = "IPC";
+			region,index = <SHMEM_IPC>;
+			region,rmem = <0>;
+			region,offset = <0x00500000>;
+			region,size = <0x00500000>;
+			region,cached = <0>;
+		};
+	};
+};
+
+&cp_cma_mem {
+	status = "disabled";
+};
+
+&direct_dm {
+	status = "disabled";
+};
+
+&cp_rmem {
+	reg = <0x8 0x80000000 0x00A00000>;
+};
+
+&cp_rmem1 {
+	status ="disabled";
+};
+
+&cp_extra_rmem {
+	status = "disabled";
+};
+

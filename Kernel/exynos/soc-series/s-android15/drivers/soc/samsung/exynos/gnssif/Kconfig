@@ -1,0 +1,10 @@
+config EXYNOS_GNSS_IF
+	tristate "Exynos GNSS interface driver"
+	default n
+	help
+	  Exynos GNSS interface driver
+
+config EXYNOS_GNSS_IF_KUNIT_TEST
+	tristate "KUnit tests for GNSS interface" if !KUNIT_ALL_TESTS
+	depends on KUNIT
+	default KUNIT_ALL_TESTS

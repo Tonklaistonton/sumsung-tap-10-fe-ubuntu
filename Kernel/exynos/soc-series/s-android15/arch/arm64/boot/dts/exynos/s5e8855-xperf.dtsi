@@ -1,0 +1,26 @@
+/*
+ * Exynos CPU Performance
+ * Device driver handle for testing kernel memcpy bandwidth
+ */
+
+/ {
+	xperf {
+		compatible = "samsung,exynos-perf";
+		status = "ok";
+
+			     /*	CL0	CL1 	CL2*/
+		power-coeff = <	146	394 	394>;
+
+		cl_info {
+			big-tz {
+				tz-name = "BIG";
+			};
+			lit-tz {
+				tz-name = "LITTLE";
+			};
+			mid-tz {
+				tz-name = "MID";
+			};
+		};
+	};
+};

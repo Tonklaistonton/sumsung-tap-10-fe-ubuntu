@@ -1,0 +1,9 @@
+# SPDX-License-Identifier: GPL-2.0
+#
+# Makefile for the input core pmic drivers.
+#
+
+obj-$(CONFIG_KEYBOARD_S2P)              += s2p_key.o
+obj-$(CONFIG_KEYBOARD_S2MPS27)          += s2mps27_key.o
+obj-$(CONFIG_KEYBOARD_S2SE910)          += s2se910_key.o
+obj-$(CONFIG_KEYBOARD_S2MPU15)          += s2mpu15_key.o

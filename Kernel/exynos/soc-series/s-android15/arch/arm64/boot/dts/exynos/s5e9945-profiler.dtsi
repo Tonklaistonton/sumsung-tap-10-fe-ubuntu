@@ -1,0 +1,151 @@
+
+/*
+ * SAMSUNG PROFILER device tree source
+ *
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+ *		http://www.samsung.com
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+#include <dt-bindings/soc/samsung/s5e9945-profiler-dt.h>
+
+/{
+	exynos-profiler {
+		compatible = "samsung,exynos-profiler";
+		status = "okay";
+
+		/* Common */
+		version = < 2000 >;
+		window-period = < 100 >;
+		window-number = < 30 >;
+		mo-id = < 51 52 53 54 > ;
+
+		/* FPS */
+		frame-src = < 0 >;      /* 0: use frame-done, 1: use frame-done and  missed-frame */
+		max-fps = < 600 >;
+		dt-up-step = < 10 >;
+		dt-down-step =  < 10 >;
+
+		/* domain list */
+		domain-names = "cl0", "cl1l", "cl1h", "cl2", "gpu", "mif", "dsu";
+
+		cl0 {
+			pm-qos-cpu = < 0 >;
+		};
+		cl1l {
+			pm-qos-cpu = < 4 >;
+		};
+		cl1h {
+			pm-qos-cpu = < 7 >;
+		};
+		cl2 {
+			pm-qos-cpu = < 9 >;
+		};
+		gpu {
+			pm-qos-min-class = < PM_QOS_GPU_THROUGHPUT_MIN >;
+		};
+		mif {
+			pm-qos-min-class = < PM_QOS_BUS_THROUGHPUT >;
+		};
+		dsu {
+		};
+	};
+
+	exynos-cpu-profiler {
+		compatible = "samsung,exynos-cpu-profiler";
+		status = "okay";
+
+		#define CPU_CL0		"0-3"
+		#define CPU_CL1L	"4-6"
+		#define CPU_CL1H	"7-8"
+		#define CPU_CL2		"9"
+		#define CPU_ALL		"0-9"
+
+		#define CPUCL0_DP_COEFF		170
+		#define CPUCL0_STP_COEFF	62
+		#define CPUCL1L_DP_COEFF	444
+		#define CPUCL1L_STP_COEFF	234
+		#define CPUCL1H_DP_COEFF	499
+		#define CPUCL1H_STP_COEFF	234
+		#define CPUCL2_DP_COEFF		991
+		#define CPUCL2_STP_COEFF	537
+
+		#define GPU_DP_COEFF		13360
+		#define GPU_STP_COEFF		400
+		#define MIF_DP_COEFF		70110000
+		#define MIF_STP_COEFF		535
+
+
+		cpu_domain0: domain@0 {
+			sibling-cpus = CPU_CL0;
+			cal-id = <ACPM_DVFS_CPUCL0>;
+
+			profiler-id = <PROFILER_CL0>;
+			power-coefficient = <CPUCL0_DP_COEFF>;
+			static-power-coefficient = <CPUCL0_STP_COEFF>;
+		};
+		cpu_domain1: domain@1 {
+			sibling-cpus = CPU_CL1L;
+			cal-id = <ACPM_DVFS_CPUCL1L>;
+
+			profiler-id = <PROFILER_CL1L>;
+			power-coefficient = <CPUCL1L_DP_COEFF>;
+			static-power-coefficient = <CPUCL1L_STP_COEFF>;
+			tz-name = "MIDL";
+		};
+		cpu_domain2: domain@2 {
+			sibling-cpus = CPU_CL1H;
+			cal-id = <ACPM_DVFS_CPUCL1H>;
+
+			profiler-id = <PROFILER_CL1H>;
+			power-coefficient = <CPUCL1H_DP_COEFF>;
+			static-power-coefficient = <CPUCL1H_STP_COEFF>;
+			tz-name = "MIDH";
+		};
+		cpu_domain3: domain@3 {
+			sibling-cpus = CPU_CL2;
+			cal-id = <ACPM_DVFS_CPUCL2>;
+
+			profiler-id = <PROFILER_CL2>;
+			power-coefficient = <CPUCL2_DP_COEFF>;
+			static-power-coefficient = <CPUCL2_STP_COEFF>;
+			tz-name = "BIG";
+		};
+	};
+
+	exynos-mif-profiler {
+		compatible = "samsung,exynos-mif-profiler";
+		status = "okay";
+
+		cal-id = <ACPM_DVFS_MIF>;
+
+		profiler-id = <PROFILER_MIF>;
+		devfreq-type = <DEVFREQ_MIF>;
+		power-coefficient = <MIF_DP_COEFF>;
+		static-power-coefficient = <MIF_STP_COEFF>;
+	};
+
+	exynos-gpu-profiler {
+		compatible = "samsung,exynos-gpu-profiler";
+		status = "okay";
+
+		cal-id = <ACPM_DVFS_G3D>;
+
+		profiler-id = <PROFILER_GPU>;
+		power-coefficient = <GPU_DP_COEFF>;
+		static-power-coefficient = <GPU_STP_COEFF>;
+		tz-name = "G3D";
+	};
+
+	exynos-dsu-profiler {
+		compatible = "samsung,exynos-dsu-profiler";
+		status = "okay";
+
+		cal-id = <ACPM_DVFS_DSU>;
+
+		profiler-id = <PROFILER_DSU>;
+	};
+};

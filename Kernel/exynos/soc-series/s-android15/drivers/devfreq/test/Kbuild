@@ -1,0 +1,5 @@
+obj-$(CONFIG_DVFS_EXYNOS_KUNIT_TEST) += dvfs_exynos_test.o
+
+dvfs_exynos_test-y += exynos-devfreq-test.o
+
+ccflags-y += -I $(srctree)/$(src)/../

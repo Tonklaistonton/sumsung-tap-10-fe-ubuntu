@@ -1,0 +1,3 @@
+obj-$(CONFIG_EXYNOS_MODEM_IF_KUNIT_TEST) += cpif_exynos_test.o
+
+ccflags-y += -I $(srctree)/$(src)/../

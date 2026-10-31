@@ -1,0 +1,93 @@
+6c75b86be288 smfc: add qosreq_core and qosreq_core_level
+27c6b8f06218 media: smfc: fix the prvent bug
+32bf44a57581 media: smfc: update code for MIF minlock and bts
+f32c92d3156b media: smfc: change to use platform_get_irq()
+6073e89d9195 media: smfc: fix build error for kernel 6.1
+6fa14169a36b media: smfc: change the condition to update ip_idle
+9c197a127ad2 media: smfc: add code to set an idle status of smfc
+109af05c2da1 media: smfc: update code for minlock and bts
+59dc65533a3b media: smfc: change DMA_BIT_MASK 36 > 32
+519aaee97ae8 smfc: add __maybe_unused to fix a build error
+75af534eeb71 media: smfc: add missing pm_qos_request_active check
+d7355228dfc8 media: smfc: add pm_qos_request_active check
+2f4f53b49399 media: smfc: modify devnode type from GRABBER to VIDEO
+661966010bf3 media: smfc: fix build error about pm_qos API
+0b386a82cadb [S5E9815-6185]media: smfc: make driver use exynos_pm_qos module
+d82b37e71e3a media: smfc: fix heap out-of-bound write and arbitrary read
+8a7dc4bf2f37 media: smfc: support non-multiplane format in HWFC scenario
+4320fe192ece media: smfc: modify to support multiple smfc
+83024d1f027d media: smfc: use unshareable mapping for HWFC buffer
+06fed012de64 media: smfc: support offset of main image base on DMABUF
+dd361916a7a2 media: smfc: modify Kconfig/Makefile for GKI
+03f1b2e7828c media: smfc: modify driver for GKI
+1f211daadc01 Revert "media: smfc: force unshareable for HWFC buffer"
+9a965dc9584c media: smfc: modify for 5.4 kernel
+386c85aa2ac8 media: smfc: fix setup_timer for kernel 4.19
+fa02034a8086 media: smfc: force unshareable for HWFC buffer
+ccbba899d5dc media: smfc: add missing wake_up
+40b50f3e619d media: smfc: fix defect about setting a thumbnail image address.
+190a32f40e1a media: smfc: wakeup waiter at compression timeout
+d8d43eb4933f media: smfc: add capability option
+761b827ce09a media: smfc: change variable for HW runtime
+8c8b5d1bb78c media: smfc: add devfreq setting
+388b15eba9f8 media: smfc: measure HW runtime
+ad47d2b9da82 smfc: fix prevent issue
+d9d8fca62223 media: smfc: fix security problem
+d7495cb79f5f media: smfc: set dma mask of 36-bit
+0acf45a23276 media: smfc: fix prevent issue
+bf38d526ef6a media: smfc: compare the conditions clearly
+c349fb7111a5 media: smfc: force non-shareable read
+7453811003dd media: smfc: fix missing vertical subasampling check
+dd6d6dd88a27 media: smfc: deactivate sysmmu for scaler
+bbfe4b38a689 media: smfc: add the shutdown callback
+3c27b7e6c10a media: smfc: add sync mode for hwfc
+9a9ff0debd19 media: smfc: add cropping window
+528264a96664 media: smfc: add support for custom quantization tables
+148bbc0966e3 media: smfc: fix bugs reported by Coverity
+d946a6463c93 media: smfc: fix resource leak in exynos_smfc_release()
+1d66c21b41bd media: smfc: add support for HWJPEG compatible with Exynos7870
+06ca355c9e35 media: smfc: remove REG_MAIN_MAX_STREAM_SIZE register
+976e926fa5ff media: smfc: invalid the cache lines as little as possible
+3730a2370a69 media: smfc: fix section mismatch
+3d69d5bc0816 media: smfc: change default JPEG version to exynos3475
+febb7a9407ac exynos: smfc: add support for the same H/W of different versions
+262549abba28 media: smfc: add support for JPEG decompression
+a3927d96e3d8 media: smfc: change a function name to smfc_v4l2_prepare_s_fmt
+a03f3e55a9ea media: smfc: move v4l2 ioctl handlers in separate file
+122f91bb696f media: smfc: use s/w timer if HWFC is enabled
+0f63f01893ac media: smfc: clean the dirty region by CPU in .buf_cleaup
+c5b2a223f402 media: smfc: disable timeout interrupt during HWFC is on
+f093f8242308 media: smfc: fix missing secondary interrupt status
+5b32a92d6b4f media: smfc: fix incorrect image format check for HWFC
+6d3dfd78cdeb media: smfc: do not chroma subsampling for thumbnail with HWFC
+3ebb835ef2af media: smfc: fix missing buffer length for RGB32 formats
+64162dfb296b media: smfc: fix unexpected warning during .stop_streaming
+f8b080c31408 media: smfc: replace v4l2 and vb2 ops with default ones
+e076dfafddd0 media: smfc: measure H/W delay
+ce5bd9f0c5b2 media: smfc: initialize all formats with chroma subsampling factor 1
+fe9834801993 media: smfc: dump SFR when unexpected IRQ invoked
+ad7f088ee2c8 media: smfc: clear JPEG codec state after IRQ
+cffc5af9877f media: smfc: fix inconsistency in hardware state
+24e372462ffa media: smfc: fix typo in comment
+30b3bc6776c7 media: smfc: fix configuration to MAX_STREAM_SIZE register
+edd658ebeeb2 media: smfc: fix doubling number of planes
+ddcb9c622185 media: smfc: remove empty function
+bbfe493efee3 media: smfc: fix reversed order in printing index and value
+dc4b11630fb4 media: smfc: add support for HWFC configuration
+51e9553ebdc3 media: smfc: return error if error found in .device_run()
+ca0909176b03 media: smfc: store control variables at the start of H/W run
+b366f66d45e6 media: smfc: wait until the current job finishes before suspending
+2cfc0e10a920 media: smfc: cancel queued buffers in .stop_streaming()
+d496311d9567 media: smfc: add System MMU fault handler
+201c2934907b media: smfc: support for secondary image compression
+104e1e2ff7d7 media: smfc: dump all control registers on an error interrupt
+ef8428e84488 media: smfc: add V4L2 control values
+46455c16317c media: smfc: handle exceptional situations
+e03147230647 media: smfc: add basic function of compression by H/W
+bbd35d327e02 media: smfc: add qbuf/dqbuf V4L2 functions
+96b48f7c9af9 media: smfc: add reqbufs and querybuf V4L2 functions
+a84d2cdd9e84 media: smfc: add g/try/s_fmt V4L2 functions
+6c3d70af38e7 media: smfc: add querycap V4L2 function
+50afec0defa7 media: smfc: add format definitions and enumeration
+b6bd97a31f66 media: smfc: add skelton implementation of v4l2.
+b5a59ff8b60c media: smfc: introduce new SMFC driver

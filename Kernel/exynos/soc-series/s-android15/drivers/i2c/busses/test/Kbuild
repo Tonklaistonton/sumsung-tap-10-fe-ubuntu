@@ -1,0 +1,7 @@
+# SPDX-License-Identifier: GPL-2.0
+
+obj-$(CONFIG_I2C_EXYNOS5_EXT_KUNIT_TEST) += hsi2c_exynos_test.o
+
+hsi2c_exynos_test-y += i2c-exynos5-ext_test.o
+
+ccflags-y += -I $(srctree)/$(src)/../

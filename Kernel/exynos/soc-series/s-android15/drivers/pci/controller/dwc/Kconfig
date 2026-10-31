@@ -1,0 +1,28 @@
+# SPDX-License-Identifier: GPL-2.0
+
+config PCI_EXYNOS_HOST
+	tristate "Samsung Exynos PCIe controller"
+	depends on ARCH_EXYNOS || COMPILE_TEST
+	select PCIE_DW_HOST
+	help
+	  Enables support for the PCIe controller in the Samsung Exynos SoCs
+	  to work in host mode. The PCI controller is based on the DesignWare
+	  hardware and therefore the driver re-uses the DesignWare core
+	  functions to implement the driver.
+
+config EXYNOS_PCIE_KUNIT_TEST
+	tristate "KUnit tests for pcie" if !KUNIT_ALL_TESTS
+	depends on KUNIT
+	depends on PCI_EXYNOS_HOST
+	default KUNIT_ALL_TESTS
+
+config PCI_EXYNOS_PHYCAL_DEBUG
+	tristate "Samsung Exynos PCIe PHY Debug feature"
+	depends on ARCH_EXYNOS || COMPILE_TEST
+	depends on PCI_EXYNOS_HOST
+	select PCIE_DW_HOST
+
+config PCIE_EXYNOS_DWPHY
+	tristate "Samsung Exynos PCIe RC with Synopsys PHY"
+	depends on PCI_EXYNOS_HOST
+

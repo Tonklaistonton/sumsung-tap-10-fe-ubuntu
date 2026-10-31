@@ -1,0 +1,94 @@
+/* SAMSUNG s5e9955 board device tree source
+ *
+ * Copyright (c) 2024 Samsung Electronics Co., Ltd.
+ *		http://www.samsung.com
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+/ {
+	fragment@sec_debug {
+		target-path = "/";
+		__overlay__ {
+			sec_debug {
+				compatible = "samsung,sec_debug";
+				status = "okay";
+				memory-region = <&sec_debug_next>;
+				bdev_path = "/dev/block/by-name/debug";
+			};
+		};
+	};
+
+	fragment@sec_debug_built {
+		target-path = "/";
+		__overlay__ {
+			sec_debug_built {
+				compatible = "samsung,sec_debug_built";
+				status = "okay";
+				memory-region = <&sec_debug_next>;
+			};
+		};
+	};
+
+	fragment@sec_debug_test {
+		target-path = "/";
+		__overlay__ {
+			sec_debug_test_device {
+				compatible = "samsung,sec_debug_test";
+				status = "okay";
+			};
+		};
+	};
+
+	fragment@sec_debug_reset_reason {
+		target-path = "/";
+		__overlay__ {
+			sec_debug_reset_reason: sec_debug_reset_reason {
+				compatible = "samsung,sec_debug_reset_reason";
+				/*
+				 * power_off_src = [OFFSRC2[0],...,[7],]OFFSRC1[0],...,[7]
+				 * power_on_src = [ONSRC2[0],...,[7],]ONSRC1[0],...,[7]
+				 * rst_stat = RST_STAT[0],...,[31]
+				 */
+				power_off_src = "OVP", "BUCK_OI", "LDO_OI", "RSVD3",
+						"RSVD4", "RSVD5", "RSVD6", "RSVD7",
+						"SUB_OFF", "TSD", "TIMEOUT", "LDO_SYS_OK",
+						"PWRHOLD", "WTSR_TOUT", "SMPL_TOUT", "UVLOB";
+				power_on_src =  "RSVD0", "RSVD1", "RSVD2", "RSVD3",
+						"INST_JIGON", "RSVD5", "RSVD6", "RSVD7",
+						"PWRON", "JIGONB", "ACOKB", "MRST",
+						"ALARM", "INST_ACOK", "SMPL", "WTSR";
+				rst_stat = "RSVD0", "RSVD1", "RSVD2", "RSVD3",
+					"RSVD4", "RSVD5", "RSVD6", "RSVD7",
+					"RSVD8", "RSVD9", "RSVD10", "RSVD11",
+					"RSVD12", "RSVD13", "RSVD14", "RSVD15",
+					"PINRESET", "DNC_CPU_WDTRESET", "SSP_CPU_WDTRESET", "OIS_CPU_WDTRESET",
+					"APM_CPU0_WDTRESET", "APM_CPU1_WDTRESET", "VTS_CPU_WDTRESET", "CHUB_WDTRESET",
+					"CLUSTER0_WDTRESET", "CLUSTER3_WDTRESET", "AUD_CPU0_WDTRESET", "SSS_CPU_WDTRESET",
+					"DBGC_CPU_WDTRESET", "WRESET", "SWRESET", "PORESET";
+			};
+		};
+	};
+};
+
+&reserved_memory {
+	sec_debug_next: sec_debug_next {
+		reg = <0x0 0x91200000 0x00200000>;
+		no-map;
+	};
+};
+
+/* /home/dpi/qb5_8814/workspace/P4_1716/kernel/kmodule/samsung/slsi/debug/6.6/dts/samsung_debug_6_6._ap_slsi_s5e8855.dtsi */
+
+&sec_debug_reset_reason {
+	rst_stat = "RSVD0", "RSVD1", "RSVD2", "RSVD3",
+		"RSVD4", "RSVD5", "RSVD6", "RSVD7",
+		"RSVD8", "RSVD9", "RSVD10", "RSVD11",
+		"RSVD12", "RSVD13", "RSVD14", "RSVD15",
+		"PINRESET", "DNC_CPU_WDTRESET", "PSP_CPU_WDTRESET", "OIS_CPU_WDTRESET",
+		"APM_CPU0_WDTRESET", "APM_CPU1_WDTRESET", "VTS_CPU_WDTRESET", "CHUB_WDTRESET",
+		"CLUSTER0_WDTRESET", "CLUSTER1_WDTRESET", "AUD_CPU0_WDTRESET", "RSVD27",
+		"DBGC_CPU_WDTRESET", "WRESET", "SWRESET", "PORESET";
+};

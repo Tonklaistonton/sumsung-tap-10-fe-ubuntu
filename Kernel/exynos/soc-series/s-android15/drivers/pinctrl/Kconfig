@@ -1,0 +1,53 @@
+# SPDX-License-Identifier: GPL-2.0-only
+#
+# SAMSUNG PINCTRL infrastructure and pmic drivers
+#
+
+config PINCTRL_S2P
+	tristate "SAMSUNG PMIC pin controller driver for S.LSI Power Product"
+	help
+	 This is the pinctrl, pinmux, pinconf and gpiolib common driver for the
+	 Samsung GPIO found in the Samsung PMIC's chips, which are using
+	 SPMI for communication with SoC.
+
+config PINCTRL_SAMSUNG_S2MPS28
+	tristate "SAMSUNG PMIC pin controller driver for s5e9945"
+	help
+	 This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+	 Samsung GPIO found in the Samsung PMIC's chips, which are using
+	 SPMI for communication with SoC.
+
+config PINCTRL_SAMSUNG_S2MPM07_9945
+	tristate "SAMSUNG PMIC pin controller driver for s5e9945"
+	help
+	 This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+	 Samsung GPIO found in the Samsung PMIC's chips, which are using
+	 SPMI for communication with SoC.
+
+config PINCTRL_SAMSUNG_S2MPA05
+	tristate "SAMSUNG PMIC pin controller driver for s2mpa05"
+	help
+	 This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+	 Samsung GPIO found in the Samsung PMIC's chips, which are using
+	 SPMI for communication with SoC.
+
+config PINCTRL_SAMSUNG_S2SE911
+	tristate "SAMSUNG PMIC pin controller driver for s2se911"
+	help
+	 This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+	 Samsung GPIO found in the Samsung PMIC's chips, which are using
+	 SPMI for communication with SoC.
+
+config PINCTRL_SAMSUNG_S2MPU15
+	tristate "SAMSUNG PMIC pin controller driver for s2mpu15"
+	help
+	 This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+	 Samsung GPIO found in the Samsung PMIC's chips, which are using
+	 SPMI for communication with SoC.
+
+config PINCTRL_SAMSUNG_S2MPU16
+	tristate "SAMSUNG PMIC pin controller driver for s2mpu16"
+	help
+	 This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+	 Samsung GPIO found in the Samsung PMIC's chips, which are using
+	 SPMI for communication with SoC.

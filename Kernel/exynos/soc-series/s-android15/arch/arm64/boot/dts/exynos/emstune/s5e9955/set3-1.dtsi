@@ -1,0 +1,74 @@
+/ {
+	/* game mode - boost app*/
+	set3_1: set@301{
+		/* Boosting margin applied to frequency selection */
+		freqboost {			/* LIT MED-L MED-H BIG */
+			top-app			= < 5  5  5  5 >;
+		};
+
+		/* Ontime Migration */
+		ontime {
+			domain0 {
+				cpus = CPU_CL0;
+				lower-boundary = <0>;
+				upper-boundary = <31>;
+			};
+			domain1 {
+				cpus = CPU_CL1L;
+				lower-boundary = <8>;
+				upper-boundary = <66>;
+			};
+			domain2 {
+				cpus = CPU_CL1H;
+				lower-boundary = <8>;
+				upper-boundary = <66>;
+			};
+			domain3 {
+				cpus = CPU_CL2;
+				lower-boundary = <43>;
+				upper-boundary = <100>;
+			};
+		};
+
+		ecs_dynamic {
+			dynamic-busy-ratio = <70 70 70 70>;
+			min-cpus = "0-6";
+		};
+
+		/* cpus_binding applied to core selection */
+		cpus_binding {
+			target-sched-class = <0x8>;	/* fair */
+
+			background	= "0-9";
+		};
+
+		fclamp {
+			max-freq          = < 1152000       0       0       0>;
+			max-target-period = <       4       0       0       0>;
+			max-target-ratio  = <      80       0       0       0>;
+
+			monitor-group {
+				top-app         = <1>;
+				foreground      = <1>;
+			};
+		};
+
+		cpufreq_gov {
+				/* LIT MED-L MED-H BIG */
+			ptb-margin = < 30 30 30 30 >;
+			ptb-min-freq = < 1248000 1632000 1824000 1920000 >;
+		};
+
+		ntu {
+			top-app			= <12>;
+		};
+
+		support_uclamp {
+			enabled = <1>;
+		};
+
+		cgroup_boost {
+			top-app = <1>;
+		};
+	};
+};

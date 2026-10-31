@@ -1,0 +1,16 @@
+# SPDX-License-Identifier: GPL-2.0-only
+#
+# Exynos pKVM module
+#
+
+config EXYNOS_PKVM_MODULE
+	tristate "Exynos Protected KVM(pKVM) module"
+	depends on ARCH_EXYNOS
+	help
+	  Exynos pKVM module for vendor-specific operation on core pKVM.
+
+config EXYNOS_PKVM_S2MPU
+	tristate "Exynos S2MPU Module for pKVM"
+	depends on (EXYNOS_S2MPU && EXYNOS_PKVM_MODULE)
+	help
+	  Exynos S2MPU module driver for protected KVM.

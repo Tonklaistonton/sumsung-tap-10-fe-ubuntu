@@ -1,0 +1,128 @@
+/*
+ * SAMSUNG SGPU device tree sourceA
+ *
+ * Copyright (c) 2022 Samsung Electronics Co., Ltd.
+ *		http://www.samsung.com
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+#define IFPO_DISABLED	0x0
+#define IFPO_ABORT	0x1
+#define IFPO_HALF_AUTO	0x2
+
+/ {
+	/* sgpu */
+	sgpu: sgpu@22200000 {
+		#address-cells = <0x2>;
+		#size-cells = <0x1>;
+		#cooling-cells = <2>; /* min followed by max */
+		compatible = "samsung-sgpu,samsung-sgpu";
+		reg = <
+			0x0 0x22200000 0x100000
+			0x0 0x22300000 0x2000
+			0x0 0x220F0000 0x40000
+			0x0 0x220D0000 0x10000
+			0x0 0x22000000 0x2000
+			0x0 0x22040000 0x10000
+			>;
+		reg-names = "gpu", "doorbell", "debug", "pwrctl", "sysreg", "htu";
+		interrupts = <GIC_SPI INTREQ__GPU_INT IRQ_TYPE_LEVEL_HIGH>,
+			     <GIC_SPI INTREQ__HTU_G3D_INT IRQ_TYPE_LEVEL_HIGH>;
+		interrupt-names =  "SGPU", "GPU-AFM";
+
+		chip_revision = <0x02600200>;
+		genID = <0x1>;
+		gl2acem_instances_count = <0x4>;
+
+		samsung,imgloader-s2mpu-support;
+		dma-coherent;
+		power-domains = <&pd_g3dcore>;
+
+		g3d_cmu_cal_id = <ACPM_DVFS_G3D>;
+		gpu_power_coeff = <625>;
+		ect-coeff-index = <4>;
+		dm_type = <DM_G3D>;
+
+		/* GPU DVFS */
+		freq_table = <252000 315000 350000 400000 450000 500000
+			545000 600000 650000 700000 800000 900000 1000000 1095000>;
+		min_freq = <252000>;
+		max_freq = <1095000>;
+		min_threshold = "0 315000:60 400000:65 900000:78";
+		max_threshold = "75 315000:80 500000:85 900000:95";
+		downstay_time = "32 450000:64 500000:160";
+		mif_min_lock = "421000 450000:1352000 500000:2028000 700000:2730000 900000:3172000 1000000:3738000 1095000:4206000";
+		mif_cl_boost_min_lock = "421000 450000:1014000 500000:1352000 700000:1539000 800000:1716000 900000:2028000";
+		cl_boost_freq = <1095000>;
+		mo_scenario = "default 450000:g3d_performance";
+		llc_ways = "0 500000:16";
+		highspeed_freq = <450000>;
+		highspeed_load = <99>;
+		highspeed_delay = <0>;
+
+		/* DIDT */
+		didt_threshold = <>;
+		edc_threshold = <>;
+		didt = <>;
+
+		/* GPU AFM */
+		interrupt-src = <2>; /* MAIN_PMIC=1, SUB_PMIC=2, EXTRA_PMIC=3 */
+		pmic-num = <3>;
+		s2mps-afm-enable-offset = <0x20>; /* VDD_G3D master buck BUCK1_AFM */
+		s2mps-afm-level-offset = <0x20>; /* VDD_G3D master buck BUCK1_AFM */
+		down-step = <1>;
+		release-duration = <15>;
+		register-duration = <15000>; /* GPU init faster than loading PMIC interface */
+
+		/* IFPO */
+		ifpo_type = <IFPO_ABORT>;
+		ifpo_cal_id = <0xB1380023>;
+
+		/* GPU INFO */
+		gc-max-shader-engines = <1>;		/* GPU__GC__NUM_SE */
+		gc-max-cu-per-sh = <6>;			/* GPU__GC__NUM_SA_PER_SE * GPU__GC__NUM_WGP_PER_SA */
+		gc-max-sh-per-se = <2>;			/* GPU__GC__NUM_SA_PER_SE */
+		gc-max-backends-per-se = <4>;		/* GPU__GC__NUM_RB_PER_SE */
+		gc-max-texture-channel-caches = <4>;	/* GPU__GC__NUM_GL2C */
+		gc-max-gprs = <1024>;			/* GPU__GC__NUM_GPRS */
+		gc-max-gs-threads = <32>;		/* GPU__GC__NUM_MAX_GS_THDS */
+		gc-vgt-table-depth = <32>;		/* GPU__GC__GS_TABLE_DEPTH */
+		gc-prim-buffer-depth = <1792>;		/* GPU__GC__GSPRIM_BUFF_DEPTH */
+		gc-double-offchip-lds-buffer = <1>;	/* GPU__GC__DOUBLE_OFFCHIP_LDS_BUFFER */
+		gc-wave-front-size = <32>;		/* GC__SQ_WAVE_SIZE */
+		gc-max-waves-per-simd = <16>;		/* GPU__GC__NUM_WAVES_PER_SIMD */
+		gc-max-scratch-slots-per-cu = <32>;	/* GPU__GC__TMP_SCBD_SLOTS_PER_CU */
+		gc-lds-size = <64>;			/* GPU__LDS__SIZE */
+		num-sc-per-sh =	<0>;			/* GPU__GC__NUM_SC_PER_SE / GPU__GC__NUM_SA_PER_SE */
+		num-packer-per-sc = <4>;		/* GPU__GC__NUM_PACKER_PER_SC */
+
+		gpu_smntarg {
+			reg = <0x0 0x22200000 0x100000>;
+			device_type = "gpu_smntarg";
+		};
+
+		gpu_doorbell {
+			reg = <0x0 0x22300000 0x100000>;
+			device_type = "gpu_doorbell";
+		};
+
+		gpu_debug {
+			reg = <0x0 0x220F0000 0x40000>;
+			device_type = "gpu_debug";
+		};
+
+		gpu_pm {
+			reg = <0x0 0x220D0000 0x10000>;
+			device_type = "gpu_pm";
+		};
+
+		gpu_sysreg {
+			reg = <0x0 0x22000000 0x2000>;
+			device_type = "gpu_sysreg";
+		};
+
+	};
+};

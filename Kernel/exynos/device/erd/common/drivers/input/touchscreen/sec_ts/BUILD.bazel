@@ -1,0 +1,42 @@
+load("//build/kernel/kleaf:kernel.bzl", "kernel_module")
+
+filegroup(
+    name = "sec_ts.kconfig",
+    srcs = [
+        "Kconfig",
+    ],
+    visibility = [
+        "//exynos/device:__subpackages__",
+    ],
+)
+
+filegroup(
+    name = "sec_ts.sources",
+    srcs = glob(
+        ["**"],
+        exclude = [
+            ".*",
+            ".*/**",
+            "BUILD.bazel",
+            "**/*.bzl",
+            "build.config.*",
+        ],
+    ),
+    visibility = [
+        "//exynos/device:__subpackages__",
+    ],
+)
+
+kernel_module(
+    name = "sec_ts",
+    srcs = [
+        ":sec_ts.sources",
+    ], 
+    outs = [
+        "sec_ts.ko",
+    ],
+    kernel_build="//exynos/soc-series/common:exynos_kernel_build",
+    visibility = [
+        "//exynos/device:__subpackages__",
+    ],
+)

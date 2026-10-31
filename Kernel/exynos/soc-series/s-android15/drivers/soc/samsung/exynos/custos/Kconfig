@@ -1,0 +1,24 @@
+config CUSTOS
+	tristate "Cust OS REE driver"
+	help
+	  Support Cust OS REE driver
+
+config CUSTOS_LOG_DMESG
+	tristate "Custos log dmesg printing"
+	default n
+	help
+	  This enables printing custos kernel console message and
+	  secure app log messages(included console message) on dmesg.
+
+config CUSTOS_MEMLOG_MEMORY
+	tristate "Custos memlog to memory"
+	default n
+	help
+	  This enables logging into memory and files using memlog. When disable,
+	  only logging into files.
+
+config SACPM_DUMP
+	tristate "Dump secure ACPM debug to memory"
+	default n
+	help
+	  This enables making log_sacpm file to dump SACPM debug table.

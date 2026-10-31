@@ -1,0 +1,14 @@
+// SPDX-License-Identifier: GPL-2.0-only
+//
+// Samsung's SoC UFS device tree source
+//
+// Copyright (C) 2020 Samsung Electronics Co., Ltd.
+
+/ {
+virtio_0: virtio_block@14200000 {
+		  compatible = "virtio,mmio";
+		  reg = <0x0 0x14200000 0x10000>;
+		  interrupts = <GIC_SPI 809 IRQ_TYPE_LEVEL_HIGH>;
+	  };
+};
+

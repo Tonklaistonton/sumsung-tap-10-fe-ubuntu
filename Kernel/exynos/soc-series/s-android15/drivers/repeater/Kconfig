@@ -1,0 +1,5 @@
+config VIDEO_EXYNOS_REPEATER
+		tristate "EXYNOS REPEATER Driver"
+		default n
+		help
+		  Repeater driver for WFD

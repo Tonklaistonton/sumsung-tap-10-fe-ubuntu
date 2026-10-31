@@ -1,0 +1,43 @@
+/ {
+	/* camera mode - default */
+	set5: set@500 {
+		/* Boosting margin applied to frequency selection */
+		freqboost {			/* LIT MID BIG */
+			top-app			= <  5  5  5>;
+		};
+
+		/* Ontime Migration */
+		ontime {
+			top-app		= <1>;
+			camera-daemon	= <1>;
+
+			domain0 {
+				cpus = CPU_CL0;
+				lower-boundary = <0>;
+				upper-boundary = <31>;
+			};
+			domain1 {
+				cpus = CPU_CL1;
+				lower-boundary = <8>;
+				upper-boundary = <66>;
+			};
+			domain2 {
+				cpus = CPU_CL2;
+				lower-boundary = <43>;
+				upper-boundary = <100>;
+			};
+		};
+
+		ecs_dynamic {
+			dynamic-busy-ratio	= <70 70 70>;
+			min-cpus = "0-5";
+		};
+
+		fclamp {
+			monitor-group {
+				top-app = <1>;
+				camera-daemon	= <1>;
+			};
+		};
+	};
+};

@@ -1,0 +1,96 @@
+// SPDX-License-Identifier: GPL-2.0-only
+//
+// Samsung's SoC UFS device tree source
+//
+// Copyright (C) 2022 Samsung Electronics Co., Ltd.
+
+//#include <dt-bindings/ufs/ufs.h>
+
+/ {
+	ufs: ufs@0x17100000 {
+		/* ----------------------- */
+		/* 1. SYSTEM CONFIGURATION */
+		/* ----------------------- */
+		compatible ="samsung,exynos-ufs";
+		#address-cells = <2>;
+		#size-cells = <1>;
+		ranges;
+
+		reg =
+			<0x0 0x17100000 0x3000>,	/* 0: HCI standard */
+			<0x0 0x17180000 0x8000>,	/* 1: UNIPRO */
+			<0x0 0x171B0000 0xA014>,	/* 2: UFS protector */
+			<0x0 0x17104000 0x4000>,	/* 3: PHY */
+			<0x0 0x171A0000 0x7500>,	/* 4: CPORT */
+			<0x0 0x171C0000 0x9400>;	/* 6: PCS */
+		reg-names = "ufs_mem", "unipro", "fmp", "phy", "cport", "pcs";
+		interrupts = <GIC_SPI INTREQ__UFS_EMBD IRQ_TYPE_LEVEL_HIGH>;
+		pinctrl-names = "ufs_stat_wakeup", "ufs_stat_sleep";
+		pinctrl-0 = <&ufs_rst_n &ufs_refclk_out>;
+		pinctrl-1 = <&ufs_rst_sleep &ufs_refclk_sleep>;
+		clocks =
+			/* aclk clock */
+			<&clock GATE_UFS_EMBD_QCH>,
+			/* unipro clocks */
+			<&clock DOUT_CLKCMU_UFS_UFS_EMBD>;
+
+		clock-names =
+			/* aclk clocks */
+			"GATE_UFS_EMBD",
+			/* unipro clocks */
+			"UFS_EMBD";
+
+		/* board type for UFS CAL */
+		brd-for-cal = /bits/ 8 <1>;  /* (1:SMDK, 16:UNIV) board */
+
+		/* ----------------------- */
+		/* 2. UFS COMMON           */
+		/* ----------------------- */
+		freq-table-hz = <0 0>, <0 0>;
+
+		/* ----------------------- */
+		/* 3. UFS EXYNOS           */
+		/* ----------------------- */
+
+		/* power mode change */
+		ufs,pmd-attr-lane = /bits/ 8 <2>;
+		ufs,pmd-attr-gear = /bits/ 8 <4>;
+
+		/* evt version for UFS CAL */
+		evt-ver = /bits/ 8 <0>;
+
+		gear-max-frequency = <332000000>;
+		/* UFS PHY isolation and TCXO control */
+		samsung,pmu-phandle = <&pmu_system_controller>;
+		/* UFS support Auto hibern8 */
+		samsung,support-ah8;
+		/* UFS support SW_H8 during enable AH8 */
+		samsung,run-by-sw-h8;
+		/* gear scale flags */
+//		samsung,ufs-gear-scale;
+		devfreq = <&devfreq_1>;
+
+		/* does SOC support UFS MCQ */
+		samsung,mcq-not-supported;
+
+		/* support always-on */
+                samsung,ufs-always-on;
+		/* ----------------------- */
+		/* 4. ADDITIONAL NODES     */
+		/* ----------------------- */
+
+		/* Node name: offset mask val */
+		ufs,phy_iso = <0x618 0x1 0x1>; /* UFS_BIT(0) */
+		ufs,phy_pwr_off = <0x400 0x1 0x1>;
+
+		ufs-pm-qos {
+			/*HS-G4*/
+			freq-int = <0 0 0 333000>;
+			perf-int = <666000>;
+			perf-mif = <3172000>;
+			cpufreq-qos-levels = <8 8 7>; /* 1690000 1690000 */
+		};
+	};
+
+};
+

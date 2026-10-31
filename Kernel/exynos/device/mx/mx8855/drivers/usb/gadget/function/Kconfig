@@ -1,0 +1,24 @@
+# SPDX-License-Identifier: GPL-2.0
+#
+# SEC USB Gadget support on a system involves
+#
+config USB_F_CONN_GADGET
+	tristate
+
+config USB_F_SS_MON_GADGET
+	tristate
+
+config USB_CONFIGFS_F_CONN_GADGET
+	tristate "F_CONN gadget"
+	depends on USB_CONFIGFS
+	select USB_F_CONN_GADGET
+	help
+	  USB Sidesync function support
+
+config USB_CONFIGFS_F_SS_MON_GADGET
+	tristate "F_SAMSUNG gadget"
+	select USB_F_SS_MON_GADGET
+	help
+	 Driver for control to Samsung Usb device layer
+	 For Samung working scenario and saving debug log, etc
+	 

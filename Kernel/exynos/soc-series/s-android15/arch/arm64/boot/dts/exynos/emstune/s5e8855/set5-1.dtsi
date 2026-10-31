@@ -1,0 +1,35 @@
+/ {
+	/* camera mode - touch boost */
+	set5_1: set@501 {
+		/* Boosting margin applied to frequency selection */
+		freqboost {		/* LIT MED BIG */
+			top-app		= < 30 30 30>;
+		};
+
+		/* Ontime Migration */
+		ontime {
+			top-app		= <1>;
+			camera-daemon 	= <1>;
+
+			domain0 {
+				cpus = CPU_CL0;
+				lower-boundary = <0>;
+				upper-boundary = <21>;
+			};
+			domain1 {
+				cpus = CPU_CL1;
+				lower-boundary = <8>;
+				upper-boundary = <66>;
+			};
+			domain2 {
+				cpus = CPU_CL2;
+				lower-boundary = <43>;
+				upper-boundary = <100>;
+			};
+		};
+
+		util_est {
+			top-app	= <1>;
+		};
+	};
+};

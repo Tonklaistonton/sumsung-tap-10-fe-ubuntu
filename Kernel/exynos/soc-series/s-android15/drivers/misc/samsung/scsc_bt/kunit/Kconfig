@@ -1,0 +1,4 @@
+config KUNIT_SCSC_BT_TEST
+	tristate "SCSC BT UNIT TEST"
+	help
+	  Select to unittest on KUnit framework

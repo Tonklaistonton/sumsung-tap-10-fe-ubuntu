@@ -1,0 +1,8 @@
+# SPDX-License-Identifier: GPL-2.0-only
+#
+# Makefile for EL2 module of Exynos pKVM module
+#
+
+EXTRA_CFLAGS=-I$(srctree)/arch/arm64/kvm/hyp/include
+hyp-obj-y := exynos-pkvm-module.o exynos-pkvm-s2mpu-module.o
+include $(srctree)/arch/arm64/kvm/hyp/nvhe/Makefile.module

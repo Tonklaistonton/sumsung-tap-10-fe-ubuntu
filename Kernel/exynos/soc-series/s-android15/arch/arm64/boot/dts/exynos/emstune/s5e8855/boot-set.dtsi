@@ -1,0 +1,43 @@
+/ {
+	/* booting exclusive set */
+	boot_set: boot_set {
+		/* Boosting margin applied to frequency selection */
+		freqboost {                     /* LIT MID BIG */
+			top-app                 = <  5  5  5>;
+		};
+
+		/* Ontime Migration */
+		ontime {
+			foreground      = <1>;
+			top-app         = <1>;
+
+			domain0 {
+				cpus = CPU_CL0;
+				lower-boundary = <0>;
+				upper-boundary = <21>;
+			};
+			domain1 {
+				cpus = CPU_CL1;
+				lower-boundary = <8>;
+				upper-boundary = <75>;
+			};
+			domain2 {
+				cpus = CPU_CL2;
+				lower-boundary = <49>;
+				upper-boundary = <100>;
+			};
+		};
+
+		gsc { };
+
+		fclamp {
+			monitor-group {
+				top-app         = <1>;
+			};
+		};
+
+		util_est {
+			top-app	= <1>;
+		};
+	};
+};

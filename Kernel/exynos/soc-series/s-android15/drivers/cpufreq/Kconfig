@@ -1,0 +1,35 @@
+# SPDX-License-Identifier: GPL-2.0
+#
+# Samsung SoC drivers
+#
+
+config EXYNOS_CPUFREQ
+	tristate "SAMSUNG EXYNOS CPUFreq driver"
+	default n
+	depends on ARCH_EXYNOS
+	help
+	  This adds the CPUFreq driver for every exynos chipset. Exynos CPUFreq
+	  supported SoC must use the exynos CAL framework.
+
+	  If in doubt, say N.
+
+config FREQ_QOS_TRACER
+	tristate "SAMSUNG CPUFreq QoS Tracer"
+	depends on ARCH_EXYNOS
+	help
+	  This supports tracing function to figure out who requested QoS with
+	  which value.
+
+config EXYNOS_DSUFREQ
+	tristate "SAMSUNG EXYNOS DSU Frequency driver"
+	help
+	  This adds the DSUFreq driver for specific exynos chipset. Exynos
+	  DSUFreq supported SoC must use the exynos CAL framework.
+
+	  If in doubt, say N.
+
+config CPU_EXYNOS_KUNIT_TEST
+	tristate "KUnit tests for CPU" if !KUNIT_ALL_TESTS
+	depends on KUNIT
+	depends on EXYNOS_CPUFREQ && EXYNOS_DSUFREQ
+	default KUNIT_ALL_TESTS

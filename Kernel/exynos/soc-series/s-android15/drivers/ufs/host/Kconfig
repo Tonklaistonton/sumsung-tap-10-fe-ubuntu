@@ -1,0 +1,128 @@
+# SPDX-License-Identifier: GPL-2.0+
+#
+# Kernel configuration file for the UFS host controller drivers.
+#
+# Copyright (C) 2023 Samsung Electronics Co., Ltd.
+#
+# Authors:
+#	Kiwoong Kim <kwmad.kim@samsung.com>
+
+config SCSI_UFS_SAMSUNG
+	tristate "Exynos specific hooks to UFS controller platform driver"
+	depends on SCSI_UFSHCD_PLATFORM && (ARCH_EXYNOS || COMPILE_TEST)
+	help
+	  This selects the Samsung Exynos SoC specific additions to UFSHCD
+	  platform driver.  UFS host on Samsung Exynos SoC includes HCI and
+	  UNIPRO layer, and associates with UFS-PHY driver.
+
+	  Select this if you have UFS host controller on Samsung Exynos SoC.
+	  If unsure, say N.
+
+config EXYNOS_UFS_KUNIT_TEST
+	tristate "KUnit tests for samsung UFS" if !KUNIT_ALL_TESTS
+	depends on SCSI_UFS_SAMSUNG
+	depends on KUNIT
+	default KUNIT_ALL_TESTS
+
+config SCSI_UFS_PERF
+	tristate "Exynos specific perf hook to UFS controller platform driver"
+	depends on SCSI_UFS_SAMSUNG
+	help
+	  This selects the Samsung Exynos SoC specific performance feature
+	  to UFSHCD platform driver.
+
+	  Select this if you have UFS host controller on Samsung Exynos SoC,
+	  and want to enable this feature.
+	  If unsure, say N.
+
+config SCSI_UFS_DBG
+	tristate "Exynos specific dbg hooks to UFS controller platform driver"
+	depends on SCSI_UFS_SAMSUNG
+	help
+	  This selects the Samsung Exynos SoC specific debuggin additions to
+	  to UFSHCD platform driver.
+
+	  Select this if you have UFS host controller on Samsung Exynos SoC,
+	  and want to enable this feature.
+	  If unsure, say N.
+
+config SCSI_UFS_EMUL
+	tristate "Exynos specific emul mode to UFS controller platform driver"
+	depends on SCSI_UFS_SAMSUNG
+	help
+	  This selects the Samsung Exynos SoC specific emulation mode
+	  to UFSHCD platform driver.
+
+	  Select this if you have UFS host controller on Samsung Exynos SoC,
+	  and want to enable this feature.
+	  If unsure, say N.
+
+config SCSI_UFS_EXYNOS_SRPMB
+	bool "EXYNOS Secure RPMB(Replay Protected Memory Block) UFS Host"
+	depends on SCSI_UFS_SAMSUNG
+	help
+	  RPMB(Replay Protected Memory Block) is a storage which is to store data
+	  to the specific memory area in an authenticated and replay protected manner.
+	  Usage of nonce and write count register are providing additional
+	  protection against replay of messages where messages could be recorded and
+	  played back later by an attacker.
+
+	  If you have a controller with this interface, say Y or M here. If unsure, say N.
+
+config SEC_UFS_FEATURE
+	tristate "SEC specific UFS feature"
+	depends on SCSI_UFSHCD
+	help
+	  Enable Samsung feature support
+	  Enabling this allows kernel to use SEC specific feature
+	  defined and implemented by SEC.
+
+config SCSI_UFS_TEST_MODE
+	bool "Samsung UFS TEST feature"
+	default n
+	depends on SEC_UFS_FEATURE
+	help
+	  This selects support for test mode for debugging.
+	  Select this option if this feature is needed on working.
+
+	  If unsure, say N.
+
+config SCSI_UFS_EXYNOS_FMP
+        bool "EXYNOS Flash Memory Protector for UFS Host"
+        depends on SCSI_UFS_SAMSUNG && SCSI_UFS_CRYPTO
+        help
+          This selects the EXYNOS UFS FMP Driver.
+
+          Select this if you need a inline crypto engine for your UFS controller.
+          If unsure, say N.
+
+choice
+        prompt "Option for FMP mode"
+        depends on SCSI_UFS_EXYNOS_FMP
+        default HW_KEYS_IN_CUSTOM_KEYSLOT
+
+config HW_KEYS_IN_CUSTOM_KEYSLOT
+        bool "Init fmp to use hw wrapped keys in custom keyslot"
+        depends on SCSI_UFS_EXYNOS_FMP
+        help
+          Choose here to select that fmp mode to use hw wrapped keys in custom keyslot.
+
+config KEYS_IN_CUSTOM_KEYSLOT
+        bool "Init fmp to use keys in custom keyslot"
+        depends on SCSI_UFS_EXYNOS_FMP
+        help
+          Choose here to select that fmp mode to use keys in custom keyslot.
+
+config KEYS_IN_PRDT
+        bool "Init fmp to use keys in prdt"
+        depends on SCSI_UFS_EXYNOS_FMP
+        help
+          Choose here to select that fmp mode to use keys in prdt
+
+endchoice
+config FMP_EXYNOS_KUNIT_TEST
+	tristate "KUnit tests for FMP" if !KUNIT_ALL_TESTS
+	depends on KUNIT
+	depends on SCSI_UFS_EXYNOS_FMP
+	depends on SCSI_UFS_SAMSUNG
+	default KUNIT_ALL_TESTS

@@ -1,0 +1,33 @@
+/* SAMSUNG EXYNOS SoC BUS device tree source
+ *
+ * Copyright (c) 2024 Samsung Electronics Co., Ltd.
+ *		http://www.samsung.com
+ *
+ * SAMSUNG EXYNOS SoC BUS device nodes are listed in this file.
+ * EXYNOS based board files should include this file.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ *
+ */
+
+/ {
+	exynos-mifgov {
+		compatible = "samsung,exynos-mifgov";
+		esca-ipc-channel = <ESCA_IPC_APP__MIF_GOV>;
+
+	        /* num_channel, mif_bus_width, bus_width, mif_util, int_util*/
+	        bw_params = <4 16 32 70 70>;
+
+		/* hold_time, bratio, period */
+		gov_params = <4 100 2>;
+
+		use-mifgov = "enabled";
+
+		mifgov_noti_ipc {
+			esca-ipc-channel = <ESCA_IPC_APP__MIF_GOV_NOTI>;
+		};
+	};
+};
+

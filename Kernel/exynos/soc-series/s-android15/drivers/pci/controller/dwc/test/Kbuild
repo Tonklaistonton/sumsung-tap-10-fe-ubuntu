@@ -1,0 +1,4 @@
+obj-$(CONFIG_EXYNOS_PCIE_KUNIT_TEST) += pcie_exynos_test.o
+
+ccflags-y += -I $(srctree)/$(src)/../
+

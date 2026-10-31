@@ -1,0 +1,5 @@
+# SPDX-License-Identifier: GPL-2.0-or-later
+try-import %workspace%/.d1.bazelrc
+try-import %workspace%/.d2.bazelrc
+try-import %workspace%/.d3.bazelrc
+

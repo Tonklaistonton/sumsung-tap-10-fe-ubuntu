@@ -1,0 +1,48 @@
+/*
+ * copyright (c) 2023 samsung electronics co., ltd.
+ *		http://www.samsung.com
+ *
+ * this program is free software; you can redistribute it and/or modify
+ * it under the terms of the gnu general public license version 2 as
+ * published by the free software foundation.
+ */
+
+#include <dt-bindings/clock/s5e8855.h>
+/{
+	contexthub_0: contexthub {
+		compatible = "samsung,exynos-nanohub";
+		memory-region = <&contexthub_rmem>;
+		/* INTREQ MAILBOX_AP2CHUB */
+		interrupts = <GIC_SPI INTREQ__MAILBOX_CHUB2AP IRQ_TYPE_LEVEL_HIGH>, <GIC_SPI INTREQ__WDT_CHUB IRQ_TYPE_LEVEL_HIGH>;
+		reg =   <0x0 0x11C30000 0x000200>, /* mailbox: MAILBOX_AP_CHUB*/
+			<0x0 0x11200000 0x68000>, /* sram */
+			<0x0 0x110F0000 0x000100>, /* dumpgpr */
+			<0x0 0x11630000 0x002000>; /* barac_chub */
+		reg-names = "mailbox",
+			    "sram",
+			    "dumpgpr",
+			    "barac_chub";
+		barac,names = "barac_chub";
+		barac,sizes = <7>;
+		barac,values = </* barac_chub */
+				0x1804 0x000   0x60000 0xDFFFE 0x80000 /* DRAM */
+				0x1884 0x101   0x40900 0x40DEF 0x11800 /* ALIVE */
+				0x1904 0x101   0x41000 0x411FF 0x12000 /* CMGP */
+				0x1984 0x000   0x40E00 0x40EBF 0x11300 /* VTS_SRAM (static)*/
+				0x1A04 0x101   0x50000 0x50001 0x10000 /* CHIP ID */
+				0x1A84 0x000   0x11340 0x113BF 0x11340 /* VTS_SRAM (sharing) */
+				0x1B04 0x101   0x41270 0x412DF 0x11690 /* CHUBVTS Common */>;
+		smc-required = "true";
+		multi-os = "enabled";
+		hardfault-debug = "enabled";
+		/* chub dfs governer */
+		chub-dfs-gov = "disabled";
+		/* chub dvfs */
+		chub-dvfs = "disabled";
+		/* chub-dvfs-level = <400000 200000>; */
+		chub-no-baaw;
+		use_alive_mct;
+		clocks = <&clock DOUT_CLKALIVE_CHUBVTS_NOC>;
+		clock-names = "chub_bus";
+	};
+};

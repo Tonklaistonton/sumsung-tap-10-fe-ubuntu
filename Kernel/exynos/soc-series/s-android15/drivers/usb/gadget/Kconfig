@@ -1,0 +1,17 @@
+# SPDX-License-Identifier: GPL-2.0
+
+config USB_CONFIGFS_RNDIS_MP
+	tristate "RNDIS_MP"
+	depends on USB_CONFIGFS
+	depends on NET
+	help
+	   Samsung RNDIS MP(Multi Packet) supports RNDIS
+	   functionality with offloading RNDIS data transfers.
+
+config USB_F_RNDIS_MP
+	tristate "F_RNDIS_MP"
+	depends on USB_CONFIGFS
+	depends on NET
+	help
+	   Samsung RNDIS F MP(Multi Packet) supports RNDIS
+           functionality with offloading RNDIS data transfers.

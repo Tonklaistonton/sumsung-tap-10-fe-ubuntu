@@ -1,0 +1,24 @@
+/ {
+	/* power-scenario mode - app boost */
+	set1_2: set@102 {
+
+		ecs_dynamic { };
+
+		tex {
+			top-app = <110>;
+			foreground = <110>;
+		};
+
+		cgroup_boost {
+			top-app = <1>;
+			foreground = <1>;
+		};
+
+		dslt {
+			running-sensitivity {
+				background = <100>;
+				system-background = <100>;
+			};
+		};
+	};
+};

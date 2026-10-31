@@ -1,0 +1,8 @@
+# SPDX-License-Identifier: GPL-2.0
+#
+# This file should be included by external modules that need to link to this
+# project.
+
+KCFLAGS += -I$(KERNEL_SRC)/../${EXYNOS_SOC_DIR}/include
+
+EXTRA_SYMBOLS += $(O)/../${EXYNOS_SOC_DIR}/Module.symvers

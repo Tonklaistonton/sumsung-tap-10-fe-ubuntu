@@ -1,0 +1,2 @@
+drivers/input/touchscreen/himax/hx83xxx_spi/himax_ts_83xxx_spi.ko
+drivers/input/touchscreen/novatek/nt36523_tablet_spi/novatek_ts_nt36523.ko

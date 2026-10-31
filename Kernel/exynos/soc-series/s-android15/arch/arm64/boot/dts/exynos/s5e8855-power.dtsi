@@ -1,0 +1,62 @@
+/*
+ * SAMSUNG S5E8855 SoC power device tree source
+ *
+ * Copyright (c) 2024 Samsung Electronics Co., Ltd.
+ *		http://www.samsung.com
+ *
+ * SAMSUNG S5E8855 SoC power device nodes are listed in this file.
+ * EXYNOS based board files can include this file and provide
+ * values for board specfic bindings.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+#include <dt-bindings/soc/samsung/s5e8855-esca-ipc.h>
+#include "s5e8855-dm.dtsi"
+#include "s5e8855-devfreq.dtsi"
+#include "s5e8855-bus.dtsi"
+#include "s5e8855-thermal.dtsi"
+
+
+/ {
+
+	exynos-ect {
+		compatible = "samsung,exynos-ect";
+		memory-region = <&ect_binary>;
+	};
+
+	acpm_dvfs {
+		compatible = "samsung,exynos-acpm-dvfs";
+		esca-ipc-channel = <ESCA_IPC_PHY__NOTI_MIF>;
+	};
+
+	exynos-esca-wow {
+		compatible = "samsung,exynos-esca-wow";
+		esca-ipc-channel = <ESCA_IPC_APP__WOW>;
+
+		polling_delay = <2000>; /* ms */
+	};
+
+#if 0
+	exynos-wow {
+		compatible = "samsung,exynos-wow";
+		reg = <0x0 0x104B0000 0x1000>;
+		polling_delay = <60000>; /* ms */
+
+		wow-ip {
+			MIF0 {
+				bus_width = <16>;
+				nr_ppc = <2>;
+				nr_base = <1>;
+				reg_index = <0>;
+				ip_type = <0>;
+
+				use_latency;
+			};
+		};
+	};
+#endif
+};
+

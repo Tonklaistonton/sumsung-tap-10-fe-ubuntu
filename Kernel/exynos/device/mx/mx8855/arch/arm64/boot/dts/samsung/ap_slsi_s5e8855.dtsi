@@ -1,0 +1,3 @@
+#include <dt-bindings/clock/s5e8855.h>
+#include <dt-bindings/interrupt-controller/s5e8855.h>
+#include "../../../../../../../../erd/erd8855/arch/arm64/boot/dts/erd/erd8855-pmic.dtsi"

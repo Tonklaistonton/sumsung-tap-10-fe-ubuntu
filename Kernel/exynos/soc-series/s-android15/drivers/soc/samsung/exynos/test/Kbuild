@@ -1,0 +1,3 @@
+obj-$(CONFIG_MEMLOGGER_EXYNOS_KUNIT_TEST)	+= memlogger_exynos_test.o
+
+memlogger_exynos_test-y					:= exynos_memlogger_test.o

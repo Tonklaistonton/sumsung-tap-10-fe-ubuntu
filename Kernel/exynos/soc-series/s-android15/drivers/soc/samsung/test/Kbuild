@@ -1,0 +1,6 @@
+# SPDX-License-Identifier: GPL-2.0-only
+
+obj-$(CONFIG_BUS_EXYNOS_KUNIT_TEST)		+= bus_exynos_test.o
+#bus_exynos_test-y				+= bus_exynos_test.o
+
+ccflags-y += -I $(srctree)/$(src)/../

@@ -1,0 +1,28 @@
+# SPDX-License-Identifier: GPL-2.0
+#
+# Samsung Pin control external drivers
+#
+config PINCTRL_SAMSUNG_EXT
+	tristate "External Pinctrl driver data for Samsung SoCs"
+	select GPIOLIB
+	select PINMUX
+	select PINCONF
+
+config PINCTRL_EXYNOS_EXT
+	bool "External Pinctrl common driver part for Samsung Exynos SoCs"
+	depends on ARCH_EXYNOS || ARCH_EXYNOS_RISCV || PINCTRL_SAMSUNG_EXT || (COMPILE_TEST && OF)
+	select PINCTRL_EXYNOS_EXT_ARM64 if ARCH_EXYNOS && ARM64
+	select PINCTRL_EXYNOS_EXT_RISCV if ARCH_EXYNOS_RISCV
+
+config PINCTRL_EXYNOS_EXT_ARM64
+	bool "External ARM64 specific pinctrl driver for Samsung Exynos SoCs"
+	depends on ARCH_EXYNOS || PINCTRL_SAMSUNG_EXT || (COMPILE_TEST && OF)
+
+config PINCTRL_EXYNOS_EXT_RISCV
+	bool "External RISCV specific pinctrl driver for Samsung Exynos SoCs"
+	depends on ARCH_EXYNOS_RISCV || PINCTRL_SAMSUNG_EXT || (COMPILE_TEST && OF)
+
+config PINCTRL_SEC_GPIO_DVS
+	tristate "Samsung GPIO debugging and verification system"
+	depends on SEC_PM && PINCTRL_EXYNOS_ARM64
+	default n

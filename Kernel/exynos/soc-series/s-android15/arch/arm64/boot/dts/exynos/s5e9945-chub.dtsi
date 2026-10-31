@@ -1,0 +1,78 @@
+/*
+ * copyright (c) 2023 samsung electronics co., ltd.
+ *		http://www.samsung.com
+ *
+ * this program is free software; you can redistribute it and/or modify
+ * it under the terms of the gnu general public license version 2 as
+ * published by the free software foundation.
+ */
+
+#include <dt-bindings/clock/s5e9945.h>
+/{
+
+	contexthub_0: contexthub {
+		compatible = "samsung,exynos-nanohub";
+		memory-region = <&contexthub_rmem>;
+		/* INTREQ MAILBOX_AP2CHUB */
+		interrupts = <GIC_SPI INTREQ__MAILBOX_CHUB2AP IRQ_TYPE_LEVEL_HIGH>,
+			     <GIC_SPI INTREQ__WDT_CHUB IRQ_TYPE_LEVEL_HIGH>;
+		reg =	<0x0 0x129F0000 0x200>, //mailbox
+			<0x0 0x13C00000 0x180000>, //sram
+			<0x0 0x138F0000 0x100>, // dumpgpr
+			<0x0 0x13E30000 0xC0>, // baaw_c_chub
+			<0x0 0x13E40000 0xC0>, // baaw_ld_chub
+			<0x0 0x13E60000 0x200>, // upmu_chub
+			<0x0 0x12861AA0 0x10>; // pmu chub_out
+			/*<0x0 0x139F0000 0x4000>,
+			<0x0 0x13800000 0x1820>,
+			<0x0 0x13830000 0x10>,
+			<0x0 0x13840000 0x10>,
+			<0x0 0x13860000 0x50>,
+			<0x0 0x13920000 0x10>,
+			<0x0 0x13930000 0x10>,
+			<0x0 0x13940000 0x10>,
+			<0x0 0x13950000 0x10>,
+			<0x0 0x13960000 0x10>,
+			<0x0 0x13970000 0x10>,
+			<0x0 0x13980000 0x10>,
+			<0x0 0x13990000 0x10>,
+			<0x0 0x139C0000 0x10>,
+			<0x0 0x139D0000 0x10>,
+			<0x0 0x13EA0000 0x1000>,*/
+		reg-names = "mailbox", "sram", "dumpgpr", "baaw_c_chub",
+			    "baaw_ld_chub", "upmu", "chub_out";
+			    /*"sysreg_chub",
+			    "chub_dump_cmu", "chub_dump_wdt",
+			    "chub_dump_timer", "chub_dump_pwm",
+			    "chub_dump_i2c0", "chub_dump_i2c1",
+			    "chub_dump_i3c0", "chub_dump_i3c1",
+			    "chub_dump_usi0", "chub_dump_usi1",
+			    "chub_dump_usi2", "chub_dump_usi3",
+			    "chub_dump_spi_i2c0", "chub_dump_spi_i2c1",
+			    "chub_dump_gpio";*/
+		baaw,names = "baaw_c_chub", "baaw_ld_chub";
+		baaw,sizes = < 2 1 >; // baaw_c_chub : 2, baaw_ld_chub : 1
+		baaw,values = < 0x20 0x6000000 0x10000000 0x6000000 0x0
+				0x80 0x5000000 0x5000100 0x5000000 0x80000003
+				0x60 0x5000000 0x5000100 0x1000000 0x80000003 >;
+				// CHUB <--> baaw_c_chub <--> baaw_ld_chub <--> DRAM
+				// =====baaw_c_chub======
+				// dram (clear)
+				// sensor algorithm
+				// =====baaw_ld_chub======
+				// sensor algorithm
+		smc-required = "true";
+		multi-os = "enabled";
+		one-binary = "enabled";
+		hardfault-debug = "enabled";
+		/* chub dfs governer */
+		chub-dfs-gov = "disabled";
+		use_alive_mct;
+		clocks =
+			<&clock DOUT_CLKALIVE_CHUBVTS_NOC>,
+			<&clock DOUT_CLKALIVE_CHUB_PERI>;
+		clock-names =
+			"chub_bus",
+			"chub_peri";
+	};
+};

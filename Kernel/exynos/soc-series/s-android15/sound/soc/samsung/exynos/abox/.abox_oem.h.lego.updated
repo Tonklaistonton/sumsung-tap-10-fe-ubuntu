@@ -1,0 +1,57 @@
+/* SPDX-License-Identifier: GPL-2.0-or-later */
+/*
+ * ALSA SoC - Samsung Abox OEM module
+ *
+ * Copyright (c) 2021 Samsung Electronics Co. Ltd.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+#ifndef __SND_SOC_ABOX_OEM_H
+#define __SND_SOC_ABOX_OEM_H
+
+#include <linux/module.h>
+
+enum ABOX_OEM_RESERVED_MEMORY {
+	ABOX_OEM_RESERVED_MEMORY_DBG, /* abox_dbg */
+	ABOX_OEM_RESERVED_MEMORY_SLOG,  /* abox_slog */
+};
+
+enum ABOX_OEM_NOISE_TYPE {
+	ABOX_OEM_CLK,
+	ABOX_OEM_DMA_INTERVAL,
+	ABOX_OEM_DMA_UNDERRUN,
+	ABOX_OEM_RMS_DETECTION,
+	ABOX_OEM_RXSE_MUTE_DETECTION,
+	ABOX_OEM_TXSE_M1_DEFECT_DETECTION,
+	ABOX_OEM_TXSE_M2_DEFECT_DETECTION,
+	ABOX_OEM_TXSE_M3_DEFECT_DETECTION,
+	ABOX_OEM_TXSE_M1_CLOG_DETECTION,
+	ABOX_OEM_TXSE_M2_CLOG_DETECTION,
+	ABOX_OEM_TXSE_M3_CLOG_DETECTION,
+	ABOX_OEM_TXSE_M1_MUTE_DETECTION,
+	ABOX_OEM_TXSE_M2_MUTE_DETECTION,
+	ABOX_OEM_TXSE_M3_MUTE_DETECTION,
+	ABOX_OEM_TXSE_M1M2_MUTE_DETECTION,
+	ABOX_OEM_TXSE_M1M3_MUTE_DETECTION,
+	ABOX_OEM_TXSE_M2M3_MUTE_DETECTION,
+	ABOX_OEM_TXSE_M1M2M3_MUTE_DETECTION,
+	ABOX_OEM_SKPAMP_VI_MUTE_DETECTION,
+	ABOX_OEM_NOISE_TYPE_COUNT,
+};
+
+/**
+ * Get OEM changed size of each reserved memory
+ * @param[in]	type	type of reserved memory
+ * @return	size of the reserved memory which is changed by OEM
+ */
+extern ssize_t abox_oem_resize_reserved_memory(enum ABOX_OEM_RESERVED_MEMORY type);
+
+extern void abox_oem_noise_detect(struct abox_data *data, struct IPC_SYSTEM_MSG *system_msg,
+		enum ABOX_OEM_NOISE_TYPE type);
+
+extern void abox_oem_init(struct device *dev);
+
+#endif /* __SND_SOC_ABOX_OEM_H */

@@ -1,0 +1,176 @@
+/*
+ * Hall ic device tree source
+ *
+ * Copyright (c) 2017 Samsung Electronics Co., Ltd.
+ *		http://www.samsung.com
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+&smd {
+	hall_ic: hall_ic {
+		status = "okay";
+		compatible = "hall_ic";
+		pinctrl-names = "default";
+		pinctrl-0 = <
+#if 1
+		&hall_irq
+#endif
+#if 0
+		&certify_hall_irq
+#endif
+#if 1
+		&hall_wacom_irq
+#endif
+#if 0
+		&folder_hall_irq
+#endif
+#if 0
+		&back_cover_hall_gpio
+#endif
+#if 0
+		&flip1_hall_irq
+#endif
+#if 0
+		&flip2_hall_irq
+#endif
+		>;
+#if 1
+		hall_ic,debounce-interval = <50>;
+#endif
+#if 1
+		hall: hall {
+			name = "hall";
+			event = <0x15>;
+			gpios = <SEC_GPIO_REF(AP,gpc2,gpc2,0) 1>;
+			flags = <0x01>;
+		};
+#endif
+#if 0
+		certify_hall: certify_hall {
+			name = "certify_hall";
+			event = <0x1b>;
+			gpios = <SEC_GPIO_REF(${certify_hall_gpio}) 1>;
+			flags = <0x01>;
+		};
+#endif
+#if 1
+		hall_wacom: hall_wacom {
+			name = "hall_wacom";
+			event = <0x1e>;
+			gpios = <SEC_GPIO_REF(AP,gpc1,gpc1,0) 1>;
+			flags = <0x01>;
+		};
+#endif
+#if 0
+		flip: flip {
+			name = "flip";
+			event = <0x00>;
+			gpios = <SEC_GPIO_REF(${folder_hall_gpio}) 1>;
+			flags = <0x01>;
+		};
+#endif
+#if 0
+		back_cover: back_cover {
+			name = "back_cover";
+			input-name = "certify_hall";
+			event = <0x1b>;
+			gpios = <SEC_GPIO_REF(${back_cover_hall_gpio}) 1>;
+			flags = <0x01>;
+		};
+#endif
+#if 0
+		flip1: flip1 {
+			name = "flip1";
+			event = <0x00>;
+			gpios = <SEC_GPIO_REF(${flip1_hall_gpio}) 1>;
+			flags = <0x01>;
+		};
+#endif
+#if 0
+		flip2: flip2 {
+			name = "flip2";
+			event = <0x02>;
+			gpios = <SEC_GPIO_REF(${flip2_hall_gpio}) 1>;
+			flags = <0x01>;
+		};
+#endif
+	};
+
+#if 1
+	hall_logical {
+		status = "okay";
+		compatible = "hall_logical";
+	};
+#endif
+};
+
+#if 1
+&pinctrl_0 {
+	hall_irq: hall_irq {
+		GPIO_CONFIG_PUD_DRV(AP,gpc2,gpc2,0, FUNC_INPUT_WAKEUP, PULL_NONE, DRV_LV1);
+#if 0
+		power-source = <1>;
+#endif
+	};
+};
+#endif
+
+#if 0
+&${certify_hall_parent} {
+	certify_hall_irq: certify_hall_irq {
+		GPIO_CONFIG_PUD_DRV(${certify_hall_gpio}, FUNC_INPUT_WAKEUP, PULL_NONE, DRV_LV1);
+#if 0
+		power-source = <1>;
+#endif
+	};
+};
+#endif
+
+#if 1
+&pinctrl_0 {
+	hall_wacom_irq: hall_wacom_irq {
+		GPIO_CONFIG_PUD_DRV(AP,gpc1,gpc1,0, FUNC_INPUT_WAKEUP, PULL_NONE, DRV_LV1);
+#if 0
+		power-source = <1>;
+#endif
+	};
+};
+#endif
+
+#if 0
+&${folder_hall_parent} {
+	folder_hall_irq: folder_hall_irq {
+		GPIO_CONFIG_PUD_DRV(${folder_hall_gpio}, FUNC_INPUT_WAKEUP, PULL_NONE, DRV_LV1);
+	};
+};
+#endif
+
+#if 0
+&${back_cover_hall_parent} {
+	back_cover_hall_gpio: back_cover_hall_gpio {
+		GPIO_CONFIG_PUD_DRV(${back_cover_hall_gpio}, FUNC_INPUT_WAKEUP, PULL_NONE, DRV_LV1);
+#if 0
+		power-source = <1>;
+#endif
+	};
+};
+#endif
+
+#if 0
+&${flip1_hall_parent} {
+	flip1_hall_irq: flip1_hall_irq {
+		GPIO_CONFIG_PUD_DRV(${flip1_hall_gpio}, FUNC_INPUT_WAKEUP, PULL_NONE, DRV_LV1);
+	};
+};
+#endif
+
+#if 0
+&${flip2_hall_parent} {
+	flip2_hall_irq: flip2_hall_irq {
+		GPIO_CONFIG_PUD_DRV(${flip2_hall_gpio}, FUNC_INPUT_WAKEUP, PULL_NONE, DRV_LV1);
+	};
+};
+#endif

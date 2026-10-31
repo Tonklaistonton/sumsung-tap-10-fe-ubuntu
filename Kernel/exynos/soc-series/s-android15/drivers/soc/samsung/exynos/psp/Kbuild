@@ -1,0 +1,3 @@
+# Exynos PSP driver
+psp-objs			:= main.o psp_mailbox_common.o psp_mailbox_ree.o
+obj-$(CONFIG_EXYNOS_PSP)	+= psp.o

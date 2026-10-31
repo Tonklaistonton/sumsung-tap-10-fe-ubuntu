@@ -1,0 +1,4 @@
+obj-$(CONFIG_EXYNOS_UFS_KUNIT_TEST) += ufs_exynos_test.o
+obj-$(CONFIG_FMP_EXYNOS_KUNIT_TEST) += fmp_exynos_test.o
+
+ccflags-y += -I $(srctree)/$(src)/../

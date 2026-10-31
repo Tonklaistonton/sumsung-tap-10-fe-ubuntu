@@ -1,0 +1,62 @@
+/*
+ * Samsung Exynos SoC series Panel driver
+ *
+ * Copyright (c) 2020 Samsung Electronics Co., Ltd
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+#if 1
+#define MAX77816_2nd
+#endif
+
+#include <dt-bindings/display/panel-display.h>
+/ {
+	fragment@panel_drv {
+		target-path = "/";
+		__overlay__ {
+			panel_blic: panel_blic {
+				max77816 {
+					name = "max77816";
+					i2c,reg = <0x18>;
+					i2c,match = <0x00 0x00 0x00>; /* addr mask val */
+
+					power_ctrl {
+						actions {
+							max77816_gpio_hwen_on: max77816_gpio_hwen_on {
+								type = <PCTRL_GPIO_ENABLE>;
+#if defined(MAX77816_1st)
+								gpio = <&gpio_hwen>;
+#endif
+#if defined(MAX77816_2nd)
+								gpio = <&gpio_hwen_2>;
+#endif	
+							};
+							max77816_gpio_hwen_off: max77816_gpio_hwen_off {
+								type = <PCTRL_GPIO_DISABLE>;
+#if defined(MAX77816_1st)
+								gpio = <&gpio_hwen>;
+#endif
+#if defined(MAX77816_2nd)
+								gpio = <&gpio_hwen_2>;
+#endif
+							};
+							max77816_delay_2ms: max77816_delay_2ms {
+								type = <PCTRL_DELAY_MSLEEP>;
+								value = <2>;
+							};
+						};
+
+						sequences {
+							panel_blic_pre_on = <&max77816_gpio_hwen_on &max77816_delay_2ms>;
+							panel_blic_post_off = <&max77816_delay_2ms &max77816_gpio_hwen_off>;
+						};
+					};
+				};
+			};
+		};
+	};
+};
+

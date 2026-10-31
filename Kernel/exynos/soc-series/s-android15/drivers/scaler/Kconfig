@@ -1,0 +1,15 @@
+config VIDEO_EXYNOS_SCALER
+       tristate "EXYNOS M2M Scaler Driver"
+       depends on VIDEO_DEV && HAS_DMA
+       depends on ARCH_EXYNOS
+       select V4L2_MEM2MEM_DEV
+       select VIDEOBUF2_DMA_SG
+       default n
+       help
+         This is a v4l2 driver for EXYNOS Scaler (MSCL) device.
+
+config MSCL_EXYNOS_KUNIT_TEST
+	tristate "KUnit tests for MSCL" if !KUNIT_ALL_TESTS
+	depends on KUNIT
+	depends on VIDEO_EXYNOS_SCALER
+	default KUNIT_ALL_TESTS

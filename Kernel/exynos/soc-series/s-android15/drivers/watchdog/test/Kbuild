@@ -1,0 +1,3 @@
+obj-$(CONFIG_WATCHDOG_EXYNOS_KUNIT_TEST)	+= watchdog_exynos_test.o
+
+watchdog_exynos_test-y					:= exynos_watchdog_test.o

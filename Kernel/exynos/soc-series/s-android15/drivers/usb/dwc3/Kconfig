@@ -1,0 +1,55 @@
+# SPDX-License-Identifier: GPL-2.0
+
+config USB_DWC3_EXYNOS_MODULE
+	tristate "DesignWare USB3 DRD Core Support"
+	depends on (USB || USB_GADGET) && HAS_DMA
+	help
+	  Say Y or M here if your system has a Dual Role SuperSpeed
+	  USB controller based on the DesignWare USB3 IP Core.
+
+	  If you choose to build this driver is a dynamically linked
+	  module, the module will be called dwc3.ko.
+
+config EXYNOS_USB_KUNIT_TEST
+	tristate "KUnit tests for DWC3" if !KUNIT_ALL_TESTS
+	depends on KUNIT
+	depends on USB_DWC3_EXYNOS_MODULE
+	default KUNIT_ALL_TESTS
+
+config USB_DWC3_EXYNOS
+	tristate "Samsung Exynos SoC Platform"
+	depends on (ARCH_EXYNOS || COMPILE_TEST) && OF
+	default USB_DWC3
+	help
+	  Recent Samsung Exynos SoCs (Exynos5250, Exynos5410, Exynos542x,
+	  Exynos5800, Exynos5433, Exynos7) ship with one DesignWare Core USB3
+	  IP inside, say 'Y' or 'M' if you have one such device.
+
+config USB_EXYNOS_TPMON_MODULE
+	tristate "Samsung Exynos USB TPMON"
+	depends on USB_DWC3_EXYNOS
+	help
+	  Enable/Disable Exynos USB TPMON
+	  Say 'Y' or 'M' here if you have one such device
+
+config EXYNOS_USBDRD_PHY30
+	bool "Samsung Exynos USB3.0 PHY"
+	default n
+	help
+	  Select this if you have Samsung Exynos USB3.0 PHY
+	  device.
+
+config USB_DEBUG_MODULE
+	tristate "Samsung Exynos USB debug Module"
+	default n
+	help
+	  Enable/Disable Exynos USB debug log
+	  Say 'Y' or 'M' here if you have one such device
+
+config SEC_USB_CB
+	tristate "Exynos SoC series is mapping to sec usb function"
+	help
+	 Enable Sec USB CB to support for SEC function.
+	 This driver provides OWN sec function to SOC series.
+	 If you choose to build this driver is a dynamically linked
+	 module, the module will be called sec_usb_cb.ko.

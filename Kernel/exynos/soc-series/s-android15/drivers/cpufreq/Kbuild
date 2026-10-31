@@ -1,0 +1,8 @@
+obj-$(CONFIG_EXYNOS_CPUFREQ)	+= exynos-cpufreq.o
+obj-$(CONFIG_FREQ_QOS_TRACER)	+= freq-qos-tracer.o
+obj-$(CONFIG_EXYNOS_DSUFREQ)	+= exynos-dsufreq.o
+
+# Test files
+obj-$(CONFIG_CPU_EXYNOS_KUNIT_TEST) += test/
+
+subdir-ccflags-y += -I $(srctree)

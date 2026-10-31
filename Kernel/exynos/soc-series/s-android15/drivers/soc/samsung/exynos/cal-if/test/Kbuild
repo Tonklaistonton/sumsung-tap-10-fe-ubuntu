@@ -1,0 +1,3 @@
+obj-$(CONFIG_POWER_EXYNOS_KUNIT_TEST) += power_exynos_test.o
+
+ccflags-y += -I $(srctree)/$(src)/../

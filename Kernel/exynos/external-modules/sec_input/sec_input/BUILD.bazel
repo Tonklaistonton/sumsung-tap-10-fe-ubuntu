@@ -1,0 +1,53 @@
+load("//build/kernel/kleaf:kernel.bzl", "kernel_module")
+
+filegroup(
+    name = "sec_input.kconfig",
+    srcs = [
+        "Kconfig",
+    ],
+    visibility = [
+        "//exynos/device:__subpackages__",
+        "//exynos/external-modules:__subpackages__",
+    ],
+)
+
+filegroup(
+    name = "sec_input.sources",
+    srcs = glob(
+        ["**"],
+        exclude = [
+            ".*",
+            ".*/**",
+            "BUILD.bazel",
+            "**/*.bzl",
+        ],
+    ),
+    visibility = [
+        "//exynos/external-modules:__subpackages__",
+    ],
+)
+
+filegroup(
+    name = "sec_input.headers",
+    srcs = glob([
+        "*.h",
+    ]),
+    visibility = [
+        "//exynos/external-modules/sec_input:__subpackages__",
+    ],
+)
+
+kernel_module(
+    name = "sec_input",
+    srcs = [
+        ":sec_input.sources",
+    ],
+    outs = [
+        "sec_common_fn.ko",
+    ],
+    kernel_build="//exynos/soc-series/common:exynos_kernel_build",
+    visibility = [
+        "//exynos/device:__subpackages__",
+        "//exynos/external-modules:__subpackages__",
+    ],
+)

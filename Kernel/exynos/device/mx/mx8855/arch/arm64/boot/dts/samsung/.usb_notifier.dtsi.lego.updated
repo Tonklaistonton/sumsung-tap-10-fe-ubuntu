@@ -1,0 +1,14 @@
+
+&smd {
+	usb_notifier {
+		compatible = "samsung,usb-notifier";
+		udc = <&udc>;
+		status = "okay";
+		disable_host_wakelock;
+		disable_device_wakelock;
+#if 0
+		support_reverse_bypass_en;
+#endif
+	};
+};
+

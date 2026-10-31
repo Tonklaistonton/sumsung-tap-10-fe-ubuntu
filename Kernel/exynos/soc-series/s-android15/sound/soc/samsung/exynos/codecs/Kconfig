@@ -1,0 +1,5 @@
+# SPDX-License-Identifier: GPL-2.0-only
+config SND_SOC_SAMSUNG_S5M3500X
+	tristate "S5M3500X CODEC"
+	help
+	  Say Y if you want to use S5M3500X Audio Codec.

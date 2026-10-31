@@ -1,0 +1,10 @@
+config SHUB_LSI
+	tristate "lsi sensorhub"
+	default y
+config SHUB_MTK
+	tristate "Mediatek project"
+	default n
+
+config SHUB_MTK_SCP_INCLUDE
+	tristate "Mediatek project scp include folder"
+	default y

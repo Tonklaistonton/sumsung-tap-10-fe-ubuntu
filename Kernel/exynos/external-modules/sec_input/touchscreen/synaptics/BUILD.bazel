@@ -1,0 +1,51 @@
+load("//build/kernel/kleaf:kernel.bzl", "kernel_module")
+
+filegroup(
+    name = "synaptics_ts.kconfig",
+    srcs = [
+        "Kconfig",
+    ],
+    visibility = [
+        "//exynos/device:__subpackages__",
+    ],
+)
+
+filegroup(
+    name = "synaptics_ts.sources",
+    srcs = glob(
+        ["**"],
+        exclude = [
+            ".*",
+            ".*/**",
+            "BUILD.bazel",
+            "**/*.bzl",
+            "build.config.*",
+            "synaptics_spi.c",
+            "synaptics_i2c.c",
+        ],
+    ),
+    visibility = [
+        "//exynos/device:__subpackages__",
+    ],
+)
+
+kernel_module(
+    name = "synaptics_ts_spi",
+    srcs = [
+        ":synaptics_ts.sources",
+        "synaptics_spi.c",
+    ] + [
+        "//exynos/external-modules/sec_input/sec_input:sec_input.headers",
+    ],
+    outs = [
+        "synaptics_ts_spi.ko",
+    ],
+    kernel_build="//exynos/soc-series/common:exynos_kernel_build",
+    visibility = [
+        "//exynos/device:__subpackages__",
+    ],
+    deps = [
+        "//exynos/external-modules/sec_input/sec_input:sec_input",
+    ],
+)
+

@@ -1,0 +1,69 @@
+/ {
+	/* balance mode - default */
+	set4: set@400 {
+		/* Boosting margin applied to frequency selection */
+		freqboost {			/* LIT MID BIG */
+			top-app			= <  5  5  5>;
+		};
+
+		/* Ontime Migration */
+		ontime {
+			top-app		= <1>;
+			foreground	= <1>;
+
+			domain0 {
+				cpus = CPU_CL0;
+				lower-boundary = <0>;
+				upper-boundary = <31>;
+			};
+			domain1 {
+				cpus = CPU_CL1;
+				lower-boundary = <9>;
+				upper-boundary = <66>;
+			};
+			domain2 {
+				cpus = CPU_CL2;
+				lower-boundary = <43>;
+				upper-boundary = <100>;
+			};
+		};
+
+		ecs_dynamic {
+			dynamic-busy-ratio	= <70 70 70>;
+			min-cpus = "0-5";
+		};
+
+		fclamp {
+			max-freq          = < 1536000   0   2016000>;
+			max-target-period = <       4   0         4>;
+			max-target-ratio  = <      80   0        80>;
+
+			monitor-group {
+				top-app         = <1>;
+				foreground      = <1>;
+			};
+		};
+
+		dslt {
+			running-sensitivity {
+				background = <95>;
+				system-background = <95>;
+			};
+		};
+
+		cpufreq_gov {
+			step-latency-enable = < 1 >;
+			step-margin-enable = < 1 >;
+
+				/* LIT MID BIG */
+			low-pelt-margin = < 6 6 6 >;
+			margin-freq = < 1536000 2016000 2016000 >;
+			step-latency-ns = < 4 4 16 16
+					4 4 16 16
+					4 4 16 16 >;
+			step-latency-freq = < 400000 400000 1536000 1536000
+					400000 400000 2016000 2016000
+					400000 400000 2016000 2016000 >;
+		};
+	};
+};

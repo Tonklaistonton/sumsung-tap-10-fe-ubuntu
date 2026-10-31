@@ -1,0 +1,32 @@
+# SPDX-License-Identifier: GPL-2.0-or-later
+
+load("//build/kernel/kleaf:kernel.bzl", "kernel_dtstree")
+
+filegroup(
+    name = "erd8855_dt_sources",
+    srcs = glob([
+            "erd/**/*.dtsi",
+            "erd/**/*.dtso",
+            "exynos-base-dts/**/*.dts",
+            "exynos-base-dts/**/*.dtsi",
+        ],
+    ),
+    visibility = [
+        "//exynos/device:__subpackages__",
+    ],
+)
+
+kernel_dtstree(
+    name = "erd8855_dt",
+    srcs = glob([
+            "Makefile",
+            "erd/Makefile",
+            "exynos-base-dts/Makefile",
+    ]) + [
+        "erd8855_dt_sources",
+        "//exynos/soc-series/s-android15:exynos.dt-bindings",
+    ],
+    visibility = [
+        "//exynos/device/erd/erd8855:__pkg__",
+    ],
+)

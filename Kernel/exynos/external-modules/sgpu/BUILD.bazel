@@ -1,0 +1,68 @@
+# exynos/external-modules/sgpu
+load(
+    "//build/kernel/kleaf:kernel.bzl",
+    "kernel_module",
+)
+
+filegroup(
+    name = "sgpu.kconfig",
+    srcs = [
+        "Kconfig",
+        "sgpu/Kconfig",
+        "test/Kconfig",
+    ],
+    visibility = ["//exynos/device:__subpackages__"],
+)
+
+filegroup(
+    name = "sgpu_src",
+    srcs = glob([
+        "include/**",
+        "pm/**/*.c",
+        "pm/**/*.h",
+        "pm/Makefile",
+        "sgpu/*.c",
+        "sgpu/*.h",
+        "sgpu/Makefile",
+        "Kbuild",
+    ]),
+)
+
+filegroup(
+    name = "test_src",
+    srcs = glob([
+        "test/*.c",
+        "test/*.h",
+        "test/Makefile",
+    ]),
+)
+
+kernel_module(
+    name = "sgpu",
+    srcs = [
+        ":sgpu_src",
+        "//exynos/soc-series/common:exynos_soc_header",
+    ],
+    outs = [
+        "sgpu/sgpu.ko",
+    ],
+    kernel_build = "//exynos/soc-series/common:exynos_kernel_build",
+    visibility = ["//exynos/device:__subpackages__"],
+    deps = ["//exynos/soc-series/common:exynos_soc_module"],
+)
+
+kernel_module(
+    name = "sgpu_with_test",
+    srcs = [
+        ":sgpu_src",
+        ":test_src",
+        "//exynos/soc-series/common:exynos_soc_header",
+    ],
+    outs = [
+        "sgpu/sgpu.ko",
+        "test/sgpu_exynos_test.ko"
+    ],
+    kernel_build = "//exynos/soc-series/common:exynos_kernel_build",
+    visibility = ["//exynos/device:__subpackages__"],
+    deps = ["//exynos/soc-series/common:exynos_soc_module"],
+)

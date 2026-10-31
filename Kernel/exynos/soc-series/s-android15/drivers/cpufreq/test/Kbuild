@@ -1,0 +1,3 @@
+obj-$(CONFIG_CPU_EXYNOS_KUNIT_TEST) += cpu_exynos_test.o
+
+ccflags-y += -I $(srctree)/$(src)/../

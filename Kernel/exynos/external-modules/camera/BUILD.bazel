@@ -1,0 +1,68 @@
+# SPDX-License-Identifier: GPL-2.0-or-later
+
+load(":s5e9955_modules.bzl", "register_s5e9955_soc_module")
+load(":s5e8855_modules.bzl", "register_s5e8855_soc_module")
+
+filegroup(
+    name = "camera.kconfig",
+    srcs = [
+        "Kconfig",
+        "camera/Kconfig",
+    ],
+    visibility = [ "//exynos/device:__subpackages__", ],
+)
+
+filegroup(
+    name = "camera_src",
+    srcs = glob([
+        "camera/**/*.c",
+        "camera/**/*.S",
+        "camera/**/*.h",
+        "camera/Makefile",
+        "Kbuild",
+        "camera/testing/kunit/Makefile",
+        "camera/testing/self/Makefile",
+        "camera/post/vra/Makefile",
+        "camera/post/Makefile",
+        "camera/post/gdc/Makefile",
+        "camera/post/lme/Makefile",
+        "camera/post/dof/Makefile",
+        "camera/post/str/sfr/Makefile",
+        "camera/post/str/Makefile",
+        "camera/icpu/Makefile",
+        "camera/ischain/Makefile",
+        "camera/sensor/module_framework/i2c_dummy/Makefile",
+        "camera/sensor/module_framework/ois/Makefile",
+        "camera/sensor/module_framework/eeprom/Makefile",
+        "camera/sensor/module_framework/modules/Makefile",
+        "camera/sensor/module_framework/laser_af/Makefile",
+        "camera/sensor/module_framework/aperture/Makefile",
+        "camera/sensor/module_framework/cis/Makefile",
+        "camera/sensor/module_framework/actuator/Makefile",
+        "camera/sensor/module_framework/flash/Makefile",
+        "camera/sensor/Makefile",
+        "camera/Makefile",
+        "camera/lib/Makefile",
+        "camera/lib/votf/Makefile",
+        "camera/hardware/Makefile",
+        "camera/vendor/Makefile",
+        "camera/vendor/mcd/Makefile",
+        "camera/vendor/default/Makefile",
+    ]),
+)
+
+filegroup(
+    name = "camera_header",
+    srcs = glob([
+        "**/*.h",
+    ] + [
+        "Makefile.include",
+    ]),
+    visibility = [
+        "//exynos/device:__subpackages__",
+        "//exynos/external-modules:__subpackages__",
+    ],
+)
+# Register all SoC modules
+register_s5e9955_soc_module()
+register_s5e8855_soc_module()

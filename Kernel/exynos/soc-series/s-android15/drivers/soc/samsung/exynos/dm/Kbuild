@@ -1,0 +1,6 @@
+# SPDX-License-Identifier: GPL-2.0-only
+
+# Object files in subdirectories
+
+obj-$(CONFIG_EXYNOS_DVFS_MANAGER)		+= exynos-dm.o
+obj-$(CONFIG_EXYNOS_ESCA_DVFS_MANAGER)		+= exynos-esca-dm.o

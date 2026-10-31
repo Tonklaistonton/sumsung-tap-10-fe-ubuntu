@@ -1,0 +1,5 @@
+obj-$(CONFIG_SYSMMU_EXYNOS_KUNIT_TEST) += sysmmu_exynos_test.o
+
+sysmmu_exynos_test-y += sysmmu-exynos-test.o
+
+ccflags-y += -I $(srctree)/$(src)/../

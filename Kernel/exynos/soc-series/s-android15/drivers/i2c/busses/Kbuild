@@ -1,0 +1,7 @@
+# SPDX-License-Identifier: GPL-2.0
+
+obj-$(CONFIG_I2C_EXYNOS5_EXT)	+= i2c-exynos5-ext.o
+obj-$(CONFIG_EXYNOS_ESCA_MFD_BUS)	+= esca-mfd-bus.o
+
+# Test Files
+obj-$(CONFIG_I2C_EXYNOS5_EXT_KUNIT_TEST) += test/

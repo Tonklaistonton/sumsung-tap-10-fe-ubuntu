@@ -1,0 +1,27 @@
+if PM_DEVFREQ
+
+config ARM_EXYNOS_DEVFREQ
+	tristate "ARM Exynos Memory Bus DEVFREQ Common driver"
+	depends on ARCH_EXYNOS
+	select PM_OPP
+	help
+	  This adds the DEVFREQ driver for Exynos series common bus
+
+config ARM_EXYNOS_DEVFREQ_DEBUG
+	tristate "ARM Exynos DEVFREQ sysfs for Debug"
+	depends on ARM_EXYNOS_DEVFREQ
+
+config DVFS_EXYNOS_KUNIT_TEST
+	tristate "Example test for Devfreq" if !KUNIT_ALL_TESTS
+	depends on ARM_EXYNOS_DEVFREQ
+	depends on KUNIT
+	default KUNIT_ALL_TESTS
+
+config EXYNOS_LEALT_DVFS
+	tristate "Latency Evaluated Active Load Tracing (LEALT) DVFS"
+	default n
+	depends on ARM_EXYNOS_DEVFREQ
+	help
+	  Enable LEALT-DVFS governor for MIF domain.
+
+endif

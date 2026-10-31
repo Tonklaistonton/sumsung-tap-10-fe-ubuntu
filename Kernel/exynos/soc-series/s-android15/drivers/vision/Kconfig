@@ -1,0 +1,24 @@
+config VISION_SUPPORT
+	tristate "Vision Support"
+	help
+	  If you want to use hardware acceleration for vision
+	  enable this option and other options below.
+
+if VISION_SUPPORT
+
+if SOC_S5E9955
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/vision/npu/Kconfig"
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/vision/npu/interface/Kconfig"
+endif
+
+if SOC_S5E8855
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/vision/npu/Kconfig"
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/vision/npu/interface/Kconfig"
+endif
+
+if SOC_S5E9945
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/vision/npu9945/Kconfig"
+source "$(KCONFIG_EXT_SOC_PREFIX)drivers/vision/npu9945/interface/Kconfig"
+endif
+
+endif # VISION_SUPPORT

@@ -1,0 +1,238 @@
+/*
+ * SAMSUNG EXYNOS8855 SoC DVFS Manager device tree source
+ *
+ * Copyright (c) 2014 Samsung Electronics Co., Ltd.
+ *		http://www.samsung.com
+ *
+ * SAMSUNG EXYNOS8855 SoC device nodes are listed in this file.
+ * EXYNOS based board files can include this file and provide
+ * values for board specfic bindings.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+#include <dt-bindings/soc/samsung/esca.h>
+#include <dt-bindings/soc/samsung/s5e8855-esca-ipc.h>
+
+/ {
+	esca_phy0_layer: esca_phy0_layer@203B000 {
+		compatible = "samsung,exynos-esca";
+		esca-layer = <ESCA_LAYER__PHY0>;
+		num-cores = <2>;
+		#address-cells = <2>;
+		#size-cells = <1>;
+		reg = <0x0 0x203B000 0x40000>,		/* APM0 SRAM */
+		    <0x0 0x11B10000 0x1000>,	/* AP2APM */
+		    <0x0 0x11910090 0x1000>;	/* RTC_0 */
+		reg-names = "sram", "mbox", "timer_apm";
+		initdata-base = <0xD300>;
+		fvmap_offset = <0x3A800>;
+		esca-ipc-channel = <ESCA_IPC_PHY__FRAMEWORK>;
+		timer {
+			timer_tick_max = <0xffffffff>;
+			timer_period = <30517>;
+		};
+		ipc {
+			interrupts = <GIC_SPI INTREQ__MAILBOX_APM2AP IRQ_TYPE_LEVEL_HIGH>;
+			esca-mbox-master = <ESCA_MBOX_MASTER1>;
+			interrupt-ch = <0>;
+		};
+		log {
+			debug-log-level = <0>;
+			logging-period = <500>;
+		};
+		dump {
+			esca_phy0_dram {
+				sram-base = <0x2041000>;
+				size = <0x3b000>;
+			};
+			esca_phy0_sram {
+				dump-base = <0x90014000>;
+				size = <0x3b000>;
+			};
+		};
+	};
+
+
+	esca_app_layer: esca_app_layer@207C000 {
+		compatible = "samsung,exynos-esca";
+		esca-layer = <ESCA_LAYER__APP>;
+		num-cores = <1>;
+		#address-cells = <2>;
+		#size-cells = <1>;
+		reg = <0x0 0x207C000 0xA000>,		/* ASM SRAM */
+		    <0x0 0x11AB0000 0x1000>;	/* AP2ASM */
+		reg-names = "sram", "mbox";
+		initdata-base = <0x6400>;
+		esca-ipc-channel = <ESCA_IPC_APP__FRAMEWORK>;
+		ipc {
+			interrupts = <GIC_SPI INTREQ__MAILBOX_ASM2AP IRQ_TYPE_LEVEL_HIGH>;
+			esca-mbox-master = <ESCA_MBOX_MASTER0>;
+			interrupt-ch = <1>;
+		};
+		dump {
+			esca_app_sram {
+				dump-base = <0x9004F000>;
+				size = <0xA000>;
+			};
+			esca_app_dram {
+				dump-base = <0x90059000>;
+				size = <0x44000>;
+			};
+		};
+	};
+
+        exynos-power-rail-dbg {
+                compatible = "samsung,exynos-power-rail-dbg";
+                dvfs-layer-offset = <0>; /* which layer of APM has DVFS Plugin */
+                regulator-offset = <0x17D4>; /* from FVMAP */
+                num-power-rails = <17>;
+                power-rail-names =
+                        "VDD_MIF",
+                        "VDD_CAM",
+                        "VDD_G3D",
+                        "VDD_NPU",
+                        "VDD_MCW_CP",
+                        "VDD_GNSS",
+                        "VDD_SRAM_PPC_MID",
+                        "VDD_SRAM_PPC_BIG",
+                        "VDD_WLBT",
+                        "VDD_CPUCL1_MID",
+                        "VDD_INT",
+                        "VDD_CPUCL0_LIT",
+                        "VDD_CPUCL2_BIG",
+                        "VDD_CP",
+                        "VDD_CPU_CP",
+                        "VDD_SRAM",
+                        "VDD_ALIVE";
+                dvfs-domain-names =
+                        "DVFS_MIF",
+                        "DVFS_INT",
+                        "UNDEF",
+                        "UNDEF",
+                        "UNDEF",
+                        "UNDEF",
+                        "DVFS_NPU",
+                        "DVFS_DNC",
+                        "DVFS_AUD",
+                        "DVFS_CP_CPU",
+                        "DVFS_CP",
+                        "DVFS_GNSS",
+                        "DVFS_CP_MCW",
+                        "UNDEF",
+                        "DVFS_DISP",
+                        "DVFS_MFC",
+                        "DVFS_INTCAM",
+                        "DVFS_ICPU",
+                        "DVFS_CAM",
+                        "DVFS_ISP",
+                        "DVFS_CSIS",
+                        "DVFS_WLBT",
+                        "DVFS_INTSCI",
+                        "UNDEF",
+                        "DVFS_DSU",
+                        "DVFS_CPUCL0",
+                        "UNDEF",
+                        "UNDEF",
+                        "DVFS_CPUCL1",
+                        "DVFS_CPUCL2",
+                        "DVFS_IP_G3D",
+                        "UNDEF",
+                        "UNDEF",
+                        "IDLE_VOLT_ID";
+
+                power-rails {
+                        VDD_MIF {
+                                domain_id = <0 8 33>;
+                        };
+                        VDD_CAM {
+                                domain_id = <18 19 20 33>;
+                        };
+                        VDD_G3D {
+                                domain_id = <30 33>;
+                        };
+                        VDD_NPU {
+                                domain_id = <6 7 33>;
+                        };
+                        VDD_MCW_CP {
+                                domain_id = <12 33>;
+                        };
+                        VDD_GNSS {
+                                domain_id = <11 33>;
+                        };
+                        VDD_SRAM_PPC_MID {
+                                domain_id = <>;
+                        };
+                        VDD_SRAM_PPC_BIG {
+                                domain_id = <>;
+                        };
+                        VDD_WLBT {
+                                domain_id = <21 33>;
+                        };
+                        VDD_CPUCL1_MID {
+                                domain_id = <28 33>;
+                        };
+                        VDD_INT {
+                                domain_id = <1 14 15 22 16 17 33>;
+                        };
+                        VDD_CPUCL0_LIT {
+                                domain_id = <25 33>;
+                        };
+                        VDD_CPUCL2_BIG {
+                                domain_id = <29 33>;
+                        };
+                        VDD_CP {
+                                domain_id = <10 33>;
+                        };
+                        VDD_CPU_CP {
+                                domain_id = <9 33>;
+                        };
+                        VDD_SRAM {
+                                domain_id = <>;
+                        };
+                        VDD_ALIVE {
+                                domain_id = <>;
+                        };
+                };
+        };
+
+	flexpmu_dbg {
+		compatible = "samsung,flexpmu-dbg";
+		esca-layer = <ESCA_LAYER__PHY0>;
+		pid = <1>;
+		#address-cells = <2>;
+		#size-cells = <1>;
+		reg = <0x0 0x11910000 0x1000>;
+		rtc-tick2us = <32>;
+		rtc-offset = <0x90>;
+		rtc-max = <0xfffff>;
+		nfc-clkreq-idx = <1>;
+		mif_requesters {
+			requester-name =
+				"MIF_AUD",
+				"MIF_VTS",
+				"MIF_WLBT",
+				"MIF_CHUB",
+				"MIF_CP",
+				"MIF_GNSS",
+				"MIF_AP";
+		};
+	};
+
+	esca_mfd_bus0: esca_mfd_bus@11960000 {
+		compatible = "samsung,exynos-esca-mfd-bus";
+		status = "okay";
+	};
+
+	esca_mfd_bus1: esca_mfd_bus@11961000 {
+		compatible = "samsung,exynos-esca-mfd-bus";
+		status = "okay";
+	};
+
+	dmc_plugin {
+		compatible = "samsung,exynos-esca-plg-dbg";
+		esca-ipc-channel = <ESCA_IPC_PHY__DMC>;
+	};
+};
