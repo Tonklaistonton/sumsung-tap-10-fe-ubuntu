@@ -84,6 +84,9 @@ Thumbs.db
 .idea/
 *.sublime-project
 *.sublime-workspace
-.vscode/*
-!.vscode/settings.json
-.vscode
+.vscode/
+
+# ==============================================================================
+# Local Porting Notes & Handoff Docs
+# ==============================================================================
+s10fe_ubuntu_port_handoff.md
