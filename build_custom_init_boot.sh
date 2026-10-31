@@ -182,3 +182,4 @@ echo -e "${GREEN}[OK]${NC} custom_init_boot.img generated successfully!"
 echo -e "${GREEN}[OK]${NC} Output: $OUTPUT_IMG"
 echo -e "${GREEN}[OK]${NC} Size:   $(ls -lh "$OUTPUT_IMG" | awk '{print $5}')"
 echo -e "${GREEN}[OK]${NC} =========================================================================="
+
