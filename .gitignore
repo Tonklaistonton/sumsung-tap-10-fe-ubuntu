@@ -96,3 +96,10 @@ s10fe_ubuntu_port_handoff.md
 rootfs_builder/
 ubuntu-noble-rootfs/
 *.img
+
+# ==============================================================================
+# Boot Image Extraction & Analysis
+# ==============================================================================
+stock_boot/
+custom_boot.img
+custom_init_boot.img

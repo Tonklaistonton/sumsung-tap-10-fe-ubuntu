@@ -45,3 +45,4 @@ echo -e "${GREEN}[OK]${NC} Ubuntu 24.04 ARM64 ext4 image packaged successfully!"
 echo -e "${GREEN}[OK]${NC} Path: $IMAGE_OUT"
 echo -e "${GREEN}[OK]${NC} Size: $(ls -lh "$IMAGE_OUT" | awk '{print $5}')"
 echo -e "${GREEN}[OK]${NC} =========================================================================="
+
