@@ -86,4 +86,4 @@ Thumbs.db
 *.sublime-workspace
 .vscode/*
 !.vscode/settings.json
-
+.vscode/
