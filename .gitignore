@@ -1,0 +1,89 @@
+# ==============================================================================
+# Bazel & Kleaf Build Outputs and Symlinks
+# ==============================================================================
+bazel-*
+**/bazel-*
+out/
+**/out/
+.bazel-cache/
+**/bazel_cache/
+
+# ==============================================================================
+# Symlinked External Toolchain Folders (pointed to host system)
+# ==============================================================================
+Kernel/build
+Kernel/external
+Kernel/common-modules
+Kernel/prebuilts/build-tools
+Kernel/prebuilts/clang
+Kernel/prebuilts/clang-tools
+Kernel/prebuilts/gcc
+Kernel/prebuilts/jdk
+Kernel/prebuilts/kernel-build-tools
+Kernel/prebuilts/ndk-r26
+Kernel/prebuilts/rust
+Kernel/common
+
+# ==============================================================================
+# Linux Kernel Build Artifacts
+# ==============================================================================
+*.o
+*.o.cmd
+*.ko
+*.mod
+*.mod.c
+*.mod.o
+*.order
+*.builtin
+modules.order
+Module.symvers
+modules.builtin
+modules.builtin.modinfo
+*.dtb
+*.dtbo
+vmlinux
+System.map
+*.su
+
+# ==============================================================================
+# Large Firmware & Stock ROM Archives
+# ==============================================================================
+*.tar.md5
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.7z
+*.lz4
+# Exception: preserve SoC binary firmware
+!Kernel/prebuilts/platform/erd8855/firmware/**
+
+# ==============================================================================
+# Device Research & ADB Dumps
+# ==============================================================================
+s10fe-research/
+
+# ==============================================================================
+# Temporary, Log & Cache Files
+# ==============================================================================
+*.log
+*.tmp
+*.bak
+*~
+*.swp
+*.swo
+__pycache__/
+*.py[cod]
+.cache/
+.DS_Store
+Thumbs.db
+
+# ==============================================================================
+# IDE & Editors
+# ==============================================================================
+.idea/
+*.sublime-project
+*.sublime-workspace
+.vscode/*
+!.vscode/settings.json
+
