@@ -45,9 +45,12 @@ and `kernel/source.json` for source provenance.
 
 ## Install
 
-See `docs/FLASHING.md`. Summary: unlock bootloader, back up stock partitions,
-flash `release/*` to `_a` slots with `vbmeta` verification disabled, and write
-`ubuntu-rootfs.img` to `userdata`.
+See `docs/FLASHING.md`. Summary: check the binary version (rollback
+protection) before unlocking, unlock the bootloader from Download Mode, verify
+fastboot is actually available, flash `vbmeta_a` **first** with
+`--disable-verity --disable-verification`, then flash `release/*` to the `_a`
+slots and write `ubuntu-rootfs.img` to `userdata`. If fastboot is not
+available after unlock, the Odin path is documented in the guide.
 
 ## Layout
 
