@@ -1,0 +1,70 @@
+{
+  "device": "Samsung Galaxy Tab S10 FE (Wi-Fi)",
+  "model": "SM-X520",
+  "codename": "gts10fewifi",
+  "soc": "Samsung Exynos 1580 (S5E8855 / mx8855 / erd8855)",
+  "android_build_number": "BP4A.251205.006.X520XXSBCZI2",
+  "csc_region": "XSP",
+  "kernel_version_on_device": "6.6.102-android15-8-abX520XXSBCZI2-4k",
+  "scmversion": "-abX520XXSBCZI2",
+  "source_date_epoch": 1788864812,
+  "page_size": "4K",
+
+  "base_tree": {
+    "description": "Full Linux 6.6 + Exynos 1580 driver source. In-tree (committed).",
+    "path": "Kernel/kernel-6.6",
+    "scmversion_file": "Kernel/kernel-6.6/workspace_status.json"
+  },
+
+  "source_layers": [
+    {
+      "order": 1,
+      "name": "base",
+      "samsung_package": "SM-X526N_16_Opensource.zip",
+      "inner_tarball": "X526NKOU7CZE3_kernel.tar.gz",
+      "provides": "Base kernel + mx8855 SoC drivers (5G variant config)",
+      "sha256": "PENDING - fill from your copy of X526NKOU7CZE3_kernel.tar.gz"
+    },
+    {
+      "order": 2,
+      "name": "dts",
+      "samsung_package": "SM-X520_16_Opensource_dts.zip",
+      "inner_tarball": "X520XXU7CZE3_kernel.tar.gz",
+      "provides": "SM-X520 (gts10fewifi) board: .dtso overlays, defconfig, lego.bzl, battery_auth",
+      "sha256": "PENDING - fill from your copy of X520XXU7CZE3_kernel.tar.gz"
+    },
+    {
+      "order": 3,
+      "name": "update",
+      "samsung_package": "SM-X526N_16_Opensource_..._X520XXSBCZI2_...zip",
+      "inner_tarball": "X526NKOSBCZI2_kernel.tar.gz",
+      "provides": "CZI2 security + firmware blobs (overwrites CZE3). Applied LAST.",
+      "sha256": "PENDING - fill from your copy of X526NKOSBCZI2_kernel.tar.gz"
+    }
+  ],
+
+  "unpack_order": "base -> dts -> update (do not reorder: CZI2 firmware must win, and dts supplies the .dtso/defconfig)",
+
+  "config": {
+    "file": "Kernel/exynos/device/mx/mx8855/arch/arm64/configs/s5e8855-bazel_defconfig",
+    "selected_via": "bazel --config=mx8855_user",
+    "ubuntu_edits": [
+      "Samsung/Android security disabled: SECURITY_DEFEX, PROCA, FIVE, KNOX_NCM, SECURITY_KUMIHO, SECURITY_SEATD, SECURITY_DSMS (lines ~316-332)",
+      "systemd/desktop enabled: DEVTMPFS, DEVTMPFS_MOUNT, TMPFS_POSIX_ACL, VT, VT_CONSOLE, FRAMEBUFFER_CONSOLE, VETH (lines ~335-341)"
+    ],
+    "note": "Edits are applied directly in the committed defconfig (the file Bazel --config=mx8855_user selects). Any future Samsung source refresh must re-apply these lines."
+  },
+
+  "outputs": {
+    "dist": "Kernel/out/mx8855/dist/",
+    "image": "Kernel/out/mx8855/dist/Image",
+    "dtb": "Kernel/out/mx8855/dist/s5e8855.dtb",
+    "dtbo": "Kernel/out/mx8855/dist/dtbo.img",
+    "modules": "Kernel/out/mx8855/dist/*.ko"
+  },
+
+  "provenance": {
+    "samsung_opensource_center": "https://opensource.samsung.com/uploadSearch?searchValue=X520XXSBCZI2",
+    "license_note": "Samsung kernel source is GPL-2.0 with Samsung proprietary extensions; firmware blobs are non-free. Integration layer in this repo (tools/, initramfs/init, docs/, device/configs/) is MIT. See NOTICE."
+  }
+}

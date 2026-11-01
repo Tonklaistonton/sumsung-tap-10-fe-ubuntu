@@ -1,0 +1,31 @@
+SM-X520 Ubuntu Project
+======================
+
+Integration layer (build scripts, initramfs, init, docs, tools/,
+device/configs/, manifest.json, kernel/source.json): (c) 2026 project
+contributors, MIT (see LICENSE).
+
+Kernel source
+-------------
+The kernel tree under Kernel/ is assembled from three Samsung open-source
+release packages (Android 16, Exynos 1580 platform, GKI 6.6):
+
+  1. SM-X526N_16_Opensource.zip            -> X526NKOU7CZE3_kernel.tar.gz  (base)
+  2. SM-X520_16_Opensource_dts.zip         -> X520XXU7CZE3_kernel.tar.gz   (SM-X520 board)
+  3. SM-X526N_16_Opensource_X520XXSBCZI2.zip -> X526NKOSBCZI2_kernel.tar.gz (CZI2 update)
+
+Downloaded from the Samsung Open Source Center
+(https://opensource.samsung.com, search: X520XXSBCZI2). Licensed under the
+GPL-2.0 and Samsung's open-source license terms; see the original package
+documentation.
+
+Firmware
+--------
+Binary firmware blobs (GPU, sensor hub, NPU, video codec) under
+Kernel/prebuilts/platform/erd8855/firmware/ are non-free Samsung binaries
+from the CZI2 package.
+
+Ubuntu / GNOME
+--------------
+The userspace is standard Ubuntu 24.04 LTS ARM64 packages from
+ports.ubuntu.com, unmodified beyond package selection.

@@ -15,7 +15,7 @@ if [ "$(id -u)" -ne 0 ]; then
     exit 1
 fi
 
-BASE_DIR="/home/tonton/rom/samsung"
+BASE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOTFS_DIR="$BASE_DIR/ubuntu-noble-rootfs/rootfs"
 IMAGE_OUT="$BASE_DIR/ubuntu-noble-rootfs/ubuntu-24.04-arm64.img"
 

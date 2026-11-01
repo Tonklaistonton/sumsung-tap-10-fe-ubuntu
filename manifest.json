@@ -1,0 +1,33 @@
+{
+  "comment": "Pinned build inputs. Re-run tools/make-manifest.sh after any input change to regenerate hashes.",
+  "inputs": {
+    "ubuntu_base": {
+      "path": "rootfs_builder/ubuntu-base-24.04.5-base-arm64.tar.gz",
+      "source_url": "http://cdimage.ubuntu.com/ubuntu-base/releases/24.04/release/ubuntu-base-24.04.5-base-arm64.tar.gz",
+      "sha256": "a91d5a93010193712d346d761372b7c9db6dfcf093893161c64ca107f05914f2"
+    },
+    "busybox": {
+      "path": "initramfs_builder/extracted/usr/bin/busybox",
+      "arch": "arm64",
+      "note": "static busybox used by initramfs. Rebuild/pin when changing init.",
+      "sha256": "52151e7f322f926b64049cdaa1410dc3ea6485525e0624b05813791c219ae933"
+    },
+    "firmware": {
+      "root": "Kernel/prebuilts/platform/erd8855/firmware",
+      "files": {
+        "sgpu/mgfx2.0_mid.bin": "ea2fb446df392f73b1f18c2a1592aa8d6942eabbd69ff0cd554823fa44add622",
+        "sgpu/unsigned_mgfx2.0_mid.bin": "03276a20262f21c6b459b6892555510fc21211b84551ac84815e7b16feeab6ae",
+        "sensorhub/shub_santa_gts10fe.bin": "6f3ded8bc34c99cf3d64e72b240fb2c962070ca4e61a70c6205db2b2e2f1ebd8",
+        "sensorhub/shub_santa_gts10fe_unchecked.bin": "554faab7c7bf124e3b095c078c169ae77465c3570a1186f46ca38b262ed91607",
+        "npu/AIE.bin": "1ea48392c380f70610d538067bc98ee976183adf80a7c3ac0f3ed567e094fae4",
+        "npu/unsigned_AIE.bin": "8f290d461c5f11f82fb4b93ec7358a390a59415bc6572215b7dd48ba0e731e26",
+        "mfc_fw_v17.x.bin": "8940ccd2cfb83699f1bb76b92c608553fc95c5fcec83ca78ec713838945841c4"
+      }
+    }
+  },
+  "outputs_expected": {
+    "boot.img": "Linux boot image: Image + s5e8855.dtb (vendor_boot carries DTB), header v4, os_version 15.0.0",
+    "init_boot.img": "busybox initramfs, lz4-legacy, header v4",
+    "rootfs": "ext4 image, label 'ubuntu-rootfs', placed on 'userdata' partition (Linux-only layout)"
+  }
+}

@@ -23,7 +23,7 @@ if [ "$(id -u)" -ne 0 ]; then
     exit 1
 fi
 
-BASE_DIR="/home/tonton/rom/samsung"
+BASE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 BUILDER_DIR="$BASE_DIR/rootfs_builder"
 ROOTFS_DIR="$BASE_DIR/ubuntu-noble-rootfs/rootfs"
 DIST_DIR="$BASE_DIR/Kernel/out/mx8855/dist"
